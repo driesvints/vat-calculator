@@ -11,7 +11,7 @@ VatCalculator::getTaxRateForCountry( 'NL' );
 
 ## Installation
 
-In order to install Laravel 5 Teamwork, just run
+In order to install the VAT Calculator, just run
 
 ```bash
 $ composer require mpociot/vat-calculator
