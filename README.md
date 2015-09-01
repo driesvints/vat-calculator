@@ -32,7 +32,11 @@ in the `providers` array.
 The `VatCalculator` Facade will be installed automatically within the Service Provider.
 
 <a name="configuration"/>
-## Configuration
+## Configuration (optional)
+
+By default, the VAT Calculator has all EU VAT rules predefined, so that it can easily be updated, if it changes for a specific country.
+
+If you need to define other VAT rates, you can do so by publishing the configuration and add more rules.
 
 To publish the configuration files, run the `vendor:publish` command
 
