@@ -1,7 +1,7 @@
 {
     "name": "mpociot/vat-calculator",
     "description": "EU VAT calculation, the way it should be.",
-    "keywords": ["VAT","Tax","EU Moss", "tax calculation", "vat calculation"],
+    "keywords": ["VAT","Tax","EU Moss", "tax calculation", "vat calculation", "cashier"],
     "license": "MIT",
     "authors": [
         {
