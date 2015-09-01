@@ -12,12 +12,58 @@ trait BillableWithinTheEU
     protected $stripeTaxPercent = 0;
 
     /**
+     * @var
+     */
+    protected $userCountryCode;
+
+    /**
+     * @var bool
+     */
+    protected $userIsCompany = false;
+
+    /**
      * @param string $countryCode
      * @param bool|false $company
+     *
+     * @return $this
      */
     public function setTaxForCountry($countryCode, $company = false)
     {
-        $this->stripeTaxPercent = ( VatCalculator::getTaxRateForCountry( $countryCode, $company ) * 100 );
+        $this->userCountryCode = $countryCode;
+        $this->userIsCompany   = $company;
+
+        return $this;
+    }
+
+    /**
+     * @param $countryCode
+     * @return $this
+     */
+    public function useTaxFrom($countryCode)
+    {
+        $this->userCountryCode = $countryCode;
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function asBusiness()
+    {
+        $this->userIsCompany = true;
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function asIndividual()
+    {
+        $this->userIsCompany = false;
+
+        return $this;
     }
 
     /**
@@ -27,6 +73,6 @@ trait BillableWithinTheEU
      */
     public function getTaxPercent()
     {
-        return $this->stripeTaxPercent;
+        return ( VatCalculator::getTaxRateForCountry($this->userCountryCode, $this->userIsCompany) * 100 );
     }
 }

@@ -103,13 +103,29 @@ class User extends Model implements BillableContract
 }
 ```
 
-By using the `BillableWithinTheEU` trait, your billable model has a new method `setTaxForCountry($countryCode, $company = false)` which can be used, just like the `VatCalculator::getTaxRateForCountry` method.
+By using the `BillableWithinTheEU` trait, your billable model has new methods to set the tax rate for the billable model.
+
+Set everything in one command:
+
+- `setTaxForCountry($countryCode, $company = false)`
+
+Or use the more readable, chainable approach:
+
+- `useTaxFrom($countryCode)` &mdash; Use the given countries tax rate
+- `asIndividual()` &mdash; The billable model is not a company (default) 
+- `asBusiness()` &mdash; The billable model is a valid company
 
 So in order to set the correct tax percentage prior to subscribing your customer, consider the following workflow:
 
 ```php
 $user = User::find(1);
-$user->setTaxForCountry('NL');
+
+// For individuals use:
+$user->useTaxFrom('NL');
+
+// For business customers with a valid VAT ID, use:
+$user->useTaxFrom('NL')->asBusiness();
+
 $user->subscription('monthly')->create($creditCardToken);
 ```
 
