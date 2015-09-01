@@ -3,9 +3,17 @@
 namespace Mpociot\VatCalculator;
 
 use Illuminate\Contracts\Config\Repository;
+use Mpociot\VatCalculator\Exceptions\VATCheckUnavailableException;
+use SoapClient;
 
 class VatCalculator
 {
+    /**
+     * VAT Service check URL provided by the EU
+     */
+    const VAT_SERVICE_URL = "http://ec.europa.eu/taxation_customs/vies/checkVatService.wsdl";
+
+    protected $soapClient;
 
     /**
      * All available tax rules
@@ -90,8 +98,9 @@ class VatCalculator
      */
     public function __construct($app)
     {
-        $this->app    = $app;
-        $this->config = $this->app->make('Illuminate\Contracts\Config\Repository');
+        $this->app        = $app;
+        $this->config     = $this->app->make('Illuminate\Contracts\Config\Repository');
+        $this->soapClient = new SoapClient(self::VAT_SERVICE_URL);
     }
 
 
@@ -195,5 +204,41 @@ class VatCalculator
     public function getTaxValue()
     {
         return $this->taxValue;
+    }
+
+    /**
+     * @param $vatNumber
+     *
+     * @return bool
+     * @throws VATCheckUnavailableException
+     */
+    public function isValidVATNumber($vatNumber)
+    {
+        $vatNumber   = str_replace([' ', '-', '.', ','], "", trim($vatNumber));
+        $countryCode = substr($vatNumber, 0, 2);
+        $vatNumber   = substr($vatNumber, 2);
+
+        $client      = $this->soapClient;
+        if ($client) {
+            try {
+                $result = $client->checkVat([
+                    'countryCode' => $countryCode,
+                    'vatNumber'   => $vatNumber
+                ]);
+                return $result->valid;
+            } catch (\SoapFault $e) {
+                return false;
+            }
+        }
+        throw new VATCheckUnavailableException('The VAT check service is currently unavailable. Please try again later.');
+
+    }
+
+    /**
+     * @param SoapClient $soapClient
+     */
+    public function setSoapClient($soapClient)
+    {
+        $this->soapClient = $soapClient;
     }
 }
