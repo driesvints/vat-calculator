@@ -7,7 +7,10 @@
  * @package Teamwork
  */
 
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
+use Mpociot\VatCalculator\Facades\VatCalculator;
+use Mpociot\VatCalculator\Validators\VatCalculatorValidatorExtension;
 
 class VatCalculatorServiceProvider extends ServiceProvider
 {
@@ -26,6 +29,7 @@ class VatCalculatorServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->publishConfig();
+        $this->registerValidatorExtension();
     }
 
     /**
@@ -85,6 +89,28 @@ class VatCalculatorServiceProvider extends ServiceProvider
     {
         $this->mergeConfigFrom(
             __DIR__ . '/../../config/config.php', 'vat_calculator'
+        );
+    }
+
+    private function registerValidatorExtension()
+    {
+        $this->loadTranslationsFrom(
+            __DIR__ . '/../../lang',
+            'vatnumber-validator'
+        );
+
+        // Registering the validator extension with the validator factory
+        $this->app['validator']->resolver(
+            function($translator, $data, $rules, $messages, $customAttributes = array())
+            {
+                return new VatCalculatorValidatorExtension(
+                    $translator,
+                    $data,
+                    $rules,
+                    $messages,
+                    $customAttributes
+                );
+            }
         );
     }
 }
