@@ -23,6 +23,7 @@ VatCalculator::isValidVATNumber('NL123456789B01');
 	- [Calculate the gross price](#calculate-the-gross-price)
 	- [Receive more information](#receive-more-information)
 	- [Validate EU VAT numbers](#validate-eu-vat-numbers)
+		- [Laravel Validator extension](#laravel-validator-extension)
 	- [Cashier integration](#cashier-integration)
 - [Configuration (optional)](#configuration)
 - [Changelog](#changelog)
@@ -86,6 +87,25 @@ try {
 	// Please handle me
 }
 ```
+
+<a name="laravel-validator-extension" />
+### Laravel Validator Extension
+If you want to include the VAT number validation directly in your existing Form Requests / Validations, use the `vat_number` validtion rule.
+
+Example:
+
+```php
+$rules = array(
+    'first_name'  => 'required',
+    'last_name'   => 'required',
+    'company_vat' => 'vat_number'
+);
+
+$validator = Validator::make(Input::all(), $rules);
+```
+
+**Important:** The validator extension returns `false` when the VAT ID Check SOAP API is unavailable.
+
 <a name="cashier-integration" />
 ### Cashier integration
 If you want to use this module in combination with [Laravel Cashier](https://github.com/laravel/cashier/) you can let your billable model use the `BillableWithinTheEU` trait.
