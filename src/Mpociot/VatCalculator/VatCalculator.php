@@ -117,8 +117,10 @@ class VatCalculator
     {
         if (isset( $_SERVER[ 'HTTP_X_FORWARDED_FOR' ] ) && $_SERVER[ 'HTTP_X_FORWARDED_FOR' ]) {
             $clientIpAddress = $_SERVER[ 'HTTP_X_FORWARDED_FOR' ];
-        } else {
+        } elseif( isset( $_SERVER[ 'REMOTE_ADDR' ] ) && $_SERVER[ 'REMOTE_ADDR' ] ) {
             $clientIpAddress = $_SERVER[ 'REMOTE_ADDR' ];
+        } else {
+            $clientIpAddress = "";
         }
         return $clientIpAddress;
     }
