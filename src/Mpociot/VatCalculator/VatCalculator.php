@@ -13,6 +13,11 @@ class VatCalculator
      */
     const VAT_SERVICE_URL = "http://ec.europa.eu/taxation_customs/vies/checkVatService.wsdl";
 
+    /**
+     * We're using the free ip2c service to lookup IP 2 country
+     */
+    const GEOCODE_SERVICE_URL = "http://ip2c.org/";
+
     protected $soapClient;
 
     /**
@@ -105,12 +110,48 @@ class VatCalculator
 
 
     /**
+     * Finds the client IP address
+     * @return mixed
+     */
+    private function getClientIP()
+    {
+        if (isset( $_SERVER[ 'HTTP_X_FORWARDED_FOR' ] ) && $_SERVER[ 'HTTP_X_FORWARDED_FOR' ]) {
+            $clientIpAddress = $_SERVER[ 'HTTP_X_FORWARDED_FOR' ];
+        } else {
+            $clientIpAddress = $_SERVER[ 'REMOTE_ADDR' ];
+        }
+        return $clientIpAddress;
+    }
+
+    /**
+     * Returns the ISO 3166-1 alpha-2 two letter
+     * country code for the client IP. If the
+     * IP can't be resolved it returns false.
+     *
+     * @return bool|string
+     */
+    public function getIPBasedCountry()
+    {
+        $ip     = $this->getClientIP();
+        $url    = self::GEOCODE_SERVICE_URL . $ip;
+        $result = file_get_contents($url);
+        switch ($result[ 0 ]) {
+            case '1':
+                $data = explode(';', $result);
+                return $data[ 1 ];
+                break;
+            default:
+                return false;
+        }
+    }
+
+    /**
      * Calculate the VAT based on the net price, country code and indication if the
      * customer is a company or not.
      *
-     * @param int|float   $netPrice    The net price to use for the calculation
+     * @param int|float $netPrice The net price to use for the calculation
      * @param null|string $countryCode The country code to use for the rate lookup
-     * @param null|bool   $company
+     * @param null|bool $company
      *
      * @return float
      */
@@ -180,7 +221,7 @@ class VatCalculator
     /**
      * Returns the tax rate for the given country.
      *
-     * @param string     $countryCode
+     * @param string $countryCode
      * @param bool|false $company
      *
      * @return float
@@ -218,7 +259,7 @@ class VatCalculator
         $countryCode = substr($vatNumber, 0, 2);
         $vatNumber   = substr($vatNumber, 2);
 
-        $client      = $this->soapClient;
+        $client = $this->soapClient;
         if ($client) {
             try {
                 $result = $client->checkVat([

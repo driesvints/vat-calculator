@@ -1,5 +1,8 @@
 # Changelog
 
+#### v1.4.0 `2015-09-02`
+- Added IP to country lookup.
+
 #### v1.3.0 `2015-09-02`
 - Added Laravel Validator extension.
 

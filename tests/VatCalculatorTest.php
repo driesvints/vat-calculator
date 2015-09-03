@@ -1,14 +1,21 @@
 <?php
 
-namespace Mpociot\VatCalculator\Tests;
+namespace Mpociot\VatCalculator;
 
 use Mockery as m;
 
 use Mpociot\VatCalculator\VatCalculator;
 use PHPUnit_Framework_TestCase as PHPUnit;
 
+function file_get_contents( $url )
+{
+    return VatCalculatorTest::$file_get_contents_result ?: \file_get_contents( $url );
+}
+
 class VatCalculatorTest extends PHPUnit
 {
+    public static $file_get_contents_result;
+
     public function tearDown()
     {
         m::close();
@@ -337,5 +344,39 @@ class VatCalculatorTest extends PHPUnit
         $vatCalculator = new VatCalculator($app);
         $vatCalculator->setSoapClient( false );
         $vatCalculator->isValidVATNumber($vatNumber);
+    }
+
+
+    public function testCanResolveIPToCountry()
+    {
+        $app    = m::mock('App');
+        $config = m::mock('Illuminate\Contracts\Config\Repository');
+        $app->shouldReceive('make')->with('Illuminate\Contracts\Config\Repository')->andReturn($config);
+        self::$file_get_contents_result = '1;DE;DEU;Deutschland';
+        $vatCalculator = new VatCalculator($app);
+        $country = $vatCalculator->getIPBasedCountry();
+        $this->assertEquals('DE',$country);
+    }
+
+    public function testCanResolveInvalidIPToCountry()
+    {
+        $app    = m::mock('App');
+        $config = m::mock('Illuminate\Contracts\Config\Repository');
+        $app->shouldReceive('make')->with('Illuminate\Contracts\Config\Repository')->andReturn($config);
+        self::$file_get_contents_result = '0';
+        $vatCalculator = new VatCalculator($app);
+        $country = $vatCalculator->getIPBasedCountry();
+        $this->assertFalse($country);
+    }
+
+    public function testCanHandleIPServiceDowntime()
+    {
+        $app    = m::mock('App');
+        $config = m::mock('Illuminate\Contracts\Config\Repository');
+        $app->shouldReceive('make')->with('Illuminate\Contracts\Config\Repository')->andReturn($config);
+        self::$file_get_contents_result = false;
+        $vatCalculator = new VatCalculator($app);
+        $country = $vatCalculator->getIPBasedCountry();
+        $this->assertFalse($country);
     }
 }

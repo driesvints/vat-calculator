@@ -10,7 +10,8 @@ VAT / Tax calculation for Laravel 5 / Cashier. Fully compatible with the new EU 
 
 ```php
 // Easy to use!
-VatCalculator::calculate( 24.00, 'DE' );
+$countryCode = VatCalculator::getIPBasedCountry();
+VatCalculator::calculate( 24.00, $countryCode );
 VatCalculator::calculate( 71.00, 'DE', $isCompany = true );
 VatCalculator::getTaxRateForCountry( 'NL' );
 // Check validity of a VAT number
@@ -25,6 +26,7 @@ VatCalculator::isValidVATNumber('NL123456789B01');
 	- [Validate EU VAT numbers](#validate-eu-vat-numbers)
 		- [Laravel Validator extension](#laravel-validator-extension)
 	- [Cashier integration](#cashier-integration)
+	- [Get the IP based country of your user](#get-ip-based-country)
 - [Configuration (optional)](#configuration)
 - [Changelog](#changelog)
 - [License](#license)
@@ -108,7 +110,7 @@ $validator = Validator::make(Input::all(), $rules);
 
 <a name="cashier-integration" />
 ### Cashier integration
-If you want to use this module in combination with [Laravel Cashier](https://github.com/laravel/cashier/) you can let your billable model use the `BillableWithinTheEU` trait.
+If you want to use this package in combination with [Laravel Cashier](https://github.com/laravel/cashier/) you can let your billable model use the `BillableWithinTheEU` trait.
 
 ```php
 use Laravel\Cashier\Billable;
@@ -148,6 +150,18 @@ $user->useTaxFrom('NL')->asBusiness();
 
 $user->subscription('monthly')->create($creditCardToken);
 ```
+
+<a name="get-ip-based-country" />
+## Get the IP based Country of your user(s)
+Right now you'll need to show your users a way to select their country - probably a drop down - to use this country for the VAT calculation.
+
+This package has a small helper function, that tries to lookup the Country of the user, based on the IP they have.
+
+```php
+$countryCode = VatCalculator::getIPBasedCountry();
+```
+
+The `$countryCode` will either be `false`, if the service is unavailable, or the country couldn't be looked up. Otherwise the variable contains the two-letter country code, which can be used to prefill the user selection.
 
 <a name="configuration" />
 ## Configuration (optional)
