@@ -375,6 +375,7 @@ class VatCalculatorTest extends PHPUnit
         $config = m::mock('Illuminate\Contracts\Config\Repository');
         $app->shouldReceive('make')->with('Illuminate\Contracts\Config\Repository')->andReturn($config);
         self::$file_get_contents_result = false;
+        $_SERVER[ 'REMOTE_ADDR' ] = '';
         $vatCalculator = new VatCalculator($app);
         $country = $vatCalculator->getIPBasedCountry();
         $this->assertFalse($country);
