@@ -20,6 +20,7 @@ class VatCalculatorValidatorExtensionTest extends PHPUnit
     public function tearDown()
     {
         m::close();
+        VatCalculator::clearResolvedInstances();
     }
 
     public function setUp()
@@ -80,7 +81,6 @@ class VatCalculatorValidatorExtensionTest extends PHPUnit
             'customer_vat' => $vatNumber
         );
         VatCalculator::shouldReceive('isValidVATNumber')
-            ->with( $vatNumber )
             ->andThrow( new VATCheckUnavailableException() );
         $validator = new VatCalculatorValidatorExtension(
             $this->translator,

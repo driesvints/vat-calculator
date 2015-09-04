@@ -181,6 +181,7 @@ class VatCalculatorTest extends PHPUnit
         $vatCalculator->setCompany($company);
         $result = $vatCalculator->calculate($net, $countryCode);
         $this->assertEquals(24.00, $result);
+        $this->assertEquals(24.00, $vatCalculator->getNetPrice());
         $this->assertEquals(0, $vatCalculator->getTaxRate());
         $this->assertEquals(0, $vatCalculator->getTaxValue());
     }

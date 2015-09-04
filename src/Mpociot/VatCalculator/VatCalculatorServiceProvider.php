@@ -35,7 +35,7 @@ class VatCalculatorServiceProvider extends ServiceProvider
     /**
      * Publish Teamwork configuration
      */
-    private function publishConfig()
+    protected function publishConfig()
     {
         // Publish config files
         $this->publishes([
@@ -60,7 +60,7 @@ class VatCalculatorServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    private function registerVatCalculator()
+    protected function registerVatCalculator()
     {
         $this->app->bind('vatcalculator', function ($app) {
             return new VatCalculator($app);
@@ -85,14 +85,14 @@ class VatCalculatorServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    private function mergeConfig()
+    protected function mergeConfig()
     {
         $this->mergeConfigFrom(
             __DIR__ . '/../../config/config.php', 'vat_calculator'
         );
     }
 
-    private function registerValidatorExtension()
+    protected function registerValidatorExtension()
     {
         $this->loadTranslationsFrom(
             __DIR__ . '/../../lang',

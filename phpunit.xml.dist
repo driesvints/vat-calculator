@@ -16,7 +16,7 @@
     </testsuites>
     <filter>
         <whitelist>
-            <directory suffix=".php">src/</directory>
+            <directory suffix=".php">src/Mpociot/</directory>
         </whitelist>
     </filter>
 </phpunit>
