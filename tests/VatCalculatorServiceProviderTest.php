@@ -78,12 +78,14 @@ class VatCalculatorServiceProviderTest extends PHPUnit_Framework_TestCase
                 function ($name, $closure) use ($test, $app) {
                     $test->assertEquals('vatcalculator', $name);
                     $test->assertInstanceOf(
-                        'Mpociot\VatCalculator\Facades\VatCalculator',
+                        'Mpociot\VatCalculator\VatCalculator',
                         $closure($app)
                     );
                 }
             );
-
+        $app->shouldReceive('make')
+            ->once()
+            ->with('Illuminate\Contracts\Config\Repository');
         $sp->registerVatCalculator();
     }
 
