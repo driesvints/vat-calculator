@@ -1,5 +1,8 @@
 # Changelog
 
+#### v1.4.1 `2015-09-02`
+- Added facade explanation to README and fixed a bug in the ServiceProvider
+
 #### v1.4.0 `2015-09-02`
 - Added IP to country lookup.
 

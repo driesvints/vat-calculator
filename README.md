@@ -46,7 +46,9 @@ Then in your `config/app.php` add
     
 in the `providers` array.
     
-The `VatCalculator` Facade will be installed automatically within the Service Provider.
+The `VatCalculator` Facade will be installed automatically within the Service Provider, but if you want you can of course add it to the `aliases` array.
+
+	'VatCalculator' => Mpociot\VatCalculator\Facades\VatCalculator::class
 
 <a name="usage" />
 ## Usage
