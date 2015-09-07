@@ -1,5 +1,8 @@
 # Changelog
 
+#### v1.4.3 `2015-09-07`
+- Updated standard VAT rate for Luxembourg
+
 #### v1.4.2 `2015-09-06`
 - Added facade explanation to README and fixed a bug in the ServiceProvider
 
