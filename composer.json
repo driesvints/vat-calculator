@@ -1,7 +1,7 @@
 {
     "name": "mpociot/vat-calculator",
     "description": "EU VAT calculation, the way it should be.",
-    "keywords": ["VAT","Tax","EU Moss", "tax calculation", "vat calculation", "cashier"],
+    "keywords": ["VAT","Tax","EU MOSS", "VAT ID", "tax calculation", "vat calculation", "cashier"],
     "license": "MIT",
     "authors": [
         {
@@ -10,15 +10,18 @@
         }
     ],
     "require": {
-      "php": ">=5.5.9",
-      "illuminate/support": "~5.0",
-      "illuminate/validation": "~5.0"
+      "php": ">=5.5.9"
     },
     "require-dev": {
+        "illuminate/support": "~5.0",
+        "illuminate/validation": "~5.0",
         "phpunit/phpunit": "4.7.*",
         "mockery/mockery": "dev-master"
     },
     "autoload": {
+        "classmap": [
+            "src/controllers"
+        ],
         "psr-0": {
             "Mpociot\\VatCalculator": "src/"
         }

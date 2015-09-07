@@ -27,7 +27,7 @@ class VatCalculatorServiceProviderTest extends PHPUnit_Framework_TestCase
         $app['validator'] = m::mock('Validator');
         $app['validator']->shouldReceive('addNamespace');
         $app['validator']->shouldReceive('resolver');
-        $sp = m::mock('Mpociot\VatCalculator\VatCalculatorServiceProvider[publishes,loadTranslationsFrom]',
+        $sp = m::mock('Mpociot\VatCalculator\VatCalculatorServiceProvider[publishes,loadTranslationsFrom,registerRoutes]',
             [$app]
         );
         $sp->shouldAllowMockingProtectedMethods();
@@ -46,6 +46,11 @@ class VatCalculatorServiceProviderTest extends PHPUnit_Framework_TestCase
             ->andReturnUsing(function ($a, $b) use ($test) {
                 $test->assertStringEndsWith('lang', $a);
             });
+
+        $sp->shouldReceive('registerRoutes')
+            ->once()
+            ->withNoArgs();
+
         $sp->boot();
     }
 

@@ -23,4 +23,17 @@ return [
     'rules' => [
         // 'XX' => 0.17,
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Predefined routes
+    |--------------------------------------------------------------------------
+    |
+    | The VAT calculator comes with a number of useful predefined routes
+    | that allow you to use the VAT calculator JS toolkit. If you
+    | don't want the routes to be registered, set this variable
+    | to false.
+    |
+    */
+    'use_routes' => true
 ];
