@@ -62,6 +62,33 @@ class VatCalculatorServiceProviderTest extends PHPUnit_Framework_TestCase
         $sp->register();
     }
 
+    public function testShouldMergeConfig()
+    {
+        $test = $this;
+        $sp = m::mock('Mpociot\VatCalculator\VatCalculatorServiceProvider',['app'])
+            ->shouldDeferMissing()
+            ->shouldAllowMockingProtectedMethods();
+
+        $sp->shouldReceive('mergeConfigFrom')
+            ->once()
+            ->with(m::type('string'),'vat_calculator');
+
+        $sp->mergeConfig();
+    }
+
+    public function testShouldRegisterFacade()
+    {
+        $test = $this;
+        $app = m::mock('App');
+        $app->shouldReceive('booting')
+            ->once()
+            ->with( m::type('callable') );
+
+        $sp = m::mock('Mpociot\VatCalculator\VatCalculatorServiceProvider',[$app])
+            ->shouldDeferMissing();
+        $sp->registerFacade();
+    }
+
     public function testShouldRegisterVatCalculator()
     {
         $test = $this;
