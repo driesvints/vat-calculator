@@ -1,5 +1,8 @@
 # Changelog
 
+#### v1.4.4 `2015-09-07`
+- The package can now be used without Laravel
+
 #### v1.4.3 `2015-09-07`
 - Updated standard VAT rate for Luxembourg
 

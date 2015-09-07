@@ -94,17 +94,11 @@ class VatCalculator
     protected $company = false;
 
     /**
-     * @var \Illuminate\Foundation\Application
+     * @param \Illuminate\Contracts\Config\Repository
      */
-    protected $app;
-
-    /**
-     * @param \Illuminate\Foundation\Application $app
-     */
-    public function __construct($app)
+    public function __construct( $config = null )
     {
-        $this->app        = $app;
-        $this->config     = $this->app->make('Illuminate\Contracts\Config\Repository');
+        $this->config     = $config;
         $this->soapClient = new SoapClient(self::VAT_SERVICE_URL);
     }
 
@@ -234,7 +228,7 @@ class VatCalculator
             return 0;
         }
         $taxKey = 'vat_calculator.rules.' . strtoupper($countryCode);
-        if ($this->config->has($taxKey)) {
+        if ( isset($this->config) && $this->config->has($taxKey)) {
             return $this->config->get($taxKey, 0);
         }
         return isset( $this->taxRules[ strtoupper($countryCode) ] ) ? $this->taxRules[ strtoupper($countryCode) ] : 0;

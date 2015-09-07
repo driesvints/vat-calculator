@@ -23,7 +23,6 @@ class VatCalculatorTest extends PHPUnit
 
     public function testCalculateVatWithoutCountry()
     {
-        $app    = m::mock('App');
         $config = m::mock('Illuminate\Contracts\Config\Repository');
         $config->shouldReceive('has')
             ->once()
@@ -32,11 +31,19 @@ class VatCalculatorTest extends PHPUnit
         $config->shouldReceive('get')
             ->once()
             ->andReturn(0);
-        $app->shouldReceive('make')->with('Illuminate\Contracts\Config\Repository')->andReturn($config);
 
         $net = 25.00;
 
-        $vatCalculator = new VatCalculator($app);
+        $vatCalculator = new VatCalculator($config);
+        $result        = $vatCalculator->calculate($net);
+        $this->assertEquals(25.00, $result);
+    }
+
+    public function testCalculateVatWithoutCountryAndConfig()
+    {
+        $net = 25.00;
+
+        $vatCalculator = new VatCalculator();
         $result        = $vatCalculator->calculate($net);
         $this->assertEquals(25.00, $result);
     }
@@ -46,7 +53,6 @@ class VatCalculatorTest extends PHPUnit
         $net         = 24.00;
         $countryCode = 'DE';
 
-        $app    = m::mock('App');
         $config = m::mock('Illuminate\Contracts\Config\Repository');
         $config->shouldReceive('get')
             ->never();
@@ -55,9 +61,19 @@ class VatCalculatorTest extends PHPUnit
             ->once()
             ->andReturn(false);
 
-        $app->shouldReceive('make')->with('Illuminate\Contracts\Config\Repository')->andReturn($config);
+        $vatCalculator = new VatCalculator($config);
+        $result        = $vatCalculator->calculate($net, $countryCode);
+        $this->assertEquals(28.56, $result);
+        $this->assertEquals(0.19, $vatCalculator->getTaxRate());
+        $this->assertEquals(4.56, $vatCalculator->getTaxValue());
+    }
 
-        $vatCalculator = new VatCalculator($app);
+    public function testCalculateVatWithPredefinedRulesWithoutConfig()
+    {
+        $net         = 24.00;
+        $countryCode = 'DE';
+
+        $vatCalculator = new VatCalculator();
         $result        = $vatCalculator->calculate($net, $countryCode);
         $this->assertEquals(28.56, $result);
         $this->assertEquals(0.19, $vatCalculator->getTaxRate());
@@ -71,7 +87,6 @@ class VatCalculatorTest extends PHPUnit
 
         $taxKey = 'vat_calculator.rules.' . strtoupper($countryCode);
 
-        $app    = m::mock('App');
         $config = m::mock('Illuminate\Contracts\Config\Repository');
         $config->shouldReceive('get')
             ->once()
@@ -82,9 +97,8 @@ class VatCalculatorTest extends PHPUnit
             ->once()
             ->andReturn(true);
 
-        $app->shouldReceive('make')->with('Illuminate\Contracts\Config\Repository')->andReturn($config);
 
-        $vatCalculator = new VatCalculator($app);
+        $vatCalculator = new VatCalculator( $config );
         $result        = $vatCalculator->calculate($net, $countryCode);
         $this->assertEquals(36.00, $result);
         $this->assertEquals(0.50, $vatCalculator->getTaxRate());
@@ -96,7 +110,6 @@ class VatCalculatorTest extends PHPUnit
         $net         = 24.00;
         $countryCode = 'DE';
 
-        $app    = m::mock('App');
         $config = m::mock('Illuminate\Contracts\Config\Repository');
         $config->shouldReceive('get')
             ->once()
@@ -106,9 +119,20 @@ class VatCalculatorTest extends PHPUnit
         $config->shouldReceive('has')
             ->once()
             ->andReturn(true);
-        $app->shouldReceive('make')->with('Illuminate\Contracts\Config\Repository')->andReturn($config);
 
-        $vatCalculator = new VatCalculator($app);
+        $vatCalculator = new VatCalculator( $config );
+        $result        = $vatCalculator->calculate($net, $countryCode);
+        $this->assertEquals(28.56, $result);
+        $this->assertEquals(0.19, $vatCalculator->getTaxRate());
+        $this->assertEquals(4.56, $vatCalculator->getTaxValue());
+    }
+
+    public function testCalculatVatWithCountryDirectSetWithoutConfiguration()
+    {
+        $net         = 24.00;
+        $countryCode = 'DE';
+
+        $vatCalculator = new VatCalculator( );
         $result        = $vatCalculator->calculate($net, $countryCode);
         $this->assertEquals(28.56, $result);
         $this->assertEquals(0.19, $vatCalculator->getTaxRate());
@@ -120,7 +144,6 @@ class VatCalculatorTest extends PHPUnit
         $net         = 24.00;
         $countryCode = 'DE';
 
-        $app    = m::mock('App');
         $config = m::mock('Illuminate\Contracts\Config\Repository');
         $config->shouldReceive('get')
             ->once()
@@ -130,9 +153,8 @@ class VatCalculatorTest extends PHPUnit
         $config->shouldReceive('has')
             ->once()
             ->andReturn(true);
-        $app->shouldReceive('make')->with('Illuminate\Contracts\Config\Repository')->andReturn($config);
 
-        $vatCalculator = new VatCalculator($app);
+        $vatCalculator = new VatCalculator($config);
         $vatCalculator->setCountryCode($countryCode);
 
         $result = $vatCalculator->calculate($net);
@@ -147,7 +169,6 @@ class VatCalculatorTest extends PHPUnit
         $countryCode = 'DE';
         $company     = true;
 
-        $app    = m::mock('App');
         $config = m::mock('Illuminate\Contracts\Config\Repository');
         $config->shouldReceive('get')
             ->never();
@@ -155,9 +176,7 @@ class VatCalculatorTest extends PHPUnit
         $config->shouldReceive('has')
             ->never();
 
-        $app->shouldReceive('make')->with('Illuminate\Contracts\Config\Repository')->andReturn($config);
-
-        $vatCalculator = new VatCalculator($app);
+        $vatCalculator = new VatCalculator( $config );
         $result        = $vatCalculator->calculate($net, $countryCode, $company);
         $this->assertEquals(24.00, $result);
         $this->assertEquals(0, $vatCalculator->getTaxRate());
@@ -170,14 +189,11 @@ class VatCalculatorTest extends PHPUnit
         $countryCode = 'DE';
         $company     = true;
 
-        $app    = m::mock('App');
         $config = m::mock('Illuminate\Contracts\Config\Repository');
         $config->shouldReceive('get')
             ->never();
 
-        $app->shouldReceive('make')->with('Illuminate\Contracts\Config\Repository')->andReturn($config);
-
-        $vatCalculator = new VatCalculator($app);
+        $vatCalculator = new VatCalculator($config);
         $vatCalculator->setCompany($company);
         $result = $vatCalculator->calculate($net, $countryCode);
         $this->assertEquals(24.00, $result);
@@ -192,7 +208,6 @@ class VatCalculatorTest extends PHPUnit
         $countryCode = 'DE';
         $company     = true;
 
-        $app    = m::mock('App');
         $config = m::mock('Illuminate\Contracts\Config\Repository');
         $config->shouldReceive('get')
             ->never();
@@ -200,9 +215,8 @@ class VatCalculatorTest extends PHPUnit
         $config->shouldReceive('has')
             ->never();
 
-        $app->shouldReceive('make')->with('Illuminate\Contracts\Config\Repository')->andReturn($config);
 
-        $vatCalculator = new VatCalculator($app);
+        $vatCalculator = new VatCalculator($config);
         $vatCalculator->setCountryCode($countryCode);
         $vatCalculator->setCompany($company);
         $result = $vatCalculator->calculate($net);
@@ -215,7 +229,7 @@ class VatCalculatorTest extends PHPUnit
     {
         $countryCode = 'DE';
 
-        $app    = m::mock('App');
+
         $config = m::mock('Illuminate\Contracts\Config\Repository');
         $config->shouldReceive('get')
             ->once()
@@ -225,10 +239,9 @@ class VatCalculatorTest extends PHPUnit
         $config->shouldReceive('has')
             ->once()
             ->andReturn(true);
-        $app->shouldReceive('make')->with('Illuminate\Contracts\Config\Repository')->andReturn($config);
 
 
-        $vatCalculator = new VatCalculator($app);
+        $vatCalculator = new VatCalculator($config);
         $result        = $vatCalculator->getTaxRateForCountry($countryCode);
         $this->assertEquals(0.19, $result);
     }
@@ -238,7 +251,6 @@ class VatCalculatorTest extends PHPUnit
         $countryCode = 'DE';
         $company     = true;
 
-        $app    = m::mock('App');
         $config = m::mock('Illuminate\Contracts\Config\Repository');
         $config->shouldReceive('get')
             ->never();
@@ -246,23 +258,20 @@ class VatCalculatorTest extends PHPUnit
         $config->shouldReceive('has')
             ->never();
 
-        $app->shouldReceive('make')->with('Illuminate\Contracts\Config\Repository')->andReturn($config);
 
 
-        $vatCalculator = new VatCalculator($app);
+        $vatCalculator = new VatCalculator($config);
         $result        = $vatCalculator->getTaxRateForCountry($countryCode, $company);
         $this->assertEquals(0, $result);
     }
 
     public function testCanValidateValidVATNumber()
     {
-        $app    = m::mock('App');
         $config = m::mock('Illuminate\Contracts\Config\Repository');
 
         $result        = new \stdClass();
         $result->valid = true;
 
-        $app->shouldReceive('make')->with('Illuminate\Contracts\Config\Repository')->andReturn($config);
 
         $vatCheck = $this->getMockFromWsdl(__DIR__ . '/checkVatService.wsdl', 'VATService');
         $vatCheck->expects($this->any())
@@ -274,7 +283,7 @@ class VatCalculatorTest extends PHPUnit
             ->willReturn($result);
 
         $vatNumber     = "DE 190 098 891";
-        $vatCalculator = new VatCalculator($app);
+        $vatCalculator = new VatCalculator($config);
         $vatCalculator->setSoapClient($vatCheck);
         $result = $vatCalculator->isValidVATNumber($vatNumber);
         $this->assertTrue($result);
@@ -282,13 +291,8 @@ class VatCalculatorTest extends PHPUnit
 
     public function testCanValidateInvalidVATNumber()
     {
-        $app    = m::mock('App');
-        $config = m::mock('Illuminate\Contracts\Config\Repository');
-
         $result        = new \stdClass();
         $result->valid = false;
-
-        $app->shouldReceive('make')->with('Illuminate\Contracts\Config\Repository')->andReturn($config);
 
         $vatCheck = $this->getMockFromWsdl(__DIR__ . '/checkVatService.wsdl', 'VATService');
         $vatCheck->expects($this->any())
@@ -300,7 +304,7 @@ class VatCalculatorTest extends PHPUnit
             ->willReturn($result);
 
         $vatNumber     = "SomeInvalidNumber";
-        $vatCalculator = new VatCalculator($app);
+        $vatCalculator = new VatCalculator();
         $vatCalculator->setSoapClient($vatCheck);
         $result = $vatCalculator->isValidVATNumber($vatNumber);
         $this->assertFalse($result);
@@ -308,11 +312,6 @@ class VatCalculatorTest extends PHPUnit
 
     public function testValidateVATNumberReturnsFalseOnSoapFailure()
     {
-        $app    = m::mock('App');
-        $config = m::mock('Illuminate\Contracts\Config\Repository');
-
-        $app->shouldReceive('make')->with('Illuminate\Contracts\Config\Repository')->andReturn($config);
-
         $vatCheck = $this->getMockFromWsdl(__DIR__ . '/checkVatService.wsdl', 'VATService');
         $vatCheck->expects($this->any())
             ->method('checkVat')
@@ -323,7 +322,7 @@ class VatCalculatorTest extends PHPUnit
             ->willThrowException( new \SoapFault("Server","Something went wrong") );
 
         $vatNumber     = "SomeInvalidNumber";
-        $vatCalculator = new VatCalculator($app);
+        $vatCalculator = new VatCalculator();
         $vatCalculator->setSoapClient($vatCheck);
         $result = $vatCalculator->isValidVATNumber($vatNumber);
         $this->assertFalse($result);
@@ -331,18 +330,13 @@ class VatCalculatorTest extends PHPUnit
 
     public function testCannotValidateVATNumberWhenServiceIsDown()
     {
-        $app    = m::mock('App');
-        $config = m::mock('Illuminate\Contracts\Config\Repository');
-
         $this->setExpectedException( \Mpociot\VatCalculator\Exceptions\VATCheckUnavailableException::class );
 
         $result        = new \stdClass();
         $result->valid = false;
 
-        $app->shouldReceive('make')->with('Illuminate\Contracts\Config\Repository')->andReturn($config);
-
         $vatNumber     = "SomeInvalidNumber";
-        $vatCalculator = new VatCalculator($app);
+        $vatCalculator = new VatCalculator();
         $vatCalculator->setSoapClient( false );
         $vatCalculator->isValidVATNumber($vatNumber);
     }
@@ -350,34 +344,25 @@ class VatCalculatorTest extends PHPUnit
 
     public function testCanResolveIPToCountry()
     {
-        $app    = m::mock('App');
-        $config = m::mock('Illuminate\Contracts\Config\Repository');
-        $app->shouldReceive('make')->with('Illuminate\Contracts\Config\Repository')->andReturn($config);
         self::$file_get_contents_result = '1;DE;DEU;Deutschland';
-        $vatCalculator = new VatCalculator($app);
+        $vatCalculator = new VatCalculator();
         $country = $vatCalculator->getIPBasedCountry();
         $this->assertEquals('DE',$country);
     }
 
     public function testCanResolveInvalidIPToCountry()
     {
-        $app    = m::mock('App');
-        $config = m::mock('Illuminate\Contracts\Config\Repository');
-        $app->shouldReceive('make')->with('Illuminate\Contracts\Config\Repository')->andReturn($config);
         self::$file_get_contents_result = '0';
-        $vatCalculator = new VatCalculator($app);
+        $vatCalculator = new VatCalculator();
         $country = $vatCalculator->getIPBasedCountry();
         $this->assertFalse($country);
     }
 
     public function testCanHandleIPServiceDowntime()
     {
-        $app    = m::mock('App');
-        $config = m::mock('Illuminate\Contracts\Config\Repository');
-        $app->shouldReceive('make')->with('Illuminate\Contracts\Config\Repository')->andReturn($config);
         self::$file_get_contents_result = false;
         $_SERVER[ 'REMOTE_ADDR' ] = '';
-        $vatCalculator = new VatCalculator($app);
+        $vatCalculator = new VatCalculator();
         $country = $vatCalculator->getIPBasedCountry();
         $this->assertFalse($country);
     }

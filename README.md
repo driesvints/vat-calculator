@@ -7,7 +7,8 @@ VatCalculator
 [![Code Coverage](https://scrutinizer-ci.com/g/mpociot/vat-calculator/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/mpociot/vat-calculator/?branch=master)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/adecb98a-8484-48cb-be13-803decc475bc/mini.png)](https://insight.sensiolabs.com/projects/adecb98a-8484-48cb-be13-803decc475bc)
 
-VAT / Tax calculation for Laravel 5 / Cashier. Fully compatible with the new EU MOSS reverse charge processing.
+Handle all the hard stuff related to EU MOSS tax/vat regulations, the way it should be.
+Can be used with **Laravel 5 / Cashier** &mdash; or **standalone**.
 
 ```php
 // Easy to use!
@@ -21,6 +22,8 @@ VatCalculator::isValidVATNumber('NL123456789B01');
 ## Contents
 
 - [Installation](#installation)
+	- [Laravel 5](#installation-laravel5)
+	- [Standalone](#installation-standalone)
 - [Usage](#usage)
 	- [Calculate the gross price](#calculate-the-gross-price)
 	- [Receive more information](#receive-more-information)
@@ -40,16 +43,34 @@ In order to install the VAT Calculator, just run
 ```bash
 $ composer require mpociot/vat-calculator
 ```
+<a name="installation-laravel5" />
+### Laravel 5
 
-Then in your `config/app.php` add 
+This package comes with a service provider, to use this package within your Laravel 5 app. Go to your `config/app.php` and add 
 
     Mpociot\VatCalculator\VatCalculatorServiceProvider::class
     
-in the `providers` array.
+to the `providers` array.
     
-The `VatCalculator` Facade will be installed automatically within the Service Provider, but if you want you can of course add it to the `aliases` array.
+The `VatCalculator` Facade will be installed automatically within the Service Provider, but if you want you can of course add it to the `aliases` array (Useful for the IDE helper).
 
 	'VatCalculator' => Mpociot\VatCalculator\Facades\VatCalculator::class
+	
+<a name="installation-standalone" />
+### Standalone
+
+You can also use this package without Laravel. Simply create a new instance of the VAT calculator and use it.
+All documentation examples use the Laravel 5 facade code, so make sure not to call the methods as if they were static methods.
+
+Example:
+
+```php
+use Mpociot\VatCalculator\VatCalculator;
+
+$vatCalculator = new VatCalculator();
+$countryCode = $vatCalculator->getIPBasedCountry();
+$grossPrice = $vatCalculator->calculate( 49.99, 'LU' );
+```
 
 <a name="usage" />
 ## Usage
