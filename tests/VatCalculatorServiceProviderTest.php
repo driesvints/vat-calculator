@@ -42,7 +42,7 @@ class VatCalculatorServiceProviderTest extends PHPUnit_Framework_TestCase
             ->once()
             ->andReturnUsing(function ($array) use ($test) {
                 $test->assertContains('test/vat_calculator.php', $array);
-                $test->assertContains('public/js/vatcalculator.js', $array);
+                $test->assertContains('public/js/vat_calculator.js', $array);
             });
 
 
