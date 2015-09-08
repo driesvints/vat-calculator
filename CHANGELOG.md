@@ -1,5 +1,8 @@
 # Changelog
 
+#### v1.5.0 `2015-09-08`
+- Added VAT Calculator JS
+
 #### v1.4.4 `2015-09-07`
 - The package can now be used without Laravel
 

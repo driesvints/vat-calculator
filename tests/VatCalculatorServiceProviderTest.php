@@ -9,6 +9,11 @@ function config_path($path)
     return 'test/' . $path;
 }
 
+function public_path($path)
+{
+    return 'public/' . $path;
+}
+
 class VatCalculatorServiceProviderTest extends PHPUnit_Framework_TestCase
 {
     /**
@@ -37,6 +42,7 @@ class VatCalculatorServiceProviderTest extends PHPUnit_Framework_TestCase
             ->once()
             ->andReturnUsing(function ($array) use ($test) {
                 $test->assertContains('test/vat_calculator.php', $array);
+                $test->assertContains('public/js/vatcalculator.js', $array);
             });
 
 

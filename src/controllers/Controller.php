@@ -2,6 +2,7 @@
 
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 use Mpociot\VatCalculator\Exceptions\VATCheckUnavailableException;
 use Mpociot\VatCalculator\VatCalculator;
 
@@ -39,12 +40,20 @@ class Controller extends BaseController
     public function calculateGrossPrice(Request $request)
     {
         if (!$request->has('netPrice')) {
-            abort(422, "The 'netPrice' parameter is missing");
+            return Response::json( [
+                "error" => "The 'netPrice' parameter is missing"
+            ], 422 );
+        }
+
+        $valid_company = false;
+        if( $request->has('vat_number') )
+        {
+            $valid_company = $this->validateVATID( $request->get('vat_number') );
+            $valid_company = $valid_company["is_valid"];
         }
 
         return [
-            "gross_price" => $this->calculator->calculate($request->get('netPrice'), $request->get('country'),
-                $request->get('company')),
+            "gross_price" => $this->calculator->calculate($request->get('netPrice'), $request->get('country'), $valid_company),
             "net_price"   => $this->calculator->getNetPrice(),
             "tax_rate"    => $this->calculator->getTaxRate(),
             "tax_value"   => $this->calculator->getTaxValue(),
@@ -73,7 +82,7 @@ class Controller extends BaseController
     public function validateVATID($vat_id)
     {
         try {
-            $isValid = $this->calculator->isValidVATNumber('vat_id');
+            $isValid = $this->calculator->isValidVATNumber($vat_id);
             $message = "";
         } catch (VATCheckUnavailableException $e) {
             $isValid = false;

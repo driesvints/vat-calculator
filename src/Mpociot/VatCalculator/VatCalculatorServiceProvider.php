@@ -41,6 +41,7 @@ class VatCalculatorServiceProvider extends ServiceProvider
         // Publish config files
         $this->publishes([
             __DIR__ . '/../../config/config.php' => config_path('vat_calculator.php'),
+            __DIR__ . '/../../public/js/vat_calculator.js' => public_path('js/vat_calculator.js')
         ]);
     }
 
