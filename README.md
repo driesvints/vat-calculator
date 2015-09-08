@@ -141,7 +141,7 @@ $validator = Validator::make(Input::all(), $rules);
 
 <a name="cashier-integration" />
 ### Cashier integration
-If you want to use this package in combination with [Laravel Cashier](https://github.com/laravel/cashier/) you can let your billable model use the `BillableWithinTheEU` trait.
+If you want to use this package in combination with [Laravel Cashier](https://github.com/laravel/cashier/) you can let your billable model use the `BillableWithinTheEU` trait. Because this trait overrides the `getTaxPercent` method of the `Billable` trait, we have to explicitly tell our model to do so.
 
 ```php
 use Laravel\Cashier\Billable;
@@ -150,7 +150,9 @@ use Laravel\Cashier\Contracts\Billable as BillableContract;
 
 class User extends Model implements BillableContract
 {
-    use Billable, BillableWithinTheEU;
+    use Billable, BillableWithinTheEU {
+        BillableWithinTheEU::getTaxPercent insteadof Billable;
+    }
 
     protected $dates = ['trial_ends_at', 'subscription_ends_at'];
 }
