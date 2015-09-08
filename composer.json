@@ -20,7 +20,7 @@
     },
     "autoload": {
         "classmap": [
-            "src/controllers/"
+            "src/controllers/Controller.php"
         ],
         "psr-0": {
             "Mpociot\\VatCalculator": "src/"
