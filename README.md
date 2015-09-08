@@ -306,6 +306,9 @@ Attribute  | Description | Required
 #### Use a different form selector
 Use `VATCalculator.init('#my-selector')` to initialize the live calculation on a different form.
 
+#### Trigger calculation manually
+Call `VATCalculator.calculate()` to trigger the calculation manually. For example when you change the `data-amount` attribute on your form.
+
 <a name="preconfigured-routes" />
 ### Preconfigured routes
 

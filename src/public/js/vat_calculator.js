@@ -174,6 +174,13 @@
         },
 
         /**
+         * Perform the calculation task
+         */
+        calculate: function () {
+            calculate();
+        },
+
+        /**
          * Get the current selector
          * @returns {Calculator.selector|Function}
          */
