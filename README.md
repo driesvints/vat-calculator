@@ -200,6 +200,10 @@ Phew - so you know how to use this class, built your fancy payment form and now.
 
 Or you use the **built in routes** and **vat_calculator.js** library.
 
+<div style="text-align:center">
+<img src="http://www.titaniumcontrols.com/git/vat_calc_js.gif" alt="VAT Calculator JS" />
+</div>
+
 The VAT Calculator JS library will automatically: 
 
 - Calculate taxes whenever the selected country value changes
