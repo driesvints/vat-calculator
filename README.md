@@ -5,6 +5,7 @@ VatCalculator
 [![Build Status](https://travis-ci.org/mpociot/vat-calculator.svg)](https://travis-ci.org/mpociot/vat-calculator)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/mpociot/vat-calculator/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/mpociot/vat-calculator/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/mpociot/vat-calculator/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/mpociot/vat-calculator/?branch=master)
+[![StyleCI](https://styleci.io/repos/41703624/shield)](https://styleci.io/repos/41703624)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/adecb98a-8484-48cb-be13-803decc475bc/mini.png)](https://insight.sensiolabs.com/projects/adecb98a-8484-48cb-be13-803decc475bc)
 
 Handle all the hard stuff related to EU MOSS tax/vat regulations, the way it should be.
