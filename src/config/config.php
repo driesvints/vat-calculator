@@ -1,10 +1,9 @@
 <?php
 
 /**
- * This file is part of VatCalculator
+ * This file is part of VatCalculator.
  *
  * @license MIT
- * @package VatCalculator
  */
 
 return [
@@ -35,5 +34,5 @@ return [
     | to false.
     |
     */
-    'use_routes' => true
+    'use_routes' => true,
 ];

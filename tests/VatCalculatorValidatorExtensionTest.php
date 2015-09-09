@@ -1,9 +1,8 @@
 <?php
 
-namespace Mpociot\VatCalculator\Tests;
+namespace Mpociot\VatCalculator\tests;
 
 use Mockery as m;
-
 use Mpociot\VatCalculator\Exceptions\VATCheckUnavailableException;
 use Mpociot\VatCalculator\Facades\VatCalculator;
 use Mpociot\VatCalculator\Validators\VatCalculatorValidatorExtension;
@@ -30,23 +29,22 @@ class VatCalculatorValidatorExtensionTest extends PHPUnit
             ->with('vatnumber-validator::validation.vat_number')
             ->andReturn($this->testDefaultErrorMessage);
         $this->translator->shouldReceive('trans')
-            ->andReturnUsing(function($arg) { return $arg; });
-        $this->rules = array(
+            ->andReturnUsing(function ($arg) { return $arg; });
+        $this->rules = [
             'customer_vat' => 'required|vat_number',
-        );
-        $this->messages = array();
-
+        ];
+        $this->messages = [];
     }
 
     public function testValidatesVATNumber()
     {
-        $vatNumber     = "DE 190 098 891";
-        $this->data = array(
-            'customer_vat' => $vatNumber
-        );
+        $vatNumber = 'DE 190 098 891';
+        $this->data = [
+            'customer_vat' => $vatNumber,
+        ];
         VatCalculator::shouldReceive('isValidVATNumber')
-            ->with( $vatNumber )
-            ->andReturn( true );
+            ->with($vatNumber)
+            ->andReturn(true);
         $validator = new VatCalculatorValidatorExtension(
             $this->translator,
             $this->data,
@@ -58,13 +56,13 @@ class VatCalculatorValidatorExtensionTest extends PHPUnit
 
     public function testValidatesInvalidVATNumber()
     {
-        $vatNumber     = "098 891";
-        $this->data = array(
-            'customer_vat' => $vatNumber
-        );
+        $vatNumber = '098 891';
+        $this->data = [
+            'customer_vat' => $vatNumber,
+        ];
         VatCalculator::shouldReceive('isValidVATNumber')
-            ->with( $vatNumber )
-            ->andReturn( false );
+            ->with($vatNumber)
+            ->andReturn(false);
         $validator = new VatCalculatorValidatorExtension(
             $this->translator,
             $this->data,
@@ -76,12 +74,12 @@ class VatCalculatorValidatorExtensionTest extends PHPUnit
 
     public function testValidatesUnavailableVATNumberCheck()
     {
-        $vatNumber     = "098 891";
-        $this->data = array(
-            'customer_vat' => $vatNumber
-        );
+        $vatNumber = '098 891';
+        $this->data = [
+            'customer_vat' => $vatNumber,
+        ];
         VatCalculator::shouldReceive('isValidVATNumber')
-            ->andThrow( new VATCheckUnavailableException() );
+            ->andThrow(new VATCheckUnavailableException());
         $validator = new VatCalculatorValidatorExtension(
             $this->translator,
             $this->data,
@@ -93,13 +91,13 @@ class VatCalculatorValidatorExtensionTest extends PHPUnit
 
     public function testDefaultErrorMessageWorks()
     {
-        $vatNumber     = "098 891";
-        $this->data = array(
-            'customer_vat' => $vatNumber
-        );
+        $vatNumber = '098 891';
+        $this->data = [
+            'customer_vat' => $vatNumber,
+        ];
         VatCalculator::shouldReceive('isValidVATNumber')
-            ->with( $vatNumber )
-            ->andThrow( new VATCheckUnavailableException() );
+            ->with($vatNumber)
+            ->andThrow(new VATCheckUnavailableException());
         $validator = new VatCalculatorValidatorExtension(
             $this->translator,
             $this->data,
@@ -124,13 +122,13 @@ class VatCalculatorValidatorExtensionTest extends PHPUnit
     {
         $test_message = 'This is a test override message for :attribute.';
 
-        $vatNumber     = "098 891";
-        $this->data = array(
-            'customer_vat' => $vatNumber
-        );
+        $vatNumber = '098 891';
+        $this->data = [
+            'customer_vat' => $vatNumber,
+        ];
         VatCalculator::shouldReceive('isValidVATNumber')
-            ->with( $vatNumber )
-            ->andThrow( new VATCheckUnavailableException() );
+            ->with($vatNumber)
+            ->andThrow(new VATCheckUnavailableException());
         $validator = new VatCalculatorValidatorExtension(
             $this->translator,
             $this->data,
@@ -149,6 +147,5 @@ class VatCalculatorValidatorExtensionTest extends PHPUnit
         $this->assertArrayHasKey('customer_vat', $errors);
         $this->assertNotEmpty($errors['customer_vat']);
         $this->assertEquals('This is a test override message for customer vat.', $errors['customer_vat'][0]);
-
     }
 }
