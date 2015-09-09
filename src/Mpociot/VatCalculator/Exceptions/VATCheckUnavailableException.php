@@ -1,4 +1,5 @@
 <?php
+
 namespace Mpociot\VatCalculator\Exceptions;
 
 use Exception;

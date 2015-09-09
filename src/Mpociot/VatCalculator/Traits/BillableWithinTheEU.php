@@ -22,7 +22,7 @@ trait BillableWithinTheEU
     protected $userIsCompany = false;
 
     /**
-     * @param string $countryCode
+     * @param string     $countryCode
      * @param bool|false $company
      *
      * @return $this
@@ -30,13 +30,14 @@ trait BillableWithinTheEU
     public function setTaxForCountry($countryCode, $company = false)
     {
         $this->userCountryCode = $countryCode;
-        $this->userIsCompany   = $company;
+        $this->userIsCompany = $company;
 
         return $this;
     }
 
     /**
      * @param $countryCode
+     *
      * @return $this
      */
     public function useTaxFrom($countryCode)
@@ -73,6 +74,6 @@ trait BillableWithinTheEU
      */
     public function getTaxPercent()
     {
-        return ( VatCalculator::getTaxRateForCountry($this->userCountryCode, $this->userIsCompany) * 100 );
+        return (VatCalculator::getTaxRateForCountry($this->userCountryCode, $this->userIsCompany) * 100);
     }
 }

@@ -9,19 +9,20 @@ use SoapClient;
 class VatCalculator
 {
     /**
-     * VAT Service check URL provided by the EU
+     * VAT Service check URL provided by the EU.
      */
-    const VAT_SERVICE_URL = "http://ec.europa.eu/taxation_customs/vies/checkVatService.wsdl";
+    const VAT_SERVICE_URL = 'http://ec.europa.eu/taxation_customs/vies/checkVatService.wsdl';
 
     /**
-     * We're using the free ip2c service to lookup IP 2 country
+     * We're using the free ip2c service to lookup IP 2 country.
      */
-    const GEOCODE_SERVICE_URL = "http://ip2c.org/";
+    const GEOCODE_SERVICE_URL = 'http://ip2c.org/';
 
     protected $soapClient;
 
     /**
-     * All available tax rules
+     * All available tax rules.
+     *
      * @var array
      */
     protected $taxRules = [
@@ -82,11 +83,11 @@ class VatCalculator
     protected $taxRate = 0;
 
     /**
-     * The calculate net + tax value
+     * The calculate net + tax value.
+     *
      * @var float
      */
     protected $value = 0;
-
 
     /**
      * @var bool
@@ -96,26 +97,27 @@ class VatCalculator
     /**
      * @param \Illuminate\Contracts\Config\Repository
      */
-    public function __construct( $config = null )
+    public function __construct($config = null)
     {
-        $this->config     = $config;
+        $this->config = $config;
         $this->soapClient = new SoapClient(self::VAT_SERVICE_URL);
     }
 
-
     /**
-     * Finds the client IP address
+     * Finds the client IP address.
+     *
      * @return mixed
      */
     private function getClientIP()
     {
-        if (isset( $_SERVER[ 'HTTP_X_FORWARDED_FOR' ] ) && $_SERVER[ 'HTTP_X_FORWARDED_FOR' ]) {
+        if (isset($_SERVER[ 'HTTP_X_FORWARDED_FOR' ]) && $_SERVER[ 'HTTP_X_FORWARDED_FOR' ]) {
             $clientIpAddress = $_SERVER[ 'HTTP_X_FORWARDED_FOR' ];
-        } elseif( isset( $_SERVER[ 'REMOTE_ADDR' ] ) && $_SERVER[ 'REMOTE_ADDR' ] ) {
+        } elseif (isset($_SERVER[ 'REMOTE_ADDR' ]) && $_SERVER[ 'REMOTE_ADDR' ]) {
             $clientIpAddress = $_SERVER[ 'REMOTE_ADDR' ];
         } else {
-            $clientIpAddress = "";
+            $clientIpAddress = '';
         }
+
         return $clientIpAddress;
     }
 
@@ -128,12 +130,13 @@ class VatCalculator
      */
     public function getIPBasedCountry()
     {
-        $ip     = $this->getClientIP();
-        $url    = self::GEOCODE_SERVICE_URL . $ip;
+        $ip = $this->getClientIP();
+        $url = self::GEOCODE_SERVICE_URL.$ip;
         $result = file_get_contents($url);
         switch ($result[ 0 ]) {
             case '1':
                 $data = explode(';', $result);
+
                 return $data[ 1 ];
                 break;
             default:
@@ -145,9 +148,9 @@ class VatCalculator
      * Calculate the VAT based on the net price, country code and indication if the
      * customer is a company or not.
      *
-     * @param int|float $netPrice The net price to use for the calculation
+     * @param int|float   $netPrice    The net price to use for the calculation
      * @param null|string $countryCode The country code to use for the rate lookup
-     * @param null|bool $company
+     * @param null|bool   $company
      *
      * @return float
      */
@@ -160,9 +163,10 @@ class VatCalculator
             $this->setCompany($company);
         }
         $this->netPrice = floatval($netPrice);
-        $this->taxRate  = $this->getTaxRateForCountry($this->getCountryCode(), $this->isCompany());
+        $this->taxRate = $this->getTaxRateForCountry($this->getCountryCode(), $this->isCompany());
         $this->taxValue = $this->taxRate * $this->netPrice;
-        $this->value    = $this->netPrice + $this->taxValue;
+        $this->value = $this->netPrice + $this->taxValue;
+
         return $this->value;
     }
 
@@ -199,7 +203,7 @@ class VatCalculator
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isCompany()
     {
@@ -207,7 +211,7 @@ class VatCalculator
     }
 
     /**
-     * @param boolean $company
+     * @param bool $company
      */
     public function setCompany($company)
     {
@@ -217,7 +221,7 @@ class VatCalculator
     /**
      * Returns the tax rate for the given country.
      *
-     * @param string $countryCode
+     * @param string     $countryCode
      * @param bool|false $company
      *
      * @return float
@@ -227,12 +231,12 @@ class VatCalculator
         if ($company) {
             return 0;
         }
-        $taxKey = 'vat_calculator.rules.' . strtoupper($countryCode);
-        if ( isset($this->config) && $this->config->has($taxKey)) {
+        $taxKey = 'vat_calculator.rules.'.strtoupper($countryCode);
+        if (isset($this->config) && $this->config->has($taxKey)) {
             return $this->config->get($taxKey, 0);
         }
-        return isset( $this->taxRules[ strtoupper($countryCode) ] ) ? $this->taxRules[ strtoupper($countryCode) ] : 0;
 
+        return isset($this->taxRules[ strtoupper($countryCode) ]) ? $this->taxRules[ strtoupper($countryCode) ] : 0;
     }
 
     /**
@@ -246,29 +250,30 @@ class VatCalculator
     /**
      * @param $vatNumber
      *
-     * @return bool
      * @throws VATCheckUnavailableException
+     *
+     * @return bool
      */
     public function isValidVATNumber($vatNumber)
     {
-        $vatNumber   = str_replace([' ', '-', '.', ','], "", trim($vatNumber));
+        $vatNumber = str_replace([' ', '-', '.', ','], '', trim($vatNumber));
         $countryCode = substr($vatNumber, 0, 2);
-        $vatNumber   = substr($vatNumber, 2);
+        $vatNumber = substr($vatNumber, 2);
 
         $client = $this->soapClient;
         if ($client) {
             try {
                 $result = $client->checkVat([
                     'countryCode' => $countryCode,
-                    'vatNumber'   => $vatNumber
+                    'vatNumber'   => $vatNumber,
                 ]);
+
                 return $result->valid;
             } catch (\SoapFault $e) {
                 return false;
             }
         }
         throw new VATCheckUnavailableException('The VAT check service is currently unavailable. Please try again later.');
-
     }
 
     /**

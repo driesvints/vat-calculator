@@ -1,29 +1,29 @@
-<?php namespace Mpociot\VatCalculator;
+<?php
+
+namespace Mpociot\VatCalculator;
 
 use Mockery as m;
 use PHPUnit_Framework_TestCase;
 
-
 function config_path($path)
 {
-    return 'test/' . $path;
+    return 'test/'.$path;
 }
 
 function public_path($path)
 {
-    return 'public/' . $path;
+    return 'public/'.$path;
 }
 
 class VatCalculatorServiceProviderTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * Calls Mockery::close
+     * Calls Mockery::close.
      */
     public function tearDown()
     {
         m::close();
     }
-
 
     public function testShouldBoot()
     {
@@ -45,7 +45,6 @@ class VatCalculatorServiceProviderTest extends PHPUnit_Framework_TestCase
                 $test->assertContains('public/js/vat_calculator.js', $array);
             });
 
-
         $sp->shouldReceive('loadTranslationsFrom')
             ->with(m::type('string'), 'vatnumber-validator')
             ->once()
@@ -66,7 +65,7 @@ class VatCalculatorServiceProviderTest extends PHPUnit_Framework_TestCase
             ['something']
         );
         $sp->shouldAllowMockingProtectedMethods();
-        $sp->shouldReceive( 'registerVatCalculator',
+        $sp->shouldReceive('registerVatCalculator',
             'registerFacade',
             'mergeConfig')->once();
 
@@ -76,13 +75,13 @@ class VatCalculatorServiceProviderTest extends PHPUnit_Framework_TestCase
     public function testShouldMergeConfig()
     {
         $test = $this;
-        $sp = m::mock('Mpociot\VatCalculator\VatCalculatorServiceProvider',['app'])
+        $sp = m::mock('Mpociot\VatCalculator\VatCalculatorServiceProvider', ['app'])
             ->shouldDeferMissing()
             ->shouldAllowMockingProtectedMethods();
 
         $sp->shouldReceive('mergeConfigFrom')
             ->once()
-            ->with(m::type('string'),'vat_calculator');
+            ->with(m::type('string'), 'vat_calculator');
 
         $sp->mergeConfig();
     }
@@ -93,9 +92,9 @@ class VatCalculatorServiceProviderTest extends PHPUnit_Framework_TestCase
         $app = m::mock('App');
         $app->shouldReceive('booting')
             ->once()
-            ->with( m::type('callable') );
+            ->with(m::type('callable'));
 
-        $sp = m::mock('Mpociot\VatCalculator\VatCalculatorServiceProvider',[$app])
+        $sp = m::mock('Mpociot\VatCalculator\VatCalculatorServiceProvider', [$app])
             ->shouldDeferMissing();
         $sp->registerFacade();
     }
@@ -126,5 +125,4 @@ class VatCalculatorServiceProviderTest extends PHPUnit_Framework_TestCase
             ->with('Illuminate\Contracts\Config\Repository');
         $sp->registerVatCalculator();
     }
-
 }

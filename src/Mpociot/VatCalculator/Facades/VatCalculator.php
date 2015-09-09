@@ -1,4 +1,6 @@
-<?php namespace Mpociot\VatCalculator\Facades;
+<?php
+
+namespace Mpociot\VatCalculator\Facades;
 
 class VatCalculator extends \Illuminate\Support\Facades\Facade
 {

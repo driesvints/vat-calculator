@@ -1,4 +1,5 @@
 <?php
-return array(
+
+return [
     'vat_number' => ':attribute is not a valid VAT ID number.',
-);
+];

@@ -1,6 +1,8 @@
-<?php namespace Mpociot\VatCalculator;
+<?php
 
-/**
+namespace Mpociot\VatCalculator;
+
+/*
  * This file is part of Teamwork
  *
  * @license MIT
@@ -34,14 +36,14 @@ class VatCalculatorServiceProvider extends ServiceProvider
     }
 
     /**
-     * Publish Teamwork configuration
+     * Publish Teamwork configuration.
      */
     protected function publishConfig()
     {
         // Publish config files
         $this->publishes([
-            __DIR__ . '/../../config/config.php' => config_path('vat_calculator.php'),
-            __DIR__ . '/../../public/js/vat_calculator.js' => public_path('js/vat_calculator.js')
+            __DIR__.'/../../config/config.php'           => config_path('vat_calculator.php'),
+            __DIR__.'/../../public/js/vat_calculator.js' => public_path('js/vat_calculator.js'),
         ]);
     }
 
@@ -66,7 +68,8 @@ class VatCalculatorServiceProvider extends ServiceProvider
     {
         $this->app->bind('vatcalculator', function ($app) {
             $config = $app->make('Illuminate\Contracts\Config\Repository');
-            return new \Mpociot\VatCalculator\VatCalculator( $config );
+
+            return new \Mpociot\VatCalculator\VatCalculator($config);
         });
     }
 
@@ -91,21 +94,20 @@ class VatCalculatorServiceProvider extends ServiceProvider
     protected function mergeConfig()
     {
         $this->mergeConfigFrom(
-            __DIR__ . '/../../config/config.php', 'vat_calculator'
+            __DIR__.'/../../config/config.php', 'vat_calculator'
         );
     }
 
     protected function registerValidatorExtension()
     {
         $this->loadTranslationsFrom(
-            __DIR__ . '/../../lang',
+            __DIR__.'/../../lang',
             'vatnumber-validator'
         );
 
         // Registering the validator extension with the validator factory
         $this->app['validator']->resolver(
-            function($translator, $data, $rules, $messages, $customAttributes = array())
-            {
+            function ($translator, $data, $rules, $messages, $customAttributes = []) {
                 return new VatCalculatorValidatorExtension(
                     $translator,
                     $data,
@@ -119,13 +121,12 @@ class VatCalculatorServiceProvider extends ServiceProvider
 
     /**
      * Register predefined routes, used for the
-     * handy javascript toolkit
+     * handy javascript toolkit.
      */
     protected function registerRoutes()
     {
         $config = $this->app->make('Illuminate\Contracts\Config\Repository');
-        if( $config->get('vat_calculator.use_routes',true) )
-        {
+        if ($config->get('vat_calculator.use_routes', true)) {
             include __DIR__.'/../../routes.php';
         }
     }
