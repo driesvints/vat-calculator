@@ -15,6 +15,11 @@ function public_path($path)
     return 'public/'.$path;
 }
 
+function base_path($path)
+{
+    return 'base/'.$path;
+}
+
 class VatCalculatorServiceProviderTest extends PHPUnit_Framework_TestCase
 {
     /**
@@ -43,6 +48,13 @@ class VatCalculatorServiceProviderTest extends PHPUnit_Framework_TestCase
             ->andReturnUsing(function ($array) use ($test) {
                 $test->assertContains('test/vat_calculator.php', $array);
                 $test->assertContains('public/js/vat_calculator.js', $array);
+            });
+
+        $sp->shouldReceive('publishes')
+            ->with(m::type('array'), 'vatcalculator-spark')
+            ->once()
+            ->andReturnUsing(function ($array) use ($test) {
+                $test->assertContains('base/resources/assets/js/vat_calculator.js', $array);
             });
 
         $sp->shouldReceive('loadTranslationsFrom')
