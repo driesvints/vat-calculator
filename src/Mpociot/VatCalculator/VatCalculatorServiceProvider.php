@@ -45,6 +45,10 @@ class VatCalculatorServiceProvider extends ServiceProvider
             __DIR__.'/../../config/config.php'           => config_path('vat_calculator.php'),
             __DIR__.'/../../public/js/vat_calculator.js' => public_path('js/vat_calculator.js'),
         ]);
+
+        $this->publishes([
+            __DIR__.'/../../public/js/vat_calculator.js' => base_path('resources/assets/js/vat_calculator.js'),
+        ], 'vatcalculator-spark');
     }
 
     /**
