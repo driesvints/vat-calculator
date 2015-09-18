@@ -47,17 +47,20 @@ class Controller extends BaseController
             ], 422);
         }
 
+        $valid_vat_id  = null;
         $valid_company = false;
         if ($request->has('vat_number')) {
             $valid_company = $this->validateVATID($request->get('vat_number'));
             $valid_company = $valid_company['is_valid'];
+            $valid_vat_id  = $valid_company;
         }
 
         return [
-            'gross_price' => $this->calculator->calculate($request->get('netPrice'), $request->get('country'), $valid_company),
-            'net_price'   => $this->calculator->getNetPrice(),
-            'tax_rate'    => $this->calculator->getTaxRate(),
-            'tax_value'   => $this->calculator->getTaxValue(),
+            'gross_price'   => $this->calculator->calculate($request->get('netPrice'), $request->get('country'), $valid_company),
+            'net_price'     => $this->calculator->getNetPrice(),
+            'tax_rate'      => $this->calculator->getTaxRate(),
+            'tax_value'     => $this->calculator->getTaxValue(),
+            'valid_vat_id'  => $valid_vat_id,
         ];
     }
 

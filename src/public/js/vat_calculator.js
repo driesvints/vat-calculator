@@ -112,8 +112,9 @@
 
     /**
      * Calculate the gross price
+     * @param successCallback
      */
-    function calculate() {
+    function calculate(successCallback) {
         var form = document.querySelector(VATCalculator.selector);
         if (form !== null) {
             var amount = parseInt(form.getAttribute('data-amount')),
@@ -124,6 +125,9 @@
                     setHTML('total', response.gross_price.toFixed(2));
                     setHTML('subtotal', response.net_price.toFixed(2));
                     setHTML('taxes', response.tax_value.toFixed(2));
+                    if (successCallback) {
+                        successCallback(response);
+                    }
                     VATCalculator.setCalculation(response);
                 },
                 error: function (status, response) {
@@ -175,9 +179,10 @@
 
         /**
          * Perform the calculation task
+         * @param {function} successCallback
          */
-        calculate: function () {
-            calculate();
+        calculate: function (successCallback) {
+            calculate(successCallback);
         },
 
         /**
