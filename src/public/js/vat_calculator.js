@@ -125,7 +125,7 @@
                     setHTML('total', response.gross_price.toFixed(2));
                     setHTML('subtotal', response.net_price.toFixed(2));
                     setHTML('taxes', response.tax_value.toFixed(2));
-                    if (successCallback) {
+                    if (successCallback && typeof(successCallback) === 'function') {
                         successCallback(response);
                     }
                     VATCalculator.setCalculation(response);
