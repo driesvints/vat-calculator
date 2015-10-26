@@ -11,4 +11,9 @@ before_script:
   - travis_retry composer install --prefer-source --no-interaction
 
 script:
-  - composer test
+  - vendor/bin/phpunit --coverage-clover=coverage.xml
+
+before_install:
+  - pip install --user codecov
+after_success:
+  - codecov

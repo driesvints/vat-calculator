@@ -4,7 +4,7 @@ VatCalculator
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
 [![Build Status](https://travis-ci.org/mpociot/vat-calculator.svg)](https://travis-ci.org/mpociot/vat-calculator)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/mpociot/vat-calculator/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/mpociot/vat-calculator/?branch=master)
-[![Code Coverage](https://scrutinizer-ci.com/g/mpociot/vat-calculator/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/mpociot/vat-calculator/?branch=master)
+[![codecov.io](https://codecov.io/github/mpociot/vat-calculator/coverage.svg?branch=master)](https://codecov.io/github/mpociot/vat-calculator?branch=master)
 [![StyleCI](https://styleci.io/repos/41703624/shield)](https://styleci.io/repos/41703624)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/adecb98a-8484-48cb-be13-803decc475bc/mini.png)](https://insight.sensiolabs.com/projects/adecb98a-8484-48cb-be13-803decc475bc)
 
