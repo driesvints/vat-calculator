@@ -96,11 +96,22 @@ class VatCalculator
     protected $company = false;
 
     /**
+     * @var string
+     */
+    protected $businessCountryCode;
+
+    /**
      * @param \Illuminate\Contracts\Config\Repository
      */
     public function __construct($config = null)
     {
         $this->config = $config;
+
+        $businessCountryKey = 'vat_calculator.business_country_code';
+        if (isset($this->config) && $this->config->has($businessCountryKey)) {
+            $this->setBusinessCountryCode($this->config->get($businessCountryKey, ''));
+        }
+
         $this->soapClient = new SoapClient(self::VAT_SERVICE_URL);
     }
 
@@ -220,6 +231,14 @@ class VatCalculator
     }
 
     /**
+     * @param string $businessCountryCode
+     */
+    public function setBusinessCountryCode($businessCountryCode)
+    {
+        $this->businessCountryCode = $businessCountryCode;
+    }
+
+    /**
      * Returns the tax rate for the given country.
      *
      * @param string     $countryCode
@@ -229,7 +248,7 @@ class VatCalculator
      */
     public function getTaxRateForCountry($countryCode, $company = false)
     {
-        if ($company) {
+        if ($company && strtoupper($countryCode) !== strtoupper($this->businessCountryCode)) {
             return 0;
         }
         $taxKey = 'vat_calculator.rules.'.strtoupper($countryCode);

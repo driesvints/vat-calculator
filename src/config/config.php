@@ -35,4 +35,16 @@ return [
     |
     */
     'use_routes' => true,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Business country code
+    |--------------------------------------------------------------------------
+    |
+    | This should be the country code where your business is located.
+    | The business country code is used to calculate the correct VAT rate
+    | when charging a B2B (company) customer inside your business country.
+    |
+    */
+    'business_country_code' => '',
 ];

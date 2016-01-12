@@ -76,6 +76,7 @@ Example:
 use Mpociot\VatCalculator\VatCalculator;
 
 $vatCalculator = new VatCalculator();
+$vatCalculator->setBusinessCountryCode('DE');
 $countryCode = $vatCalculator->getIPBasedCountry();
 $grossPrice = $vatCalculator->calculate( 49.99, 'LU' );
 ```
@@ -329,13 +330,15 @@ Method | Route | Usage
 `GET` | `vatcalculator/calculate` | Calculates the gross price based on the parameters: `netPrice`, `country` and `vat_number`
 
 <a name="configuration" />
-## Configuration (optional)
+## Configuration
 
 By default, the VAT Calculator has all EU VAT rules predefined, so that it can easily be updated, if it changes for a specific country.
 
 If you need to define other VAT rates, you can do so by publishing the configuration and add more rules.
 
 The configuration file also determines wether you want to use the VAT Calculator JS routes or not.
+
+**Important:** Be sure to set your business country code in the configuration file, to get correct VAT calculation when selling to business customers in your own country.
 
 To publish the configuration files, run the `vendor:publish` command
 

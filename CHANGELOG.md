@@ -1,5 +1,23 @@
 # Changelog
 
+#### v1.6.0 `2016-01-12`
+- Added support for setting your own "business country code" which will be used when selling to business customers inside your own country. Previous versions returned the wrong VAT rate (0%).
+
+#### v1.5.5 `2016-01-11`
+- Romania reduces VAT to 20% in 2016
+
+#### v1.5.4 `2015-09-18`
+- Fixed issue in vat_calculator.js
+
+#### v1.5.3 `2015-09-18`
+- Added valid_vat_id and calculate JS success callback
+
+#### v1.5.2 `2015-09-18`
+- Added greek tax rate
+
+#### v1.5.1 `2015-09-16`
+- Added spark asset publishing
+
 #### v1.5.0 `2015-09-08`
 - Added VAT Calculator JS
 

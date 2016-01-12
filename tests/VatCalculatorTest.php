@@ -22,13 +22,16 @@ class VatCalculatorTest extends PHPUnit
     public function testCalculateVatWithoutCountry()
     {
         $config = m::mock('Illuminate\Contracts\Config\Repository');
+
         $config->shouldReceive('has')
             ->once()
-            ->andReturn(true);
+            ->with('vat_calculator.business_country_code')
+            ->andReturn(false);
 
-        $config->shouldReceive('get')
+        $config->shouldReceive('has')
             ->once()
-            ->andReturn(0);
+            ->with('vat_calculator.rules.')
+            ->andReturn(false);
 
         $net = 25.00;
 
@@ -57,6 +60,12 @@ class VatCalculatorTest extends PHPUnit
 
         $config->shouldReceive('has')
             ->once()
+            ->with('vat_calculator.rules.DE')
+            ->andReturn(false);
+
+        $config->shouldReceive('has')
+            ->once()
+            ->with('vat_calculator.business_country_code')
             ->andReturn(false);
 
         $vatCalculator = new VatCalculator($config);
@@ -93,7 +102,13 @@ class VatCalculatorTest extends PHPUnit
 
         $config->shouldReceive('has')
             ->once()
+            ->with($taxKey)
             ->andReturn(true);
+
+        $config->shouldReceive('has')
+            ->once()
+            ->with('vat_calculator.business_country_code')
+            ->andReturn(false);
 
         $vatCalculator = new VatCalculator($config);
         $result = $vatCalculator->calculate($net, $countryCode);
@@ -115,7 +130,13 @@ class VatCalculatorTest extends PHPUnit
 
         $config->shouldReceive('has')
             ->once()
+            ->with('vat_calculator.rules.'.$countryCode)
             ->andReturn(true);
+
+        $config->shouldReceive('has')
+            ->once()
+            ->with('vat_calculator.business_country_code')
+            ->andReturn(false);
 
         $vatCalculator = new VatCalculator($config);
         $result = $vatCalculator->calculate($net, $countryCode);
@@ -149,7 +170,14 @@ class VatCalculatorTest extends PHPUnit
 
         $config->shouldReceive('has')
             ->once()
+            ->with('vat_calculator.rules.'.$countryCode)
             ->andReturn(true);
+
+        $config->shouldReceive('has')
+            ->once()
+            ->with('vat_calculator.business_country_code')
+            ->andReturn(false);
+
 
         $vatCalculator = new VatCalculator($config);
         $vatCalculator->setCountryCode($countryCode);
@@ -171,7 +199,9 @@ class VatCalculatorTest extends PHPUnit
             ->never();
 
         $config->shouldReceive('has')
-            ->never();
+            ->once()
+            ->with('vat_calculator.business_country_code')
+            ->andReturn(false);
 
         $vatCalculator = new VatCalculator($config);
         $result = $vatCalculator->calculate($net, $countryCode, $company);
@@ -189,6 +219,11 @@ class VatCalculatorTest extends PHPUnit
         $config = m::mock('Illuminate\Contracts\Config\Repository');
         $config->shouldReceive('get')
             ->never();
+
+        $config->shouldReceive('has')
+            ->once()
+            ->with('vat_calculator.business_country_code')
+            ->andReturn(false);
 
         $vatCalculator = new VatCalculator($config);
         $vatCalculator->setCompany($company);
@@ -210,7 +245,9 @@ class VatCalculatorTest extends PHPUnit
             ->never();
 
         $config->shouldReceive('has')
-            ->never();
+            ->once()
+            ->with('vat_calculator.business_country_code')
+            ->andReturn(false);
 
         $vatCalculator = new VatCalculator($config);
         $vatCalculator->setCountryCode($countryCode);
@@ -233,7 +270,13 @@ class VatCalculatorTest extends PHPUnit
 
         $config->shouldReceive('has')
             ->once()
+            ->with('vat_calculator.rules.'.$countryCode)
             ->andReturn(true);
+
+        $config->shouldReceive('has')
+            ->once()
+            ->with('vat_calculator.business_country_code')
+            ->andReturn(false);
 
         $vatCalculator = new VatCalculator($config);
         $result = $vatCalculator->getTaxRateForCountry($countryCode);
@@ -250,7 +293,9 @@ class VatCalculatorTest extends PHPUnit
             ->never();
 
         $config->shouldReceive('has')
-            ->never();
+            ->once()
+            ->with('vat_calculator.business_country_code')
+            ->andReturn(false);
 
         $vatCalculator = new VatCalculator($config);
         $result = $vatCalculator->getTaxRateForCountry($countryCode, $company);
@@ -260,6 +305,11 @@ class VatCalculatorTest extends PHPUnit
     public function testCanValidateValidVATNumber()
     {
         $config = m::mock('Illuminate\Contracts\Config\Repository');
+
+        $config->shouldReceive('has')
+            ->once()
+            ->with('vat_calculator.business_country_code')
+            ->andReturn(false);
 
         $result = new \stdClass();
         $result->valid = true;
@@ -355,5 +405,62 @@ class VatCalculatorTest extends PHPUnit
         $vatCalculator = new VatCalculator();
         $country = $vatCalculator->getIPBasedCountry();
         $this->assertFalse($country);
+    }
+
+    public function testCompanyInBusinessCountryGetsValidVATRate()
+    {
+        $net = 24.00;
+        $countryCode = 'DE';
+
+        $config = m::mock('Illuminate\Contracts\Config\Repository');
+        $config->shouldReceive('get')
+            ->never();
+
+        $config->shouldReceive('has')
+            ->once()
+            ->with('vat_calculator.rules.DE')
+            ->andReturn(false);
+
+        $config->shouldReceive('has')
+            ->once()
+            ->with('vat_calculator.business_country_code')
+            ->andReturn(true);
+
+        $config->shouldReceive('get')
+            ->once()
+            ->with('vat_calculator.business_country_code','')
+            ->andReturn($countryCode);
+
+        $vatCalculator = new VatCalculator($config);
+        $result = $vatCalculator->calculate($net, $countryCode, true);
+        $this->assertEquals(28.56, $result);
+        $this->assertEquals(0.19, $vatCalculator->getTaxRate());
+        $this->assertEquals(4.56, $vatCalculator->getTaxValue());
+    }
+
+    public function testCompanyInBusinessCountryGetsValidVATRateDirectSet()
+    {
+        $net = 24.00;
+        $countryCode = 'DE';
+
+        $vatCalculator = new VatCalculator();
+        $vatCalculator->setBusinessCountryCode('DE');
+        $result = $vatCalculator->calculate($net, $countryCode, true);
+        $this->assertEquals(28.56, $result);
+        $this->assertEquals(0.19, $vatCalculator->getTaxRate());
+        $this->assertEquals(4.56, $vatCalculator->getTaxValue());
+    }
+
+    public function testCompanyOutsideBusinessCountryGetsValidVATRate()
+    {
+        $net = 24.00;
+        $countryCode = 'DE';
+
+        $vatCalculator = new VatCalculator();
+        $vatCalculator->setBusinessCountryCode('NL');
+        $result = $vatCalculator->calculate($net, $countryCode, true);
+        $this->assertEquals(24.00, $result);
+        $this->assertEquals(0.00, $vatCalculator->getTaxRate());
+        $this->assertEquals(0.00, $vatCalculator->getTaxValue());
     }
 }
