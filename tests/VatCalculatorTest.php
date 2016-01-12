@@ -178,7 +178,6 @@ class VatCalculatorTest extends PHPUnit
             ->with('vat_calculator.business_country_code')
             ->andReturn(false);
 
-
         $vatCalculator = new VatCalculator($config);
         $vatCalculator->setCountryCode($countryCode);
 
@@ -428,7 +427,7 @@ class VatCalculatorTest extends PHPUnit
 
         $config->shouldReceive('get')
             ->once()
-            ->with('vat_calculator.business_country_code','')
+            ->with('vat_calculator.business_country_code', '')
             ->andReturn($countryCode);
 
         $vatCalculator = new VatCalculator($config);
