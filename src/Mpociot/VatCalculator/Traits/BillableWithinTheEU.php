@@ -74,6 +74,6 @@ trait BillableWithinTheEU
      */
     public function getTaxPercent()
     {
-        return (VatCalculator::getTaxRateForCountry($this->userCountryCode, $this->userIsCompany) * 100);
+        return VatCalculator::getTaxRateForCountry($this->userCountryCode, $this->userIsCompany) * 100;
     }
 }
