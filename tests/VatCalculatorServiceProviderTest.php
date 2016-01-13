@@ -110,31 +110,4 @@ class VatCalculatorServiceProviderTest extends PHPUnit_Framework_TestCase
             ->shouldDeferMissing();
         $sp->registerFacade();
     }
-
-    public function testShouldRegisterVatCalculator()
-    {
-        $test = $this;
-        $app = m::mock('App');
-        $sp = m::mock('Mpociot\VatCalculator\VatCalculatorServiceProvider',
-            [$app]
-        );
-
-        $app->shouldReceive('bind')
-            ->once()->andReturnUsing(
-            // Make sure that the name is 'confide.repository'
-            // and that the closure passed returns the correct
-            // kind of object.
-                function ($name, $closure) use ($test, $app) {
-                    $test->assertEquals('vatcalculator', $name);
-                    $test->assertInstanceOf(
-                        'Mpociot\VatCalculator\VatCalculator',
-                        $closure($app)
-                    );
-                }
-            );
-        $app->shouldReceive('make')
-            ->once()
-            ->with('Illuminate\Contracts\Config\Repository');
-        $sp->registerVatCalculator();
-    }
 }
