@@ -70,7 +70,9 @@ class VatCalculatorServiceProvider extends ServiceProvider
      */
     protected function registerVatCalculator()
     {
-        $this->app->bind('vatcalculator', function ($app) {
+        $this->app->bind('vatcalculator', '\Mpociot\VatCalculator\VatCalculator');
+        
+        $this->app->bind('\Mpociot\VatCalculator\VatCalculator', function ($app) {
             $config = $app->make('Illuminate\Contracts\Config\Repository');
 
             return new \Mpociot\VatCalculator\VatCalculator($config);
