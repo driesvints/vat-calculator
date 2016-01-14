@@ -125,6 +125,7 @@
                     setHTML('total', response.gross_price.toFixed(2));
                     setHTML('subtotal', response.net_price.toFixed(2));
                     setHTML('taxes', response.tax_value.toFixed(2));
+                    setHTML('taxrate', (100*response.tax_rate).toFixed(0));
                     if (successCallback && typeof(successCallback) === 'function') {
                         successCallback(response);
                     }

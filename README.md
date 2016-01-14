@@ -282,12 +282,13 @@ So your form will look like this:
 <a name="extra-fields" />
 ### Extra fields
 
-To display the live tax calculation, you can use the classes `vat-subtotal`, `vat-taxes` and `vat-total` on any DOM element and VAT Calculator JS will automatically set the inner HTML content for you.
+To display the live tax calculation, you can use the classes `vat-subtotal`, `vat-taxrate`, `vat-taxes` and `vat-total` on any DOM element and VAT Calculator JS will automatically set the inner HTML content for you.
 
 Example:
 
 ```html
 <strong>Subtotal</strong>: € <span class="vat-subtotal"></span>
+<strong>Tax rate</strong>: <span class="vat-taxrate"></span>%
 <strong>Taxes</strong>: € <span class="vat-taxes"></span>
 <strong>Total</strong>: € <span class="vat-total"></span>
 ```
