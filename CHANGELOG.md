@@ -1,5 +1,8 @@
 # Changelog
 
+#### v1.6.1 `2016-01-14`
+- Added support for `vat-taxrate` as an extra field for the JS frontend integration. Thanks @orottier
+
 #### v1.6.0 `2016-01-12`
 - Added support for setting your own "business country code" which will be used when selling to business customers inside your own country. Previous versions returned the wrong VAT rate (0%).
 
