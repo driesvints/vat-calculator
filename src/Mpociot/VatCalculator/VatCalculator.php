@@ -5,6 +5,7 @@ namespace Mpociot\VatCalculator;
 use Illuminate\Contracts\Config\Repository;
 use Mpociot\VatCalculator\Exceptions\VATCheckUnavailableException;
 use SoapClient;
+use SoapFault;
 
 class VatCalculator
 {
@@ -112,7 +113,11 @@ class VatCalculator
             $this->setBusinessCountryCode($this->config->get($businessCountryKey, ''));
         }
 
-        $this->soapClient = new SoapClient(self::VAT_SERVICE_URL);
+        try {
+            $this->soapClient = new SoapClient(self::VAT_SERVICE_URL);
+        } catch (SoapFault $e) {
+            $this->soapClient = false;
+        }
     }
 
     /**
@@ -289,7 +294,7 @@ class VatCalculator
                 ]);
 
                 return $result->valid;
-            } catch (\SoapFault $e) {
+            } catch (SoapFault $e) {
                 return false;
             }
         }
