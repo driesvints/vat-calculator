@@ -401,7 +401,7 @@ class VatCalculatorTest extends PHPUnit
     public function testCanHandleIPServiceDowntime()
     {
         self::$file_get_contents_result = false;
-        $_SERVER[ 'REMOTE_ADDR' ] = '';
+        $_SERVER['REMOTE_ADDR'] = '';
         $vatCalculator = new VatCalculator();
         $country = $vatCalculator->getIPBasedCountry();
         $this->assertFalse($country);
