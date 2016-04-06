@@ -22,41 +22,268 @@ class VatCalculator
     protected $soapClient;
 
     /**
-     * All available tax rules.
+     * All available tax rules and their exceptions.
+     *
+     * Taken from: http://ec.europa.eu/taxation_customs/resources/documents/taxation/vat/how_vat_works/rates/vat_rates_en.pdf
      *
      * @var array
      */
     protected $taxRules = [
-        'AT' => 0.20,
-        'BE' => 0.21,
-        'BG' => 0.20,
-        'CY' => 0.19,
-        'CZ' => 0.21,
-        'DE' => 0.19,
-        'DK' => 0.25,
-        'EE' => 0.20,
-        'EL' => 0.23,
-        'ES' => 0.21,
-        'FI' => 0.24,
-        'FR' => 0.20,
-        'GB' => 0.20,
-        'GR' => 0.23,
-        'IE' => 0.23,
-        'IT' => 0.22,
-        'HR' => 0.25,
-        'HU' => 0.27,
-        'LV' => 0.21,
-        'LT' => 0.21,
-        'LU' => 0.17,
-        'MT' => 0.18,
-        'NL' => 0.21,
-        'NO' => 0.25,
-        'PL' => 0.23,
-        'PT' => 0.23,
-        'RO' => 0.20,
-        'SE' => 0.25,
-        'SK' => 0.20,
-        'SI' => 0.22,
+        'AT' => [ // Austria
+            'rate' => 0.20,
+            'exceptions' => [
+                'Jungholz' => 0.19,
+                'Mittelberg' => 0.19,
+            ]
+        ],
+        'BE' => [ // Belgium
+            'rate' => 0.21,
+        ],
+        'BG' => [ // Bulgaria
+            'rate' => 0.20,
+        ],
+        'CY' => [ // Cyprus
+            'rate' => 0.19,
+        ],
+        'CZ' => [ // Czech Republic
+            'rate' => 0.21,
+        ],
+        'DE' => [ // Germany
+            'rate' => 0.19,
+            'exceptions' => [
+                'Heligoland' => 0,
+                'Büsingen am Hochrhein' => 0,
+            ]
+        ],
+        'DK' => [ // Denmark
+            'rate' => 0.25,
+        ],
+        'EE' => [ // Estonia
+            'rate' => 0.20,
+        ],
+        'EL' => [ // Hellenic Republic (Greece)
+            'rate' => 0.23,
+            'exceptions' => [
+                'Mount Athos' => 0,
+            ]
+        ],
+        'ES' => [ // Spain
+            'rate' => 0.21,
+            'exceptions' => [
+                'Canary Islands' => 0,
+                'Ceuta' => 0,
+                'Melilla' => 0
+            ]
+        ],
+        'FI' => [ // Finland
+            'rate' => 0.24,
+        ],
+        'FR' => [ // France
+            'rate' => 0.20,
+        ],
+        'GB' => [ // United Kingdom
+            'rate' => 0.20,
+            'exceptions' => [
+                // UK RAF Bases in Cyprus are taxed at Cyprus rate
+                'Akrotiri' => 0.19,
+                'Dhekelia' => 0.19,
+            ]
+        ],
+        'GR' => [ // Greece
+            'rate' => 0.23,
+            'exceptions' => [
+                'Mount Athos' => 0,
+            ]
+        ],
+        'HR' => [ // Croatia
+            'rate' => 0.25,
+        ],
+        'HU' => [ // Hungary
+            'rate' => 0.27,
+        ],
+        'IE' => [ // Ireland
+            'rate' => 0.23,
+        ],
+        'IT' => [ // Italy
+            'rate' => 0.22,
+            'exceptions' => [
+                'Campione d\'Italia' => 0,
+                'Livigno' => 0,
+            ]
+        ],
+        'LT' => [ // Lithuania
+            'rate' => 0.21,
+        ],
+        'LU' => [ // Luxembourg
+            'rate' => 0.17,
+        ],
+        'LV' => [ // Latvia
+            'rate' => 0.21,
+        ],
+        'MT' => [ // Malta
+            'rate' => 0.18,
+        ],
+        'NL' => [ // Netherlands
+            'rate' => 0.21,
+        ],
+        'PL' => [ // Poland
+            'rate' => 0.23,
+        ],
+        'PT' => [ // Portugal
+            'rate' => 0.23,
+            'exceptions' => [
+                'Azores' => 0.18,
+                'Madeira' => 0.22
+            ]
+        ],
+        'RO' => [ // Romania
+            'rate' => 0.20,
+        ],
+        'SE' => [ // Sweden
+            'rate' => 0.25,
+        ],
+        'SI' => [ // Slovenia
+            'rate' => 0.22,
+        ],
+        'SK' => [ // Slovakia
+            'rate' => 0.20,
+        ],
+
+        // Countries associated with EU countries that have a special VAT rate
+        'MC' => [ // Monaco France
+            'rate' => 0.20,
+        ],
+        'IM' => [ // Isle of Man - United Kingdom
+            'rate' => 0.20,
+        ],
+
+        // Non-EU with their own VAT requirements
+        'NO' => [ // Norway
+            'rate' => 0.25,
+        ],
+    ];
+
+    /**
+     * All possible postal code exceptions.
+     *
+     * @var array
+     */
+    protected $postalCodeExceptions = [
+        'AT' => [
+            [
+                'postalCode' => '/^6691$/',
+                'code' => 'AT',
+                'name' => 'Jungholz'
+            ],
+            [
+                'postalCode' => '/^699[123]$/',
+                'city' => '/\bmittelberg\b/i',
+                'code' => 'AT',
+                'name' => 'Mittelberg'
+            ]
+        ],
+        'CH' => [
+            [
+                'postalCode' => '/^8238$/',
+                'code' => 'DE',
+                'name' => 'Büsingen am Hochrhein'
+            ],
+            [
+                'postalCode' => '/^6911$/',
+                'code' => 'IT',
+                'name' => "Campione d'Italia"
+            ],
+            // The Italian city of Domodossola has a Swiss post office also
+            [
+                'postalCode' => '/^3907$/',
+                'code' => 'IT'
+            ]
+        ],
+        'DE' => [
+            [
+                'postalCode' => '/^87491$/',
+                'code' => 'AT',
+                'name' => 'Jungholz'
+            ],
+            [
+                'postalCode' => '/^8756[789]$/',
+                'city' => '/\bmittelberg\b/i',
+                'code' => 'AT',
+                'name' => 'Mittelberg'
+            ],
+            [
+                'postalCode' => '/^78266$/',
+                'code' => 'DE',
+                'name' => 'Büsingen am Hochrhein'
+            ],
+            [
+                'postalCode' => '/^27498$/',
+                'code' => 'DE',
+                'name' => 'Heligoland'
+            ]
+        ],
+        'ES' => [
+            [
+                'postalCode' => '/^(5100[1-5]|5107[0-1]|51081)$/',
+                'code' => 'ES',
+                'name' => 'Ceuta'
+            ],
+            [
+                'postalCode' => '/^(5200[0-6]|5207[0-1]|52081)$/',
+                'code' => 'ES',
+                'name' => 'Melilla'
+            ],
+            [
+                'postalCode' => '/^(35\d[3]|38\d[3])$/',
+                'code' => 'ES',
+                'name' => 'Canary Islands'
+            ]
+        ],
+        'GB' => [
+            // Akrotiri
+            [
+                'postalCode' => '/^BFPO57|BF12AT$/',
+                'code' => 'CY'
+            ],
+            // Dhekelia
+            [
+                'postalCode' => '/^BFPO58|BF12AU$/',
+                'code' => 'CY'
+            ]
+        ],
+        'GR' => [
+            [
+                'postalCode' => '/^63086$/',
+                'code' => 'GR',
+                'name' => 'Mount Athos'
+            ]
+        ],
+        'IT' => [
+            [
+                'postalCode' => '/^22060$/',
+                'city' => '/\bcampione\b/i',
+                'code' => 'IT',
+                'name' => "Campione d'Italia"
+            ],
+            [
+                'postalCode' => '/^23030$/',
+                'city' => '/\blivigno\b/i',
+                'code' => 'IT',
+                'name' => 'Livigno'
+            ]
+        ],
+        'PT' => [
+            [
+                'postalCode' => '/^9[0-4]\d[2,]$/',
+                'code' => 'PT',
+                'name' => 'Madeira'
+            ],
+            [
+                'postalCode' => '/^9[5-9]\d[2,]$/',
+                'code' => 'PT',
+                'name' => 'Azores'
+            ]
+        ]
     ];
 
     /**
@@ -68,6 +295,11 @@ class VatCalculator
      * @var string
      */
     protected $countryCode;
+
+    /**
+     * @var string
+     */
+    protected $postalCode;
 
     /**
      * @var Repository
@@ -167,20 +399,24 @@ class VatCalculator
      *
      * @param int|float   $netPrice    The net price to use for the calculation
      * @param null|string $countryCode The country code to use for the rate lookup
+     * @param null|string $postalCode  The postal code to use for the rate exception lookup
      * @param null|bool   $company
      *
      * @return float
      */
-    public function calculate($netPrice, $countryCode = null, $company = null)
+    public function calculate($netPrice, $countryCode = null, $postalCode = null, $company = null)
     {
         if ($countryCode) {
             $this->setCountryCode($countryCode);
+        }
+        if ($postalCode) {
+            $this->setPostalCode($postalCode);
         }
         if (!is_null($company) && $company !== $this->isCompany()) {
             $this->setCompany($company);
         }
         $this->netPrice = floatval($netPrice);
-        $this->taxRate = $this->getTaxRateForCountry($this->getCountryCode(), $this->isCompany());
+        $this->taxRate = $this->getTaxRateForLocation($this->getCountryCode(), $this->getPostalCode(), $this->isCompany());
         $this->taxValue = $this->taxRate * $this->netPrice;
         $this->value = $this->netPrice + $this->taxValue;
 
@@ -209,6 +445,22 @@ class VatCalculator
     public function setCountryCode($countryCode)
     {
         $this->countryCode = $countryCode;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPostalCode()
+    {
+        return $this->postalCode;
+    }
+
+    /**
+     * @param mixed $postalCode
+     */
+    public function setPostalCode($postalCode)
+    {
+        $this->postalCode = $postalCode;
     }
 
     /**
@@ -244,14 +496,17 @@ class VatCalculator
     }
 
     /**
-     * Returns the tax rate for the given country.
+     * Returns the tax rate for the given country code.
+     * If a postal code is provided, it will try to lookup the different
+     * postal code exceptions that are possible.
      *
      * @param string     $countryCode
+     * @param string|null     $postalCode
      * @param bool|false $company
      *
      * @return float
      */
-    public function getTaxRateForCountry($countryCode, $company = false)
+    public function getTaxRateForLocation($countryCode, $postalCode = null, $company = false)
     {
         if ($company && strtoupper($countryCode) !== strtoupper($this->businessCountryCode)) {
             return 0;
@@ -261,7 +516,20 @@ class VatCalculator
             return $this->config->get($taxKey, 0);
         }
 
-        return isset($this->taxRules[ strtoupper($countryCode) ]) ? $this->taxRules[ strtoupper($countryCode) ] : 0;
+        if (!isset($this->postalCodeExceptions[$countryCode]) || $postalCode === null) {
+            return isset($this->taxRules[ strtoupper($countryCode) ]['rate']) ? $this->taxRules[ strtoupper($countryCode) ]['rate'] : 0;
+        } else {
+            foreach ($this->postalCodeExceptions[$countryCode] as $postalCodeException) {
+                if (!preg_match($postalCodeException['postalCode'], $postalCode)) {
+                    continue;
+                }
+                if (isset($postalCodeException['name'])) {
+                    return $this->taxRules[$postalCodeException['code']]['exceptions'][$postalCodeException['name']];
+                }
+                return $this->taxRules[$postalCodeException['code']]['rate'];
+            }
+            return 0;
+        }
     }
 
     /**

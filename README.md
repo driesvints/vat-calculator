@@ -15,8 +15,9 @@ Can be used with **Laravel 5 / Cashier** &mdash; or **standalone**.
 // Easy to use!
 $countryCode = VatCalculator::getIPBasedCountry();
 VatCalculator::calculate( 24.00, $countryCode );
-VatCalculator::calculate( 71.00, 'DE', $isCompany = true );
-VatCalculator::getTaxRateForCountry( 'NL' );
+VatCalculator::calculate( 24.00, $countryCode, $postalCode );
+VatCalculator::calculate( 71.00, 'DE', '41352', $isCompany = true );
+VatCalculator::getTaxRateForLocation( 'NL' );
 // Check validity of a VAT number
 VatCalculator::isValidVATNumber('NL123456789B01');
 ```

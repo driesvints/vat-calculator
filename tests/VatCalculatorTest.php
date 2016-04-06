@@ -191,6 +191,7 @@ class VatCalculatorTest extends PHPUnit
     {
         $net = 24.00;
         $countryCode = 'DE';
+        $postalCode = null;
         $company = true;
 
         $config = m::mock('Illuminate\Contracts\Config\Repository');
@@ -203,7 +204,7 @@ class VatCalculatorTest extends PHPUnit
             ->andReturn(false);
 
         $vatCalculator = new VatCalculator($config);
-        $result = $vatCalculator->calculate($net, $countryCode, $company);
+        $result = $vatCalculator->calculate($net, $countryCode, $postalCode, $company);
         $this->assertEquals(24.00, $result);
         $this->assertEquals(0, $vatCalculator->getTaxRate());
         $this->assertEquals(0, $vatCalculator->getTaxValue());
@@ -278,7 +279,7 @@ class VatCalculatorTest extends PHPUnit
             ->andReturn(false);
 
         $vatCalculator = new VatCalculator($config);
-        $result = $vatCalculator->getTaxRateForCountry($countryCode);
+        $result = $vatCalculator->getTaxRateForLocation($countryCode);
         $this->assertEquals(0.19, $result);
     }
 
@@ -297,7 +298,7 @@ class VatCalculatorTest extends PHPUnit
             ->andReturn(false);
 
         $vatCalculator = new VatCalculator($config);
-        $result = $vatCalculator->getTaxRateForCountry($countryCode, $company);
+        $result = $vatCalculator->getTaxRateForLocation($countryCode, null, $company);
         $this->assertEquals(0, $result);
     }
 
@@ -431,7 +432,7 @@ class VatCalculatorTest extends PHPUnit
             ->andReturn($countryCode);
 
         $vatCalculator = new VatCalculator($config);
-        $result = $vatCalculator->calculate($net, $countryCode, true);
+        $result = $vatCalculator->calculate($net, $countryCode, null, true);
         $this->assertEquals(28.56, $result);
         $this->assertEquals(0.19, $vatCalculator->getTaxRate());
         $this->assertEquals(4.56, $vatCalculator->getTaxValue());
@@ -444,7 +445,7 @@ class VatCalculatorTest extends PHPUnit
 
         $vatCalculator = new VatCalculator();
         $vatCalculator->setBusinessCountryCode('DE');
-        $result = $vatCalculator->calculate($net, $countryCode, true);
+        $result = $vatCalculator->calculate($net, $countryCode, null, true);
         $this->assertEquals(28.56, $result);
         $this->assertEquals(0.19, $vatCalculator->getTaxRate());
         $this->assertEquals(4.56, $vatCalculator->getTaxValue());
@@ -457,9 +458,50 @@ class VatCalculatorTest extends PHPUnit
 
         $vatCalculator = new VatCalculator();
         $vatCalculator->setBusinessCountryCode('NL');
-        $result = $vatCalculator->calculate($net, $countryCode, true);
+        $result = $vatCalculator->calculate($net, $countryCode, null, true);
         $this->assertEquals(24.00, $result);
         $this->assertEquals(0.00, $vatCalculator->getTaxRate());
         $this->assertEquals(0.00, $vatCalculator->getTaxValue());
+    }
+
+    public function testReturnsZeroForInvalidCountryCode()
+    {
+        $net = 24.00;
+        $countryCode = 'XXX';
+
+        $vatCalculator = new VatCalculator();
+        $result = $vatCalculator->calculate($net, $countryCode, null, true);
+        $this->assertEquals(24.00, $result);
+        $this->assertEquals(0.00, $vatCalculator->getTaxRate());
+        $this->assertEquals(0.00, $vatCalculator->getTaxValue());
+    }
+
+    public function testChecksPostalCodeForVATExceptions()
+    {
+        $net = 24.00;
+        $vatCalculator = new VatCalculator();
+        $postalCode = '27498'; // Heligoland
+        $result = $vatCalculator->calculate($net, 'DE', $postalCode, false);
+        $this->assertEquals(24.00, $result);
+        $this->assertEquals(0.00, $vatCalculator->getTaxRate());
+        $this->assertEquals(0.00, $vatCalculator->getTaxValue());
+
+        $postalCode = '6691'; // Jungholz
+        $result = $vatCalculator->calculate($net, 'AT', $postalCode, false);
+        $this->assertEquals(28.56, $result);
+        $this->assertEquals(0.19, $vatCalculator->getTaxRate());
+        $this->assertEquals(4.56, $vatCalculator->getTaxValue());
+
+        $postalCode = 'BFPO58'; // Dhekelia
+        $result = $vatCalculator->calculate($net, 'GB', $postalCode, false);
+        $this->assertEquals(28.56, $result);
+        $this->assertEquals(0.19, $vatCalculator->getTaxRate());
+        $this->assertEquals(4.56, $vatCalculator->getTaxValue());
+
+        $postalCode = '9122'; // Madeira
+        $result = $vatCalculator->calculate($net, 'PT', $postalCode, false);
+        $this->assertEquals(29.28, $result);
+        $this->assertEquals(0.22, $vatCalculator->getTaxRate());
+        $this->assertEquals(5.28, $vatCalculator->getTaxValue());
     }
 }

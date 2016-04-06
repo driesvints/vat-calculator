@@ -27,6 +27,10 @@
             if (vatNumber !== null) {
                 vatNumber.addEventListener('blur', calculate);
             }
+            var postalCode = form.querySelector('[' + DATA_PREFIX + '="postal-code"]');
+            if (postalCode !== null) {
+                postalCode.addEventListener('blur', calculate);
+            }
             // Trigger now
             calculate();
         }
@@ -119,8 +123,9 @@
         if (form !== null) {
             var amount = parseInt(form.getAttribute('data-amount')),
                 country = getValue('country'),
+                postal_code = getValue('postal-code'),
                 vat_number = getValue('vat-number');
-            makeRequest('GET', '/vatcalculator/calculate?netPrice=' + (amount / 100) + '&country=' + country + '&vat_number=' + vat_number, {
+            makeRequest('GET', '/vatcalculator/calculate?netPrice=' + (amount / 100) + '&country=' + country + '&postal_code=' + postal_code + '&vat_number=' + vat_number, {
                 success: function (status, response) {
                     setHTML('total', response.gross_price.toFixed(2));
                     setHTML('subtotal', response.net_price.toFixed(2));

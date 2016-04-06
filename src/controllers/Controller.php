@@ -21,14 +21,14 @@ class Controller extends BaseController
     }
 
     /**
-     * Returns the tax rate for the given country.
+     * Returns the tax rate for the given country code and postal code.
      *
      * @return \Illuminate\Http\Response
      */
-    public function getTaxRateForCountry($country = null)
+    public function getTaxRateForLocation($countryCode = null, $postalCode = null)
     {
         return [
-            'tax_rate' => $this->calculator->getTaxRateForCountry($country),
+            'tax_rate' => $this->calculator->getTaxRateForLocation($countryCode, $postalCode),
         ];
     }
 
@@ -56,7 +56,7 @@ class Controller extends BaseController
         }
 
         return [
-            'gross_price'   => $this->calculator->calculate($request->get('netPrice'), $request->get('country'), $valid_company),
+            'gross_price'   => $this->calculator->calculate($request->get('netPrice'), $request->get('country'), $request->get('postal_code'), $valid_company),
             'net_price'     => $this->calculator->getNetPrice(),
             'tax_rate'      => $this->calculator->getTaxRate(),
             'tax_value'     => $this->calculator->getTaxValue(),
