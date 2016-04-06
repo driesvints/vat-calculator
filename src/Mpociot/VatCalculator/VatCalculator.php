@@ -30,11 +30,11 @@ class VatCalculator
      */
     protected $taxRules = [
         'AT' => [ // Austria
-            'rate' => 0.20,
+            'rate'       => 0.20,
             'exceptions' => [
-                'Jungholz' => 0.19,
+                'Jungholz'   => 0.19,
                 'Mittelberg' => 0.19,
-            ]
+            ],
         ],
         'BE' => [ // Belgium
             'rate' => 0.21,
@@ -49,11 +49,11 @@ class VatCalculator
             'rate' => 0.21,
         ],
         'DE' => [ // Germany
-            'rate' => 0.19,
+            'rate'       => 0.19,
             'exceptions' => [
-                'Heligoland' => 0,
+                'Heligoland'            => 0,
                 'Büsingen am Hochrhein' => 0,
-            ]
+            ],
         ],
         'DK' => [ // Denmark
             'rate' => 0.25,
@@ -62,18 +62,18 @@ class VatCalculator
             'rate' => 0.20,
         ],
         'EL' => [ // Hellenic Republic (Greece)
-            'rate' => 0.23,
+            'rate'       => 0.23,
             'exceptions' => [
                 'Mount Athos' => 0,
-            ]
+            ],
         ],
         'ES' => [ // Spain
-            'rate' => 0.21,
+            'rate'       => 0.21,
             'exceptions' => [
                 'Canary Islands' => 0,
-                'Ceuta' => 0,
-                'Melilla' => 0
-            ]
+                'Ceuta'          => 0,
+                'Melilla'        => 0,
+            ],
         ],
         'FI' => [ // Finland
             'rate' => 0.24,
@@ -82,18 +82,18 @@ class VatCalculator
             'rate' => 0.20,
         ],
         'GB' => [ // United Kingdom
-            'rate' => 0.20,
+            'rate'       => 0.20,
             'exceptions' => [
                 // UK RAF Bases in Cyprus are taxed at Cyprus rate
                 'Akrotiri' => 0.19,
                 'Dhekelia' => 0.19,
-            ]
+            ],
         ],
         'GR' => [ // Greece
-            'rate' => 0.23,
+            'rate'       => 0.23,
             'exceptions' => [
                 'Mount Athos' => 0,
-            ]
+            ],
         ],
         'HR' => [ // Croatia
             'rate' => 0.25,
@@ -105,11 +105,11 @@ class VatCalculator
             'rate' => 0.23,
         ],
         'IT' => [ // Italy
-            'rate' => 0.22,
+            'rate'       => 0.22,
             'exceptions' => [
                 'Campione d\'Italia' => 0,
-                'Livigno' => 0,
-            ]
+                'Livigno'            => 0,
+            ],
         ],
         'LT' => [ // Lithuania
             'rate' => 0.21,
@@ -130,11 +130,11 @@ class VatCalculator
             'rate' => 0.23,
         ],
         'PT' => [ // Portugal
-            'rate' => 0.23,
+            'rate'       => 0.23,
             'exceptions' => [
-                'Azores' => 0.18,
-                'Madeira' => 0.22
-            ]
+                'Azores'  => 0.18,
+                'Madeira' => 0.22,
+            ],
         ],
         'RO' => [ // Romania
             'rate' => 0.20,
@@ -172,118 +172,118 @@ class VatCalculator
         'AT' => [
             [
                 'postalCode' => '/^6691$/',
-                'code' => 'AT',
-                'name' => 'Jungholz'
+                'code'       => 'AT',
+                'name'       => 'Jungholz',
             ],
             [
                 'postalCode' => '/^699[123]$/',
-                'city' => '/\bmittelberg\b/i',
-                'code' => 'AT',
-                'name' => 'Mittelberg'
-            ]
+                'city'       => '/\bmittelberg\b/i',
+                'code'       => 'AT',
+                'name'       => 'Mittelberg',
+            ],
         ],
         'CH' => [
             [
                 'postalCode' => '/^8238$/',
-                'code' => 'DE',
-                'name' => 'Büsingen am Hochrhein'
+                'code'       => 'DE',
+                'name'       => 'Büsingen am Hochrhein',
             ],
             [
                 'postalCode' => '/^6911$/',
-                'code' => 'IT',
-                'name' => "Campione d'Italia"
+                'code'       => 'IT',
+                'name'       => "Campione d'Italia",
             ],
             // The Italian city of Domodossola has a Swiss post office also
             [
                 'postalCode' => '/^3907$/',
-                'code' => 'IT'
-            ]
+                'code'       => 'IT',
+            ],
         ],
         'DE' => [
             [
                 'postalCode' => '/^87491$/',
-                'code' => 'AT',
-                'name' => 'Jungholz'
+                'code'       => 'AT',
+                'name'       => 'Jungholz',
             ],
             [
                 'postalCode' => '/^8756[789]$/',
-                'city' => '/\bmittelberg\b/i',
-                'code' => 'AT',
-                'name' => 'Mittelberg'
+                'city'       => '/\bmittelberg\b/i',
+                'code'       => 'AT',
+                'name'       => 'Mittelberg',
             ],
             [
                 'postalCode' => '/^78266$/',
-                'code' => 'DE',
-                'name' => 'Büsingen am Hochrhein'
+                'code'       => 'DE',
+                'name'       => 'Büsingen am Hochrhein',
             ],
             [
                 'postalCode' => '/^27498$/',
-                'code' => 'DE',
-                'name' => 'Heligoland'
-            ]
+                'code'       => 'DE',
+                'name'       => 'Heligoland',
+            ],
         ],
         'ES' => [
             [
                 'postalCode' => '/^(5100[1-5]|5107[0-1]|51081)$/',
-                'code' => 'ES',
-                'name' => 'Ceuta'
+                'code'       => 'ES',
+                'name'       => 'Ceuta',
             ],
             [
                 'postalCode' => '/^(5200[0-6]|5207[0-1]|52081)$/',
-                'code' => 'ES',
-                'name' => 'Melilla'
+                'code'       => 'ES',
+                'name'       => 'Melilla',
             ],
             [
                 'postalCode' => '/^(35\d[3]|38\d[3])$/',
-                'code' => 'ES',
-                'name' => 'Canary Islands'
-            ]
+                'code'       => 'ES',
+                'name'       => 'Canary Islands',
+            ],
         ],
         'GB' => [
             // Akrotiri
             [
                 'postalCode' => '/^BFPO57|BF12AT$/',
-                'code' => 'CY'
+                'code'       => 'CY',
             ],
             // Dhekelia
             [
                 'postalCode' => '/^BFPO58|BF12AU$/',
-                'code' => 'CY'
-            ]
+                'code'       => 'CY',
+            ],
         ],
         'GR' => [
             [
                 'postalCode' => '/^63086$/',
-                'code' => 'GR',
-                'name' => 'Mount Athos'
-            ]
+                'code'       => 'GR',
+                'name'       => 'Mount Athos',
+            ],
         ],
         'IT' => [
             [
                 'postalCode' => '/^22060$/',
-                'city' => '/\bcampione\b/i',
-                'code' => 'IT',
-                'name' => "Campione d'Italia"
+                'city'       => '/\bcampione\b/i',
+                'code'       => 'IT',
+                'name'       => "Campione d'Italia",
             ],
             [
                 'postalCode' => '/^23030$/',
-                'city' => '/\blivigno\b/i',
-                'code' => 'IT',
-                'name' => 'Livigno'
-            ]
+                'city'       => '/\blivigno\b/i',
+                'code'       => 'IT',
+                'name'       => 'Livigno',
+            ],
         ],
         'PT' => [
             [
                 'postalCode' => '/^9[0-4]\d[2,]$/',
-                'code' => 'PT',
-                'name' => 'Madeira'
+                'code'       => 'PT',
+                'name'       => 'Madeira',
             ],
             [
                 'postalCode' => '/^9[5-9]\d[2,]$/',
-                'code' => 'PT',
-                'name' => 'Azores'
-            ]
-        ]
+                'code'       => 'PT',
+                'name'       => 'Azores',
+            ],
+        ],
     ];
 
     /**
@@ -359,10 +359,10 @@ class VatCalculator
      */
     private function getClientIP()
     {
-        if (isset($_SERVER[ 'HTTP_X_FORWARDED_FOR' ]) && $_SERVER[ 'HTTP_X_FORWARDED_FOR' ]) {
-            $clientIpAddress = $_SERVER[ 'HTTP_X_FORWARDED_FOR' ];
-        } elseif (isset($_SERVER[ 'REMOTE_ADDR' ]) && $_SERVER[ 'REMOTE_ADDR' ]) {
-            $clientIpAddress = $_SERVER[ 'REMOTE_ADDR' ];
+        if (isset($_SERVER['HTTP_X_FORWARDED_FOR']) && $_SERVER['HTTP_X_FORWARDED_FOR']) {
+            $clientIpAddress = $_SERVER['HTTP_X_FORWARDED_FOR'];
+        } elseif (isset($_SERVER['REMOTE_ADDR']) && $_SERVER['REMOTE_ADDR']) {
+            $clientIpAddress = $_SERVER['REMOTE_ADDR'];
         } else {
             $clientIpAddress = '';
         }
@@ -382,11 +382,11 @@ class VatCalculator
         $ip = $this->getClientIP();
         $url = self::GEOCODE_SERVICE_URL.$ip;
         $result = file_get_contents($url);
-        switch ($result[ 0 ]) {
+        switch ($result[0]) {
             case '1':
                 $data = explode(';', $result);
 
-                return $data[ 1 ];
+                return $data[1];
                 break;
             default:
                 return false;
@@ -500,9 +500,9 @@ class VatCalculator
      * If a postal code is provided, it will try to lookup the different
      * postal code exceptions that are possible.
      *
-     * @param string     $countryCode
-     * @param string|null     $postalCode
-     * @param bool|false $company
+     * @param string      $countryCode
+     * @param string|null $postalCode
+     * @param bool|false  $company
      *
      * @return float
      */
@@ -517,7 +517,7 @@ class VatCalculator
         }
 
         if (!isset($this->postalCodeExceptions[$countryCode]) || $postalCode === null) {
-            return isset($this->taxRules[ strtoupper($countryCode) ]['rate']) ? $this->taxRules[ strtoupper($countryCode) ]['rate'] : 0;
+            return isset($this->taxRules[strtoupper($countryCode)]['rate']) ? $this->taxRules[strtoupper($countryCode)]['rate'] : 0;
         } else {
             foreach ($this->postalCodeExceptions[$countryCode] as $postalCodeException) {
                 if (!preg_match($postalCodeException['postalCode'], $postalCode)) {
@@ -526,8 +526,10 @@ class VatCalculator
                 if (isset($postalCodeException['name'])) {
                     return $this->taxRules[$postalCodeException['code']]['exceptions'][$postalCodeException['name']];
                 }
+
                 return $this->taxRules[$postalCodeException['code']]['rate'];
             }
+
             return 0;
         }
     }
