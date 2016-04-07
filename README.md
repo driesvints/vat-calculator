@@ -110,6 +110,16 @@ $taxValue   = VatCalculator::getTaxValue(); // 4.56
 
 <a name="validate-eu-vat-numbers" />
 ### Validate EU VAT numbers
+
+Prior to validating your customers VAT numbers, you can use the `shouldCollectVAT` method to check if the country code requires you to collect VAT
+in the first place.
+
+```php
+if (VatCalculator::shouldCollectVAT('DE')) {
+
+}
+```
+
 To validate your customers VAT numbers, you can use the `isValidVATNumber` method.
 The VAT number should be in a format specified by the [VIES](http://ec.europa.eu/taxation_customs/vies/faqvies.do#item_11).
 The given VAT numbers will be truncated and non relevant characters / whitespace will automatically be removed.
