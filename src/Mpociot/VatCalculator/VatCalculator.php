@@ -359,10 +359,10 @@ class VatCalculator
      */
     private function getClientIP()
     {
-        if (isset($_SERVER[ 'HTTP_X_FORWARDED_FOR' ]) && $_SERVER[ 'HTTP_X_FORWARDED_FOR' ]) {
-            $clientIpAddress = $_SERVER[ 'HTTP_X_FORWARDED_FOR' ];
-        } elseif (isset($_SERVER[ 'REMOTE_ADDR' ]) && $_SERVER[ 'REMOTE_ADDR' ]) {
-            $clientIpAddress = $_SERVER[ 'REMOTE_ADDR' ];
+        if (isset($_SERVER['HTTP_X_FORWARDED_FOR']) && $_SERVER['HTTP_X_FORWARDED_FOR']) {
+            $clientIpAddress = $_SERVER['HTTP_X_FORWARDED_FOR'];
+        } elseif (isset($_SERVER['REMOTE_ADDR']) && $_SERVER['REMOTE_ADDR']) {
+            $clientIpAddress = $_SERVER['REMOTE_ADDR'];
         } else {
             $clientIpAddress = '';
         }
@@ -382,11 +382,11 @@ class VatCalculator
         $ip = $this->getClientIP();
         $url = self::GEOCODE_SERVICE_URL.$ip;
         $result = file_get_contents($url);
-        switch ($result[ 0 ]) {
+        switch ($result[0]) {
             case '1':
                 $data = explode(';', $result);
 
-                return $data[ 1 ];
+                return $data[1];
                 break;
             default:
                 return false;
@@ -394,15 +394,17 @@ class VatCalculator
     }
 
     /**
-     * Determines if you need to collect VAT for the given country code
+     * Determines if you need to collect VAT for the given country code.
      *
      * @param $countryCode
+     *
      * @return bool
      */
     public function shouldCollectVAT($countryCode)
     {
         $taxKey = 'vat_calculator.rules.'.strtoupper($countryCode);
-        return (isset($this->taxRules[ strtoupper($countryCode) ]) || (isset($this->config) && $this->config->has($taxKey)));
+
+        return isset($this->taxRules[strtoupper($countryCode)]) || (isset($this->config) && $this->config->has($taxKey));
     }
 
     /**
