@@ -462,4 +462,36 @@ class VatCalculatorTest extends PHPUnit
         $this->assertEquals(0.00, $vatCalculator->getTaxRate());
         $this->assertEquals(0.00, $vatCalculator->getTaxValue());
     }
+
+    public function testShouldCollectVAT()
+    {
+
+        $vatCalculator = new VatCalculator();
+        $this->assertTrue($vatCalculator->shouldCollectVAT('DE'));
+        $this->assertTrue($vatCalculator->shouldCollectVAT('NL'));
+        $this->assertFalse($vatCalculator->shouldCollectVAT(''));
+        $this->assertFalse($vatCalculator->shouldCollectVAT('XXX'));
+    }
+
+    public function testShouldCollectVATFromConfig()
+    {
+        $countryCode = 'TEST';
+        $taxKey = 'vat_calculator.rules.'.strtoupper($countryCode);
+
+        $config = m::mock('Illuminate\Contracts\Config\Repository');
+
+        $config->shouldReceive('has')
+            ->with($taxKey)
+            ->andReturn(true);
+
+        $config->shouldReceive('has')
+            ->once()
+            ->with('vat_calculator.business_country_code')
+            ->andReturn(false);
+
+        $vatCalculator = new VatCalculator($config);
+        $this->assertTrue($vatCalculator->shouldCollectVAT($countryCode));
+    }
+
+
 }

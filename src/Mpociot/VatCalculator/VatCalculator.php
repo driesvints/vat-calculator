@@ -162,6 +162,18 @@ class VatCalculator
     }
 
     /**
+     * Determines if you need to collect VAT for the given country code
+     *
+     * @param $countryCode
+     * @return bool
+     */
+    public function shouldCollectVAT($countryCode)
+    {
+        $taxKey = 'vat_calculator.rules.'.strtoupper($countryCode);
+        return (isset($this->taxRules[ strtoupper($countryCode) ]) || (isset($this->config) && $this->config->has($taxKey)));
+    }
+
+    /**
      * Calculate the VAT based on the net price, country code and indication if the
      * customer is a company or not.
      *
