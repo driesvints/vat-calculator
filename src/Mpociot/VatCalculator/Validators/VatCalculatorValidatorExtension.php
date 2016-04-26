@@ -8,7 +8,6 @@ use Mpociot\VatCalculator\Facades\VatCalculator;
 
 class VatCalculatorValidatorExtension
 {
-
     /**
      * Usage: vat_number.
      *
