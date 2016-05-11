@@ -76,4 +76,14 @@ trait BillableWithinTheEU
     {
         return VatCalculator::getTaxRateForCountry($this->userCountryCode, $this->userIsCompany) * 100;
     }
+    
+    /**
+     * Get the tax percentage to apply to the subscription for Cashier > 6.0
+     *
+     * @return int
+     */
+    public function taxPercentage()
+    {
+        return $this->getTaxPercent();
+    }
 }
