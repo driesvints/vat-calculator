@@ -29,7 +29,9 @@ class VatCalculatorValidatorExtensionTest extends PHPUnit
             ->with('vatnumber-validator::validation.vat_number')
             ->andReturn($this->testDefaultErrorMessage);
         $this->translator->shouldReceive('trans')
-            ->andReturnUsing(function ($arg) { return $arg; });
+            ->andReturnUsing(function ($arg) {
+                return $arg;
+            });
         $this->rules = [
             'customer_vat' => 'required|vat_number',
         ];
