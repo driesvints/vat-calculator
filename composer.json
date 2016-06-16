@@ -16,8 +16,9 @@
     "require-dev": {
         "illuminate/support": "~5.0",
         "illuminate/validation": "~5.0",
-        "phpunit/phpunit": "4.7.*",
-        "mockery/mockery": "dev-master"
+        "mockery/mockery": "dev-master",
+        "orchestra/testbench": "~3.0",
+        "phpunit/phpunit": "4.7.*"
     },
     "autoload": {
         "classmap": [

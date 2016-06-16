@@ -35,6 +35,7 @@ class VatCalculatorServiceProviderTest extends PHPUnit_Framework_TestCase
         $test = $this;
         $app = [];
         $app['validator'] = m::mock('Validator');
+        $app['validator']->shouldReceive('extend');
         $app['validator']->shouldReceive('addNamespace');
         $app['validator']->shouldReceive('resolver');
         $sp = m::mock('Mpociot\VatCalculator\VatCalculatorServiceProvider[publishes,loadTranslationsFrom,registerRoutes]',
