@@ -8,7 +8,7 @@
     function bindCalculatorEvents() {
         var form = document.querySelector(VATCalculator.selector);
         if (form !== null) {
-            var dropDown = form.querySelector('[' + DATA_PREFIX + '="country"]');
+            var dropDown = form.querySelector('select[' + DATA_PREFIX + '="country"]');
             if (dropDown !== null) {
                 dropDown.addEventListener('change', calculate);
                 // Try to preselect based on the user IP
