@@ -337,6 +337,18 @@ Attribute  | Description | Required
 #### Use a different form selector
 Use `VATCalculator.init('#my-selector')` to initialize the live calculation on a different form.
 
+#### Use a custom formatter function to modify calculation result HTML
+Use `VATCalculator.setCurrencyFormatter` to use a different method to format the calculated values for the HTML output.
+This function will receive the calculation result as a parameter.
+
+Example:
+
+```javascript
+VATCalculator.setCurrencyFormatter(function(value){
+    return value.toFixed(2) + ' €';
+});
+```
+
 #### Trigger calculation manually
 Call `VATCalculator.calculate()` to trigger the calculation manually. For example when you change the `data-amount` attribute on your form.
 
