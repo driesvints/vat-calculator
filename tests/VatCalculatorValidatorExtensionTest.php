@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\Validator;
 use Mockery as m;
 use Mpociot\VatCalculator\Exceptions\VATCheckUnavailableException;
 use Mpociot\VatCalculator\Facades\VatCalculator;
-use Mpociot\VatCalculator\Validators\VatCalculatorValidatorExtension;
 use Mpociot\VatCalculator\VatCalculatorServiceProvider;
 use Orchestra\Testbench\TestCase;
 
@@ -23,7 +22,7 @@ class VatCalculatorValidatorExtensionTest extends TestCase
         m::close();
         VatCalculator::clearResolvedInstances();
     }
-    
+
     protected function getPackageProviders($app)
     {
         return [VatCalculatorServiceProvider::class];
