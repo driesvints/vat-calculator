@@ -259,7 +259,7 @@ So your form should look like this, when you would calculate the taxes for 24.99
 Next up, you need a dropdown to let your users select their billing country. This select field needs the `data-vat="country"` attribute, so that the VAT Calculator JS knows, where to look for country codes.
 
 Since there are also quite a few VAT rate exceptions for specific regions or cities, it is highly recommended to add an input field to collect postal codes.
-This field needs a `data-vat="posta-code"` attribute.
+This field needs a `data-vat="postal-code"` attribute.
 
 And last but not least, to automatically validate VAT Numbers / VAT IDs you can have an input field with the `data-vat="vat_number"` attribute specified.
 
