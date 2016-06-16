@@ -258,7 +258,7 @@ class VatCalculatorTest extends PHPUnit
         $this->assertEquals(0, $vatCalculator->getTaxValue());
     }
 
-    public function testGetTaxRateForCountry()
+    public function testGetTaxRateForLocationWithCountry()
     {
         $countryCode = 'DE';
 
@@ -283,7 +283,32 @@ class VatCalculatorTest extends PHPUnit
         $this->assertEquals(0.19, $result);
     }
 
-    public function testGetTaxRateForCountryAndCompany()
+    public function testGetTaxRateForCountry()
+    {
+        $countryCode = 'DE';
+
+        $config = m::mock('Illuminate\Contracts\Config\Repository');
+        $config->shouldReceive('get')
+            ->once()
+            ->with('vat_calculator.rules.'.$countryCode, 0)
+            ->andReturn(0.19);
+
+        $config->shouldReceive('has')
+            ->once()
+            ->with('vat_calculator.rules.'.$countryCode)
+            ->andReturn(true);
+
+        $config->shouldReceive('has')
+            ->once()
+            ->with('vat_calculator.business_country_code')
+            ->andReturn(false);
+
+        $vatCalculator = new VatCalculator($config);
+        $result = $vatCalculator->getTaxRateForCountry($countryCode);
+        $this->assertEquals(0.19, $result);
+    }
+
+    public function testGetTaxRateForLocationWithCountryAndCompany()
     {
         $countryCode = 'DE';
         $company = true;
@@ -299,6 +324,25 @@ class VatCalculatorTest extends PHPUnit
 
         $vatCalculator = new VatCalculator($config);
         $result = $vatCalculator->getTaxRateForLocation($countryCode, null, $company);
+        $this->assertEquals(0, $result);
+    }
+
+    public function testGetTaxRateForCountryAndCompany()
+    {
+        $countryCode = 'DE';
+        $company = true;
+
+        $config = m::mock('Illuminate\Contracts\Config\Repository');
+        $config->shouldReceive('get')
+            ->never();
+
+        $config->shouldReceive('has')
+            ->once()
+            ->with('vat_calculator.business_country_code')
+            ->andReturn(false);
+
+        $vatCalculator = new VatCalculator($config);
+        $result = $vatCalculator->getTaxRateForCountry($countryCode, $company);
         $this->assertEquals(0, $result);
     }
 

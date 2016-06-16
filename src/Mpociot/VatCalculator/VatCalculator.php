@@ -511,6 +511,19 @@ class VatCalculator
 
     /**
      * Returns the tax rate for the given country code.
+     * This method is used to allow backwards compatibility.
+     *
+     * @param $countryCode
+     * @param bool $company
+     * @return float
+     */
+    public function getTaxRateForCountry($countryCode, $company = false)
+    {
+        return $this->getTaxRateForLocation($countryCode, null, $company);
+    }
+
+    /**
+     * Returns the tax rate for the given country code.
      * If a postal code is provided, it will try to lookup the different
      * postal code exceptions that are possible.
      *
