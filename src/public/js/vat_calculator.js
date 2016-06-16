@@ -127,9 +127,9 @@
                 vat_number = getValue('vat-number');
             makeRequest('GET', '/vatcalculator/calculate?netPrice=' + (amount / 100) + '&country=' + country + '&postal_code=' + postal_code + '&vat_number=' + vat_number, {
                 success: function (status, response) {
-                    setHTML('total', response.gross_price.toFixed(2));
-                    setHTML('subtotal', response.net_price.toFixed(2));
-                    setHTML('taxes', response.tax_value.toFixed(2));
+                    setHTML('total', VATCalculator.formatCurrency(response.gross_price));
+                    setHTML('subtotal', VATCalculator.formatCurrency(response.net_price));
+                    setHTML('taxes', VATCalculator.formatCurrency(response.tax_value));
                     setHTML('taxrate', (100*response.tax_rate).toFixed(0));
                     if (successCallback && typeof(successCallback) === 'function') {
                         successCallback(response);
@@ -155,6 +155,15 @@
          * @type {Object}
          */
         this.calculation = {};
+
+        /**
+         * Function to use to format calculation
+         * results for HTML output.
+         * @type {Function}
+         */
+        this.currencyFormatter = function(value){
+            return value.toFixed(2);
+        };
     };
 
     Calculator.prototype = {
@@ -206,6 +215,25 @@
          */
         setSelector: function (selector) {
             return this.selector = selector;
+        },
+
+        /**
+         * Format the calculated values
+         *
+         * @param value
+         * @returns {string}
+         */
+        formatCurrency: function (value) {
+            return this.currencyFormatter(value);
+        },
+
+        /**
+         * Override the currency formatter function
+         *
+         * @param {Function} callback
+         */
+        setCurrencyFormatter: function (callback) {
+            this.currencyFormatter = callback;
         },
 
         /**
