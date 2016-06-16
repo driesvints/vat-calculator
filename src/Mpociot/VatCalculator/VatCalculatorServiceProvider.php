@@ -111,18 +111,8 @@ class VatCalculatorServiceProvider extends ServiceProvider
             'vatnumber-validator'
         );
 
-        // Registering the validator extension with the validator factory
-        $this->app['validator']->resolver(
-            function ($translator, $data, $rules, $messages, $customAttributes = []) {
-                return new VatCalculatorValidatorExtension(
-                    $translator,
-                    $data,
-                    $rules,
-                    $messages,
-                    $customAttributes
-                );
-            }
-        );
+        $this->app['validator']->extend('vat_number',
+            'Mpociot\VatCalculator\Validators\VatCalculatorValidatorExtension@validateVatNumber');
     }
 
     /**
