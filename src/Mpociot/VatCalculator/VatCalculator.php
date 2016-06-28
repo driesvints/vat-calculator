@@ -62,7 +62,7 @@ class VatCalculator
             'rate' => 0.20,
         ],
         'EL' => [ // Hellenic Republic (Greece)
-            'rate'       => 0.23,
+            'rate'       => 0.24,
             'exceptions' => [
                 'Mount Athos' => 0,
             ],
@@ -90,7 +90,7 @@ class VatCalculator
             ],
         ],
         'GR' => [ // Greece
-            'rate'       => 0.23,
+            'rate'       => 0.24,
             'exceptions' => [
                 'Mount Athos' => 0,
             ],
