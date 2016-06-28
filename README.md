@@ -91,15 +91,17 @@ To calculate the gross price use the `calculate` method with a net price and a c
 ```php
 $grossPrice = VatCalculator::calculate( 24.00, 'DE' );
 ```
-As a third parameter, you can pass in a boolean indicating wether the customer is a company or a private person. If the customer is a company, which you should check by <a href="#validate-eu-vat-numbers">validating the VAT number</a>, the net price gets returned.
+The third parameter is the postal code of the customer.
+
+As a fourth parameter, you can pass in a boolean indicating whether the customer is a company or a private person. If the customer is a company, which you should check by <a href="#validate-eu-vat-numbers">validating the VAT number</a>, the net price gets returned.
 
 
 ```php
-$grossPrice = VatCalculator::calculate( 24.00, 'DE', $isCompany = true );
+$grossPrice = VatCalculator::calculate( 24.00, 'DE', '12345', $isCompany = true );
 ```
 <a name="receive-more-information" />
 ### Receive more information
-After calculating the gross price you can extract more informations from the VatCalculator.
+After calculating the gross price you can extract more information from the VatCalculator.
 
 ```php
 $grossPrice = VatCalculator::calculate( 24.00, 'DE' ); // 28.56
