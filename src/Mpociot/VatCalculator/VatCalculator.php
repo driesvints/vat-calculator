@@ -515,6 +515,7 @@ class VatCalculator
      *
      * @param $countryCode
      * @param bool $company
+     *
      * @return float
      */
     public function getTaxRateForCountry($countryCode, $company = false)
