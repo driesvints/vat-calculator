@@ -1,5 +1,20 @@
 # Changelog
 
+#### v2.0.0 `2016-06-28`
+- VAT rate detection now supports ZIP codes, to take edge cases into consideration 
+
+#### v1.7.1 `2016-06-16`
+- Fixed bug when using multiple Validator extensions in Laravel
+
+#### v1.7.0 `2016-05-11`
+- Added Cashier 6 support
+
+#### v1.6.3 `2016-04-07`
+- Added "shouldCollectVAT" method
+
+#### v1.6.2 `2016-02-10`
+- Added polish validation rule message
+
 #### v1.6.1 `2016-01-14`
 - Added support for `vat-taxrate` as an extra field for the JS frontend integration. Thanks @orottier
 
