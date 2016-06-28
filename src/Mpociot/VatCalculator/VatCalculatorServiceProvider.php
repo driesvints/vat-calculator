@@ -12,7 +12,6 @@ namespace Mpociot\VatCalculator;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
 use Mpociot\VatCalculator\Facades\VatCalculator;
-use Mpociot\VatCalculator\Validators\VatCalculatorValidatorExtension;
 
 class VatCalculatorServiceProvider extends ServiceProvider
 {
