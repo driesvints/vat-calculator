@@ -543,7 +543,7 @@ class VatCalculator
         if (isset($this->config) && $this->config->has($taxKey)) {
             return $this->config->get($taxKey, 0);
         }
-        
+
         if (isset($this->postalCodeExceptions[$countryCode]) && $postalCode !== null) {
             foreach ($this->postalCodeExceptions[$countryCode] as $postalCodeException) {
                 if (!preg_match($postalCodeException['postalCode'], $postalCode)) {
