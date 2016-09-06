@@ -549,6 +549,28 @@ class VatCalculatorTest extends PHPUnit
         $this->assertEquals(5.28, $vatCalculator->getTaxValue());
     }
 
+    public function testPostalCodesWithoutExceptionsGetStandardRate()
+    {
+        $net = 24.00;
+        $vatCalculator = new VatCalculator();
+
+        // Invalid post code
+        $postalCode = 'IGHJ987ERT35'; 
+        $result = $vatCalculator->calculate($net, 'ES', $postalCode, false);
+        //Expect standard rate for Spain
+        $this->assertEquals(29.04, $result);
+        $this->assertEquals(0.21, $vatCalculator->getTaxRate());
+        $this->assertEquals(5.04, $vatCalculator->getTaxValue());
+		
+		// Valid UK post code
+        $postalCode = 'S1A 2AA';
+        $result = $vatCalculator->calculate($net, 'GB', $postalCode, false);
+        //Expect standard rate for UK
+        $this->assertEquals(28.80, $result);
+        $this->assertEquals(0.20, $vatCalculator->getTaxRate());
+        $this->assertEquals(4.80, $vatCalculator->getTaxValue());
+    }
+
     public function testShouldCollectVAT()
     {
         $vatCalculator = new VatCalculator();
