@@ -543,10 +543,8 @@ class VatCalculator
         if (isset($this->config) && $this->config->has($taxKey)) {
             return $this->config->get($taxKey, 0);
         }
-
-        if (!isset($this->postalCodeExceptions[$countryCode]) || $postalCode === null) {
-            return isset($this->taxRules[strtoupper($countryCode)]['rate']) ? $this->taxRules[strtoupper($countryCode)]['rate'] : 0;
-        } else {
+        
+        if (isset($this->postalCodeExceptions[$countryCode]) && $postalCode !== null) {
             foreach ($this->postalCodeExceptions[$countryCode] as $postalCodeException) {
                 if (!preg_match($postalCodeException['postalCode'], $postalCode)) {
                     continue;
@@ -557,9 +555,9 @@ class VatCalculator
 
                 return $this->taxRules[$postalCodeException['code']]['rate'];
             }
-
-            return 0;
         }
+
+        return isset($this->taxRules[strtoupper($countryCode)]['rate']) ? $this->taxRules[strtoupper($countryCode)]['rate'] : 0;
     }
 
     /**
