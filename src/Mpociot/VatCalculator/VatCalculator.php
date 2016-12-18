@@ -234,7 +234,7 @@ class VatCalculator
                 'name'       => 'Melilla',
             ],
             [
-                'postalCode' => '/^(35\d[3]|38\d[3])$/',
+                'postalCode' => '/^(35\d{3}|38\d{3})$/',
                 'code'       => 'ES',
                 'name'       => 'Canary Islands',
             ],
