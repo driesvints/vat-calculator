@@ -137,7 +137,7 @@ class VatCalculator
             ],
         ],
         'RO' => [ // Romania
-            'rate' => 0.20,
+            'rate' => 0.19,
         ],
         'SE' => [ // Sweden
             'rate' => 0.25,
