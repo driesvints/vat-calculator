@@ -344,12 +344,6 @@ class VatCalculator
         if (isset($this->config) && $this->config->has($businessCountryKey)) {
             $this->setBusinessCountryCode($this->config->get($businessCountryKey, ''));
         }
-
-        try {
-            $this->soapClient = new SoapClient(self::VAT_SERVICE_URL);
-        } catch (SoapFault $e) {
-            $this->soapClient = false;
-        }
     }
 
     /**
@@ -580,21 +574,35 @@ class VatCalculator
         $vatNumber = str_replace([' ', '-', '.', ','], '', trim($vatNumber));
         $countryCode = substr($vatNumber, 0, 2);
         $vatNumber = substr($vatNumber, 2);
-
+        $this->initSoapClient();
         $client = $this->soapClient;
         if ($client) {
             try {
                 $result = $client->checkVat([
                     'countryCode' => $countryCode,
-                    'vatNumber'   => $vatNumber,
+                    'vatNumber' => $vatNumber,
                 ]);
-
                 return $result->valid;
             } catch (SoapFault $e) {
                 return false;
             }
         }
         throw new VATCheckUnavailableException('The VAT check service is currently unavailable. Please try again later.');
+    }
+
+    /**
+     * @return void
+     */
+    public function initSoapClient()
+    {
+        if (is_object($this->soapClient) || $this->soapClient === false) {
+            return;
+        }
+        try {
+            $this->soapClient = new SoapClient(self::VAT_SERVICE_URL);
+        } catch (SoapFault $e) {
+            $this->soapClient = false;
+        }
     }
 
     /**
