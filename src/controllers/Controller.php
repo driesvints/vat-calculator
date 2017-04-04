@@ -15,9 +15,10 @@ class Controller extends BaseController
      */
     private $calculator;
 
-    public function __construct(VatCalculator $calculator)
+    public function __construct()
     {
-        $this->calculator = $calculator;
+        $config = resolve('Illuminate\Contracts\Config\Repository');
+        $this->calculator = new \Mpociot\VatCalculator\VatCalculator($config);
     }
 
     /**
