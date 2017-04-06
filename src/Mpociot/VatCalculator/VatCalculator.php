@@ -571,6 +571,24 @@ class VatCalculator
      */
     public function isValidVATNumber($vatNumber)
     {
+        $details = self::getVATDetails($vatNumber);
+        
+        if ($details) {
+            return $details->valid;
+        } else {
+            return false;
+        }
+    }
+    
+    /**
+     * @param $vatNumber
+     *
+     * @throws VATCheckUnavailableException
+     *
+     * @return object|false
+     */
+    public function getVATDetails($vatNumber)
+    {
         $vatNumber = str_replace([' ', '-', '.', ','], '', trim($vatNumber));
         $countryCode = substr($vatNumber, 0, 2);
         $vatNumber = substr($vatNumber, 2);
@@ -582,7 +600,7 @@ class VatCalculator
                     'countryCode' => $countryCode,
                     'vatNumber' => $vatNumber,
                 ]);
-                return $result->valid;
+                return $result;
             } catch (SoapFault $e) {
                 return false;
             }
