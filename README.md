@@ -31,6 +31,7 @@ VatCalculator::isValidVATNumber('NL123456789B01');
 	- [Receive more information](#receive-more-information)
 	- [Validate EU VAT numbers](#validate-eu-vat-numbers)
 		- [Laravel Validator extension](#laravel-validator-extension)
+	- [Get EU VAT number details](#vat-number-details)
 	- [Cashier integration](#cashier-integration)
 	- [Get the IP based country of your user](#get-ip-based-country)
 	- [Frontend integration - vat_calculator.js] (#frontend-integration)
@@ -131,6 +132,35 @@ This service relies on a third party SOAP API provided by the EU. If, for whatev
 ```php
 try {
 	$validVAT = VatCalculator::isValidVATNumber('NL 123456789 B01');
+} catch( VATCheckUnavailableException $e ){
+	// Please handle me
+}
+```
+
+<a name="vat-number-details" />
+### Get EU VAT number details
+
+To get the details of a VAT number, you can use the `getVATDetails` method.
+The VAT number should be in a format specified by the [VIES](http://ec.europa.eu/taxation_customs/vies/faqvies.do#item_11).
+The given VAT numbers will be truncated and non relevant characters / whitespace will automatically be removed.
+
+This service relies on a third party SOAP API provided by the EU. If, for whatever reason, this API is unavailable a `VATCheckUnavailableException` will be thrown.
+
+```php
+try {
+	$vat_details = VatCalculator::getVATDetails('NL 123456789 B01');
+	print_r($vat_details);
+	/* Outputs
+	stdClass Object
+	(
+		[countryCode] => NL
+		[vatNumber] => 123456789B01
+		[requestDate] => 2017-04-06+02:00
+		[valid] => false
+		[name] => Name of the company
+		[address] => Address of the company
+	)
+	*/
 } catch( VATCheckUnavailableException $e ){
 	// Please handle me
 }
