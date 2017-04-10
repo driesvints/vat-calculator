@@ -432,6 +432,37 @@ class VatCalculator
     }
 
     /**
+     * Calculate the VAT based on the net price, country code and indication if the
+     * customer is a company or not.
+     *
+     * @param int|float   $gross       The gross price to use for the calculation
+     * @param null|string $countryCode The country code to use for the rate lookup
+     * @param null|string $postalCode  The postal code to use for the rate exception lookup
+     * @param null|bool   $company
+     *
+     * @return float
+     */
+    public function calculateNet($gross, $countryCode = null, $postalCode = null, $company = null)
+    {
+        if ($countryCode) {
+            $this->setCountryCode($countryCode);
+        }
+        if ($postalCode) {
+            $this->setPostalCode($postalCode);
+        }
+        if (!is_null($company) && $company !== $this->isCompany()) {
+            $this->setCompany($company);
+        }
+
+        $this->value = floatval($gross);
+        $this->taxRate = $this->getTaxRateForLocation($this->getCountryCode(), $this->getPostalCode(), $this->isCompany());
+        $this->taxValue = $this->taxRate > 0 ? $this->value / (1 + $this->taxRate) * $this->taxRate : 0;
+        $this->netPrice = $this->value - $this->taxValue;
+
+        return $this->netPrice;
+    }
+
+    /**
      * @return float
      */
     public function getNetPrice()
