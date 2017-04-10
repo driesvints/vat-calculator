@@ -432,7 +432,7 @@ class VatCalculator
     }
 
     /**
-     * Calculate the VAT based on the net price, country code and indication if the
+     * Calculate the net price on the gross price, country code and indication if the
      * customer is a company or not.
      *
      * @param int|float   $gross       The gross price to use for the calculation
