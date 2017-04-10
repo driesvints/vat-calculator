@@ -45,7 +45,7 @@ VatCalculator::isValidVATNumber('NL123456789B01');
 - [Changelog](#changelog)
 - [License](#license)
 
-<a name="installation" />
+<a name="installation"></a>
 ## Installation
 
 In order to install the VAT Calculator, just run
@@ -53,7 +53,7 @@ In order to install the VAT Calculator, just run
 ```bash
 $ composer require mpociot/vat-calculator
 ```
-<a name="installation-laravel5" />
+<a name="installation-laravel5"></a>
 ### Laravel 5
 
 This package comes with a service provider, to use this package within your Laravel 5 app. Go to your `config/app.php` and add 
@@ -66,7 +66,7 @@ The `VatCalculator` Facade will be installed automatically within the Service Pr
 
 	'VatCalculator' => Mpociot\VatCalculator\Facades\VatCalculator::class
 	
-<a name="installation-standalone" />
+<a name="installation-standalone"></a>
 ### Standalone
 
 You can also use this package without Laravel. Simply create a new instance of the VAT calculator and use it.
@@ -83,9 +83,9 @@ $countryCode = $vatCalculator->getIPBasedCountry();
 $grossPrice = $vatCalculator->calculate( 49.99, 'LU' );
 ```
 
-<a name="usage" />
+<a name="usage"></a>
 ## Usage
-<a name="calculate-the-gross-price" />
+<a name="calculate-the-gross-price"></a>
 ### Calculate the gross price
 To calculate the gross price use the `calculate` method with a net price and a country code as paremeters.
 
@@ -100,7 +100,7 @@ As a fourth parameter, you can pass in a boolean indicating whether the customer
 ```php
 $grossPrice = VatCalculator::calculate( 24.00, 'DE', '12345', $isCompany = true );
 ```
-<a name="receive-more-information" />
+<a name="receive-more-information"></a>
 ### Receive more information
 After calculating the gross price you can extract more information from the VatCalculator.
 
@@ -111,7 +111,7 @@ $netPrice   = VatCalculator::getNetPrice(); // 24.00
 $taxValue   = VatCalculator::getTaxValue(); // 4.56
 ```
 
-<a name="validate-eu-vat-numbers" />
+<a name="validate-eu-vat-numbers"></a>
 ### Validate EU VAT numbers
 
 Prior to validating your customers VAT numbers, you can use the `shouldCollectVAT` method to check if the country code requires you to collect VAT
@@ -137,7 +137,7 @@ try {
 }
 ```
 
-<a name="vat-number-details" />
+<a name="vat-number-details"></a>
 ### Get EU VAT number details
 
 To get the details of a VAT number, you can use the `getVATDetails` method.
@@ -166,7 +166,7 @@ try {
 }
 ```
 
-<a name="laravel-validator-extension" />
+<a name="laravel-validator-extension"></a>
 ### Laravel Validator Extension
 If you want to include the VAT number validation directly in your existing Form Requests / Validations, use the `vat_number` validtion rule.
 
@@ -184,7 +184,7 @@ $validator = Validator::make(Input::all(), $rules);
 
 **Important:** The validator extension returns `false` when the VAT ID Check SOAP API is unavailable.
 
-<a name="cashier-integration" />
+<a name="cashier-integration"></a>
 ### Cashier integration
 If you want to use this package in combination with [Laravel Cashier](https://github.com/laravel/cashier/) you can let your billable model use the `BillableWithinTheEU` trait. Because this trait overrides the `getTaxPercent` method of the `Billable` trait, we have to explicitly tell our model to do so.
 
@@ -229,7 +229,7 @@ $user->useTaxFrom('NL')->asBusiness();
 $user->subscription('monthly')->create($creditCardToken);
 ```
 
-<a name="get-ip-based-country" />
+<a name="get-ip-based-country"></a>
 ## Get the IP based Country of your user(s)
 Right now you'll need to show your users a way to select their country - probably a drop down - to use this country for the VAT calculation.
 
@@ -241,15 +241,11 @@ $countryCode = VatCalculator::getIPBasedCountry();
 
 The `$countryCode` will either be `false`, if the service is unavailable, or the country couldn't be looked up. Otherwise the variable contains the two-letter country code, which can be used to prefill the user selection.
 
-<a name="frontend-integration" />
+<a name="frontend-integration"></a>
 ## Frontend integration &mdash; vat_calculator.js
 Phew - so you know how to use this class, built your fancy payment form and now...? Well - you want to display the correct prices to your users and want it to update dynamically. So go ahead, add some routes, write some Javascript and in no time you'll be up and running, right?
 
 Or you use the **built in routes** and **vat_calculator.js** library.
-
-<div style="text-align:center">
-<img src="http://www.titaniumcontrols.com/git/vat_calc_js.gif" alt="VAT Calculator JS" />
-</div>
 
 The VAT Calculator JS library will automatically: 
 
@@ -267,7 +263,7 @@ $ php artisan vendor:publish --provider="Mpociot\VatCalculator\VatCalculatorServ
 
 Now you have a file called `vat_calculator.js` in your `public/js` folder.
 
-<a name="payment-form-integration" />
+<a name="payment-form-integration"></a>
 ### Integrating it in your payment form
 
 Add the published javascript file to your payment form.
@@ -332,7 +328,7 @@ So your form will look like this:
         </div>
 </form>
 ```
-<a name="extra-fields" />
+<a name="extra-fields"></a>
 ### Extra fields
 
 To display the live tax calculation, you can use the classes `vat-subtotal`, `vat-taxrate`, `vat-taxes` and `vat-total` on any DOM element and VAT Calculator JS will automatically set the inner HTML content for you.
@@ -346,13 +342,13 @@ Example:
 <strong>Total</strong>: € <span class="vat-total"></span>
 ```
 
-<a name="form-attributes" />
+<a name="form-attributes"></a>
 ### Form attributes
 Attribute  | Description | Required
 ------------- | ------------- | ----------
 `data-amount`  | Use this attribute on the `form` you want to use for live calculation. It's the price in **cent** used for the calculation. | Yes
 
-<a name="form-fields" />
+<a name="form-fields"></a>
 ### Form fields
 In order to calculate the right taxes, you need to add some extra inputs to your payment form.
 All these fields need to have a `data-vat` attribute. You need to include at least the `country`.
@@ -363,7 +359,7 @@ Attribute  | Description | Required
 `postal-code`  | Customer's postal code | No **Highly recommended**
 `vat-number`  | Billing VAT number | No
 
-<a name="advanced-usage" />
+<a name="advanced-usage"></a>
 ### Advanced usage
 
 #### Use a different form selector
@@ -384,7 +380,7 @@ VATCalculator.setCurrencyFormatter(function(value){
 #### Trigger calculation manually
 Call `VATCalculator.calculate()` to trigger the calculation manually. For example when you change the `data-amount` attribute on your form.
 
-<a name="preconfigured-routes" />
+<a name="preconfigured-routes"></a>
 ### Preconfigured routes
 
 In order for VAT Calculator JS to work properly, these routes will be added to your application. If you don't want to use the Javascript library, you can of course disable the routes in the <a href="#configuration">configuration</a> file.
@@ -396,7 +392,7 @@ Method | Route | Usage
 `GET` | `vatcalculator/validate-vat-id/{vat_id}` | Validates the given VAT ID
 `GET` | `vatcalculator/calculate` | Calculates the gross price based on the parameters: `netPrice`, `country` and `vat_number`
 
-<a name="configuration" />
+<a name="configuration"></a>
 ## Configuration
 
 By default, the VAT Calculator has all EU VAT rules predefined, so that it can easily be updated, if it changes for a specific country.
@@ -415,11 +411,11 @@ $ php artisan vendor:publish --provider="Mpociot\VatCalculator\VatCalculatorServ
 
 This will create a `vat_calculator.php` in your config directory.
 
-<a name="changelog" />
+<a name="changelog"></a>
 ## Changelog
 Please see [CHANGELOG](CHANGELOG.md) for more information.
 
 
-<a name="license" />
+<a name="license"></a>
 ## License
 This library is licensed under the MIT license. Please see [License file](LICENSE.md) for more information.
