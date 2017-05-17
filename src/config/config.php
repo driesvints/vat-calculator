@@ -47,4 +47,6 @@ return [
     |
     */
     'business_country_code' => '',
+
+    'forward_soap_faults' => true,
 ];
