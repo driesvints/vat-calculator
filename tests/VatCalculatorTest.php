@@ -413,6 +413,34 @@ class VatCalculatorTest extends PHPUnit
         $this->assertFalse($result);
     }
 
+    public function testValidateVATNumberReturnsFalseOnSoapFailureWithoutForwarding()
+    {
+        $vatCheck = $this->getMockFromWsdl(__DIR__.'/checkVatService.wsdl', 'VATService');
+        $vatCheck->expects($this->any())
+            ->method('checkVat')
+            ->with([
+                'countryCode' => 'So',
+                'vatNumber'   => 'meInvalidNumber',
+            ])
+            ->willThrowException(new \SoapFault('Server', 'Something went wrong'));
+
+        $config = m::mock('Illuminate\Contracts\Config\Repository');
+        $config->shouldReceive('has')
+            ->once()
+            ->with('vat_calculator.business_country_code')
+            ->andReturn(false);
+        $config->shouldReceive('get')
+            ->once()
+            ->with('vat_calculator.forward_soap_faults')
+            ->andReturn(false);
+
+        $vatNumber = 'SomeInvalidNumber';
+        $vatCalculator = new VatCalculator($config);
+        $vatCalculator->setSoapClient($vatCheck);
+        $result = $vatCalculator->isValidVATNumber($vatNumber);
+        $this->assertFalse($result);
+    }
+
     public function testValidateVATNumberThrowsExceptionOnSoapFailure()
     {
         $this->setExpectedException(\Mpociot\VatCalculator\Exceptions\VATCheckUnavailableException::class);
