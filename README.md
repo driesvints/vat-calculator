@@ -197,6 +197,9 @@ class User extends Model implements BillableContract
 {
     use Billable, BillableWithinTheEU {
         BillableWithinTheEU::getTaxPercent insteadof Billable;
+	
+	// for Cashier > 6.0 use the following instead (taxPercentage instead of getTaxPercent)
+	// BillableWithinTheEU::taxPercentage insteadof Billable;
     }
 
     protected $dates = ['trial_ends_at', 'subscription_ends_at'];
