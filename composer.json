@@ -31,5 +31,15 @@
     "minimum-stability": "stable",
     "scripts": {
         "test": "phpunit"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Mpociot\\VatCalculator\\VatCalculatorServiceProvider"
+            ],
+            "aliases": {
+                "VatCalculator": "Mpociot\\VatCalculator\\Facades\\VatCalculator"
+            }
+        }
     }
 }
