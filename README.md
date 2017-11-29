@@ -196,7 +196,7 @@ use Laravel\Cashier\Contracts\Billable as BillableContract;
 class User extends Model implements BillableContract
 {
     use Billable, BillableWithinTheEU {
-        BillableWithinTheEU::getTaxPercent insteadof Billable;
+        BillableWithinTheEU::taxPercentage insteadof Billable;
     }
 
     protected $dates = ['trial_ends_at', 'subscription_ends_at'];
