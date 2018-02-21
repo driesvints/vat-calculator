@@ -7,6 +7,7 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Response;
 use Mpociot\VatCalculator\Exceptions\VATCheckUnavailableException;
 use Mpociot\VatCalculator\VatCalculator;
+use Illuminate\Contracts\Config\Repository as ConfigRepository;
 
 class Controller extends BaseController
 {
@@ -15,10 +16,9 @@ class Controller extends BaseController
      */
     private $calculator;
 
-    public function __construct()
+    public function __construct(ConfigRepository $configRepository)
     {
-        $config = resolve('Illuminate\Contracts\Config\Repository');
-        $this->calculator = new \Mpociot\VatCalculator\VatCalculator($config);
+        $this->calculator = new \Mpociot\VatCalculator\VatCalculator($configRepository);
     }
 
     /**
