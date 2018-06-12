@@ -125,6 +125,10 @@ class VatCalculator
         ],
         'NL' => [ // Netherlands
             'rate' => 0.21,
+            'rates' => [
+                'high' => 0.21,
+                'low' => 0.06,
+            ],
         ],
         'PL' => [ // Poland
             'rate' => 0.23,
@@ -409,10 +413,11 @@ class VatCalculator
      * @param null|string $countryCode The country code to use for the rate lookup
      * @param null|string $postalCode  The postal code to use for the rate exception lookup
      * @param null|bool   $company
+     * @param null|string $type        The type can be low or high
      *
      * @return float
      */
-    public function calculate($netPrice, $countryCode = null, $postalCode = null, $company = null)
+    public function calculate($netPrice, $countryCode = null, $postalCode = null, $company = null, $type = null)
     {
         if ($countryCode) {
             $this->setCountryCode($countryCode);
@@ -424,7 +429,7 @@ class VatCalculator
             $this->setCompany($company);
         }
         $this->netPrice = floatval($netPrice);
-        $this->taxRate = $this->getTaxRateForLocation($this->getCountryCode(), $this->getPostalCode(), $this->isCompany());
+        $this->taxRate = $this->getTaxRateForLocation($this->getCountryCode(), $this->getPostalCode(), $this->isCompany(), $type);
         $this->taxValue = $this->taxRate * $this->netPrice;
         $this->value = $this->netPrice + $this->taxValue;
 
@@ -439,10 +444,11 @@ class VatCalculator
      * @param null|string $countryCode The country code to use for the rate lookup
      * @param null|string $postalCode  The postal code to use for the rate exception lookup
      * @param null|bool   $company
+     * @param null|string $type        The type can be low or high
      *
      * @return float
      */
-    public function calculateNet($gross, $countryCode = null, $postalCode = null, $company = null)
+    public function calculateNet($gross, $countryCode = null, $postalCode = null, $company = null, $type = null)
     {
         if ($countryCode) {
             $this->setCountryCode($countryCode);
@@ -455,7 +461,7 @@ class VatCalculator
         }
 
         $this->value = floatval($gross);
-        $this->taxRate = $this->getTaxRateForLocation($this->getCountryCode(), $this->getPostalCode(), $this->isCompany());
+        $this->taxRate = $this->getTaxRateForLocation($this->getCountryCode(), $this->getPostalCode(), $this->isCompany(), $type);
         $this->taxValue = $this->taxRate > 0 ? $this->value / (1 + $this->taxRate) * $this->taxRate : 0;
         $this->netPrice = $this->value - $this->taxValue;
 
@@ -540,12 +546,13 @@ class VatCalculator
      *
      * @param $countryCode
      * @param bool $company
+     * @param string $type
      *
      * @return float
      */
-    public function getTaxRateForCountry($countryCode, $company = false)
+    public function getTaxRateForCountry($countryCode, $company = false, $type = null)
     {
-        return $this->getTaxRateForLocation($countryCode, null, $company);
+        return $this->getTaxRateForLocation($countryCode, null, $company, $type);
     }
 
     /**
@@ -556,10 +563,11 @@ class VatCalculator
      * @param string      $countryCode
      * @param string|null $postalCode
      * @param bool|false  $company
+     * @param string|null $type
      *
      * @return float
      */
-    public function getTaxRateForLocation($countryCode, $postalCode = null, $company = false)
+    public function getTaxRateForLocation($countryCode, $postalCode = null, $company = false, $type = null)
     {
         if ($company && strtoupper($countryCode) !== strtoupper($this->businessCountryCode)) {
             return 0;
@@ -580,6 +588,10 @@ class VatCalculator
 
                 return $this->taxRules[$postalCodeException['code']]['rate'];
             }
+        }
+
+        if ($type !== null) {
+            return isset($this->taxRules[strtoupper($countryCode)]['rates'][$type]) ? $this->taxRules[strtoupper($countryCode)]['rates'][$type] : 0;
         }
 
         return isset($this->taxRules[strtoupper($countryCode)]['rate']) ? $this->taxRules[strtoupper($countryCode)]['rate'] : 0;
@@ -603,14 +615,14 @@ class VatCalculator
     public function isValidVATNumber($vatNumber)
     {
         $details = self::getVATDetails($vatNumber);
-        
+
         if ($details) {
             return $details->valid;
         } else {
             return false;
         }
     }
-    
+
     /**
      * @param $vatNumber
      *

@@ -895,4 +895,32 @@ class VatCalculatorTest extends PHPUnit
         $this->assertEquals(0, $vatCalculator->getTaxRate());
         $this->assertEquals(0, $vatCalculator->getTaxValue());
     }
+
+    public function testCalculateHighVatType()
+    {
+        $gross = 24.00;
+        $countryCode = 'NL';
+        $company = false;
+        $type = 'high';
+        $postalCode = null;
+
+        $vatCalculator = new VatCalculator();
+        $result = $vatCalculator->calculate($gross, $countryCode, $postalCode, $company, $type);
+
+        $this->assertEquals(29.04, $result);
+    }
+
+    public function testCalculateLowVatType()
+    {
+        $gross = 24.00;
+        $countryCode = 'NL';
+        $company = false;
+        $type = 'low';
+        $postalCode = null;
+
+        $vatCalculator = new VatCalculator();
+        $result = $vatCalculator->calculate($gross, $countryCode, $postalCode, $company, $type);
+
+        $this->assertEquals(25.44, $result);
+    }
 }
