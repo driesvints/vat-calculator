@@ -24,7 +24,6 @@ VatCalculator::isValidVATNumber('NL123456789B01');
 ## Contents
 
 - [Installation](#installation)
-	- [Laravel 5](#installation-laravel5)
 	- [Standalone](#installation-standalone)
 - [Usage](#usage)
 	- [Calculate the gross price](#calculate-the-gross-price)
@@ -53,18 +52,6 @@ In order to install the VAT Calculator, just run
 ```bash
 $ composer require mpociot/vat-calculator
 ```
-<a name="installation-laravel5"></a>
-### Laravel 5
-
-This package comes with a service provider, to use this package within your Laravel 5 app. Go to your `config/app.php` and add 
-
-    Mpociot\VatCalculator\VatCalculatorServiceProvider::class
-    
-to the `providers` array.
-    
-The `VatCalculator` Facade will be installed automatically within the Service Provider, but if you want you can of course add it to the `aliases` array (Useful for the IDE helper).
-
-	'VatCalculator' => Mpociot\VatCalculator\Facades\VatCalculator::class
 	
 <a name="installation-standalone"></a>
 ### Standalone
