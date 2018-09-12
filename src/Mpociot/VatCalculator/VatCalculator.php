@@ -79,7 +79,15 @@ class VatCalculator
             'rate' => 0.24,
         ],
         'FR' => [ // France
-            'rate' => 0.20,
+            'rate'       => 0.20,
+            'exceptions' => [
+                // Overseas France
+                'Reunion'    => 0.085,
+                'Martinique' => 0.085,
+                'Guadeloupe' => 0.085,
+                'Guyane'     => 0,
+                'Mayotte'    => 0,
+            ],
         ],
         'GB' => [ // United Kingdom
             'rate'       => 0.20,
@@ -241,6 +249,33 @@ class VatCalculator
                 'postalCode' => '/^(35\d{3}|38\d{3})$/',
                 'code'       => 'ES',
                 'name'       => 'Canary Islands',
+            ],
+        ],
+        'FR' => [
+            [
+                'postalCode' => '/^971\d{2,}$/',
+                'code'       => 'ES',
+                'name'       => 'Guadeloupe',
+            ],
+            [
+                'postalCode' => '/^972\d{2,}$/',
+                'code'       => 'FR',
+                'name'       => 'Martinique',
+            ],
+            [
+                'postalCode' => '/^973\d{2,}$/',
+                'code'       => 'ES',
+                'name'       => 'Guyane',
+            ],
+            [
+                'postalCode' => '/^974\d{2,}$/',
+                'code'       => 'FR',
+                'name'       => 'Reunion',
+            ],
+            [
+                'postalCode' => '/^976\d{2,}$/',
+                'code'       => 'ES',
+                'name'       => 'Mayotte',
             ],
         ],
         'GB' => [
