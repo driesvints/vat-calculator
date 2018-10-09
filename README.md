@@ -374,7 +374,7 @@ In order for VAT Calculator JS to work properly, these routes will be added to y
 
 Method | Route | Usage
 -------|-------|-------
-`GET` | `vatcalculator/tax-rate-for-country/{country}/{postal-code}` | Returns the VAT / tax rate for the given country (2-letter ISO code).
+`GET` | `vatcalculator/tax-rate-for-location/{country}/{postal-code}` | Returns the VAT / tax rate for the given country (2-letter ISO code).
 `GET` | `vatcalculator/country-code` | Returns the 2-letter ISO code based from the IP address.
 `GET` | `vatcalculator/validate-vat-id/{vat_id}` | Validates the given VAT ID
 `GET` | `vatcalculator/calculate` | Calculates the gross price based on the parameters: `netPrice`, `country` and `vat_number`
