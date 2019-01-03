@@ -162,6 +162,16 @@ class VatCalculator
         ],
 
         // Non-EU with their own VAT requirements
+        'CH' => [ // Switzerland
+            'rate' => 0.077,
+            'rates' => [
+                'high' => 0.077,
+                'low' => 0.025,
+            ],
+        ],
+        'TR' => [ // Turkey
+            'rate' => 0.18,
+        ],
         'NO' => [ // Norway
             'rate' => 0.25,
         ],
