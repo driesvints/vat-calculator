@@ -127,7 +127,7 @@ class VatCalculator
             'rate' => 0.21,
             'rates' => [
                 'high' => 0.21,
-                'low' => 0.06,
+                'low' => 0.09,
             ],
         ],
         'PL' => [ // Poland
