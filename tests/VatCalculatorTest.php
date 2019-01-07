@@ -921,6 +921,6 @@ class VatCalculatorTest extends PHPUnit
         $vatCalculator = new VatCalculator();
         $result = $vatCalculator->calculate($gross, $countryCode, $postalCode, $company, $type);
 
-        $this->assertEquals(25.44, $result);
+        $this->assertEquals(26.16, $result);
     }
 }
