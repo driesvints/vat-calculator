@@ -383,6 +383,11 @@ class VatCalculator
     protected $businessCountryCode;
 
     /**
+     * @var bool
+     */
+    protected $forwardSoapFaults = false;
+
+    /**
      * @param \Illuminate\Contracts\Config\Repository
      */
     public function __construct($config = null)
@@ -392,6 +397,10 @@ class VatCalculator
         $businessCountryKey = 'vat_calculator.business_country_code';
         if (isset($this->config) && $this->config->has($businessCountryKey)) {
             $this->setBusinessCountryCode($this->config->get($businessCountryKey, ''));
+        }
+
+        if (isset($this->config) && $this->config->get('vat_calculator.forward_soap_faults', false)) {
+            $this->forwardSoapFaults();
         }
     }
 
@@ -585,6 +594,11 @@ class VatCalculator
         $this->businessCountryCode = $businessCountryCode;
     }
 
+    public function forwardSoapFaults()
+    {
+        $this->forwardSoapFaults = true;
+    }
+
     /**
      * Returns the tax rate for the given country code.
      * This method is used to allow backwards compatibility.
@@ -690,7 +704,7 @@ class VatCalculator
                 ]);
                 return $result;
             } catch (SoapFault $e) {
-                if (isset($this->config) && $this->config->get('vat_calculator.forward_soap_faults')) {
+                if ($this->forwardSoapFaults) {
                     throw new VATCheckUnavailableException($e->getMessage(), $e->getCode(), $e->getPrevious());
                 }
 

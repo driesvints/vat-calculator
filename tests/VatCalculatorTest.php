@@ -23,6 +23,11 @@ class VatCalculatorTest extends PHPUnit
     {
         $config = m::mock('Illuminate\Contracts\Config\Repository');
 
+        $config->shouldReceive('get')
+            ->once()
+            ->with('vat_calculator.forward_soap_faults', false)
+            ->andReturn(false);
+
         $config->shouldReceive('has')
             ->once()
             ->with('vat_calculator.business_country_code')
@@ -57,6 +62,11 @@ class VatCalculatorTest extends PHPUnit
         $config = m::mock('Illuminate\Contracts\Config\Repository');
         $config->shouldReceive('get')
             ->never();
+
+        $config->shouldReceive('get')
+            ->once()
+            ->with('vat_calculator.forward_soap_faults', false)
+            ->andReturn(false);
 
         $config->shouldReceive('has')
             ->once()
@@ -100,6 +110,11 @@ class VatCalculatorTest extends PHPUnit
             ->with($taxKey, 0)
             ->andReturn(0.50);
 
+        $config->shouldReceive('get')
+            ->once()
+            ->with('vat_calculator.forward_soap_faults', false)
+            ->andReturn(false);
+
         $config->shouldReceive('has')
             ->once()
             ->with($taxKey)
@@ -127,6 +142,11 @@ class VatCalculatorTest extends PHPUnit
             ->once()
             ->with('vat_calculator.rules.'.$countryCode, 0)
             ->andReturn(0.19);
+
+        $config->shouldReceive('get')
+            ->once()
+            ->with('vat_calculator.forward_soap_faults', false)
+            ->andReturn(false);
 
         $config->shouldReceive('has')
             ->once()
@@ -168,6 +188,11 @@ class VatCalculatorTest extends PHPUnit
             ->with('vat_calculator.rules.'.$countryCode, 0)
             ->andReturn(0.19);
 
+        $config->shouldReceive('get')
+            ->once()
+            ->with('vat_calculator.forward_soap_faults', false)
+            ->andReturn(false);
+
         $config->shouldReceive('has')
             ->once()
             ->with('vat_calculator.rules.'.$countryCode)
@@ -198,6 +223,11 @@ class VatCalculatorTest extends PHPUnit
         $config->shouldReceive('get')
             ->never();
 
+        $config->shouldReceive('get')
+            ->once()
+            ->with('vat_calculator.forward_soap_faults', false)
+            ->andReturn(false);
+
         $config->shouldReceive('has')
             ->once()
             ->with('vat_calculator.business_country_code')
@@ -219,6 +249,11 @@ class VatCalculatorTest extends PHPUnit
         $config = m::mock('Illuminate\Contracts\Config\Repository');
         $config->shouldReceive('get')
             ->never();
+
+        $config->shouldReceive('get')
+            ->once()
+            ->with('vat_calculator.forward_soap_faults', false)
+            ->andReturn(false);
 
         $config->shouldReceive('has')
             ->once()
@@ -244,6 +279,11 @@ class VatCalculatorTest extends PHPUnit
         $config->shouldReceive('get')
             ->never();
 
+        $config->shouldReceive('get')
+            ->once()
+            ->with('vat_calculator.forward_soap_faults', false)
+            ->andReturn(false);
+
         $config->shouldReceive('has')
             ->once()
             ->with('vat_calculator.business_country_code')
@@ -267,6 +307,11 @@ class VatCalculatorTest extends PHPUnit
             ->once()
             ->with('vat_calculator.rules.'.$countryCode, 0)
             ->andReturn(0.19);
+
+        $config->shouldReceive('get')
+            ->once()
+            ->with('vat_calculator.forward_soap_faults', false)
+            ->andReturn(false);
 
         $config->shouldReceive('has')
             ->once()
@@ -293,6 +338,11 @@ class VatCalculatorTest extends PHPUnit
             ->with('vat_calculator.rules.'.$countryCode, 0)
             ->andReturn(0.19);
 
+        $config->shouldReceive('get')
+            ->once()
+            ->with('vat_calculator.forward_soap_faults', false)
+            ->andReturn(false);
+
         $config->shouldReceive('has')
             ->once()
             ->with('vat_calculator.rules.'.$countryCode)
@@ -317,6 +367,11 @@ class VatCalculatorTest extends PHPUnit
         $config->shouldReceive('get')
             ->never();
 
+        $config->shouldReceive('get')
+            ->once()
+            ->with('vat_calculator.forward_soap_faults', false)
+            ->andReturn(false);
+
         $config->shouldReceive('has')
             ->once()
             ->with('vat_calculator.business_country_code')
@@ -336,6 +391,11 @@ class VatCalculatorTest extends PHPUnit
         $config->shouldReceive('get')
             ->never();
 
+        $config->shouldReceive('get')
+            ->once()
+            ->with('vat_calculator.forward_soap_faults', false)
+            ->andReturn(false);
+
         $config->shouldReceive('has')
             ->once()
             ->with('vat_calculator.business_country_code')
@@ -349,6 +409,11 @@ class VatCalculatorTest extends PHPUnit
     public function testCanValidateValidVATNumber()
     {
         $config = m::mock('Illuminate\Contracts\Config\Repository');
+
+        $config->shouldReceive('get')
+            ->once()
+            ->with('vat_calculator.forward_soap_faults', false)
+            ->andReturn(false);
 
         $config->shouldReceive('has')
             ->once()
@@ -431,7 +496,7 @@ class VatCalculatorTest extends PHPUnit
             ->andReturn(false);
         $config->shouldReceive('get')
             ->once()
-            ->with('vat_calculator.forward_soap_faults')
+            ->with('vat_calculator.forward_soap_faults', false)
             ->andReturn(false);
 
         $vatNumber = 'SomeInvalidNumber';
@@ -460,7 +525,7 @@ class VatCalculatorTest extends PHPUnit
             ->andReturn(false);
         $config->shouldReceive('get')
             ->once()
-            ->with('vat_calculator.forward_soap_faults')
+            ->with('vat_calculator.forward_soap_faults', false)
             ->andReturn(true);
 
         $vatNumber = 'SomeInvalidNumber';
@@ -530,6 +595,11 @@ class VatCalculatorTest extends PHPUnit
             ->once()
             ->with('vat_calculator.business_country_code', '')
             ->andReturn($countryCode);
+
+        $config->shouldReceive('get')
+            ->once()
+            ->with('vat_calculator.forward_soap_faults', false)
+            ->andReturn(false);
 
         $vatCalculator = new VatCalculator($config);
         $result = $vatCalculator->calculate($net, $countryCode, null, true);
@@ -652,6 +722,11 @@ class VatCalculatorTest extends PHPUnit
             ->with('vat_calculator.business_country_code')
             ->andReturn(false);
 
+        $config->shouldReceive('get')
+            ->once()
+            ->with('vat_calculator.forward_soap_faults', false)
+            ->andReturn(false);
+
         $vatCalculator = new VatCalculator($config);
         $this->assertTrue($vatCalculator->shouldCollectVAT($countryCode));
     }
@@ -659,6 +734,11 @@ class VatCalculatorTest extends PHPUnit
     public function testCalculateNetPriceWithoutCountry()
     {
         $config = m::mock('Illuminate\Contracts\Config\Repository');
+
+        $config->shouldReceive('get')
+            ->once()
+            ->with('vat_calculator.forward_soap_faults', false)
+            ->andReturn(false);
 
         $config->shouldReceive('has')
             ->once()
@@ -694,6 +774,11 @@ class VatCalculatorTest extends PHPUnit
         $config = m::mock('Illuminate\Contracts\Config\Repository');
         $config->shouldReceive('get')
             ->never();
+
+        $config->shouldReceive('get')
+            ->once()
+            ->with('vat_calculator.forward_soap_faults', false)
+            ->andReturn(false);
 
         $config->shouldReceive('has')
             ->once()
@@ -737,6 +822,11 @@ class VatCalculatorTest extends PHPUnit
             ->with($taxKey, 0)
             ->andReturn(0.50);
 
+        $config->shouldReceive('get')
+            ->once()
+            ->with('vat_calculator.forward_soap_faults', false)
+            ->andReturn(false);
+
         $config->shouldReceive('has')
             ->once()
             ->with($taxKey)
@@ -764,6 +854,11 @@ class VatCalculatorTest extends PHPUnit
             ->once()
             ->with('vat_calculator.rules.'.$countryCode, 0)
             ->andReturn(0.19);
+
+        $config->shouldReceive('get')
+            ->once()
+            ->with('vat_calculator.forward_soap_faults', false)
+            ->andReturn(false);
 
         $config->shouldReceive('has')
             ->once()
@@ -806,6 +901,11 @@ class VatCalculatorTest extends PHPUnit
             ->with('vat_calculator.rules.'.$countryCode, 0)
             ->andReturn(0.19);
 
+        $config->shouldReceive('get')
+            ->once()
+            ->with('vat_calculator.forward_soap_faults', false)
+            ->andReturn(false);
+
         $config->shouldReceive('has')
             ->once()
             ->with('vat_calculator.rules.'.$countryCode)
@@ -836,6 +936,11 @@ class VatCalculatorTest extends PHPUnit
         $config->shouldReceive('get')
             ->never();
 
+        $config->shouldReceive('get')
+            ->once()
+            ->with('vat_calculator.forward_soap_faults', false)
+            ->andReturn(false);
+
         $config->shouldReceive('has')
             ->once()
             ->with('vat_calculator.business_country_code')
@@ -857,6 +962,11 @@ class VatCalculatorTest extends PHPUnit
         $config = m::mock('Illuminate\Contracts\Config\Repository');
         $config->shouldReceive('get')
             ->never();
+
+        $config->shouldReceive('get')
+            ->once()
+            ->with('vat_calculator.forward_soap_faults', false)
+            ->andReturn(false);
 
         $config->shouldReceive('has')
             ->once()
@@ -881,6 +991,11 @@ class VatCalculatorTest extends PHPUnit
         $config = m::mock('Illuminate\Contracts\Config\Repository');
         $config->shouldReceive('get')
             ->never();
+
+        $config->shouldReceive('get')
+            ->once()
+            ->with('vat_calculator.forward_soap_faults', false)
+            ->andReturn(false);
 
         $config->shouldReceive('has')
             ->once()
