@@ -677,7 +677,7 @@ class VatCalculator
      */
     public function getVATDetails($vatNumber)
     {
-        $vatNumber = str_replace([' ', '-', '.', ','], '', trim($vatNumber));
+        $vatNumber = str_replace([' ', "\xC2\xA0", "\xA0", '-', '.', ','], '', trim($vatNumber));
         $countryCode = substr($vatNumber, 0, 2);
         $vatNumber = substr($vatNumber, 2);
         $this->initSoapClient();
