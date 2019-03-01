@@ -264,7 +264,7 @@ class VatCalculator
         'FR' => [
             [
                 'postalCode' => '/^971\d{2,}$/',
-                'code'       => 'ES',
+                'code'       => 'FR',
                 'name'       => 'Guadeloupe',
             ],
             [
@@ -274,7 +274,7 @@ class VatCalculator
             ],
             [
                 'postalCode' => '/^973\d{2,}$/',
-                'code'       => 'ES',
+                'code'       => 'FR',
                 'name'       => 'Guyane',
             ],
             [
@@ -284,7 +284,7 @@ class VatCalculator
             ],
             [
                 'postalCode' => '/^976\d{2,}$/',
-                'code'       => 'ES',
+                'code'       => 'FR',
                 'name'       => 'Mayotte',
             ],
         ],
