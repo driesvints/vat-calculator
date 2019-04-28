@@ -264,7 +264,7 @@ class VatCalculator
         'FR' => [
             [
                 'postalCode' => '/^971\d{2,}$/',
-                'code'       => 'FR',
+                'code'       => 'ES',
                 'name'       => 'Guadeloupe',
             ],
             [
@@ -274,7 +274,7 @@ class VatCalculator
             ],
             [
                 'postalCode' => '/^973\d{2,}$/',
-                'code'       => 'FR',
+                'code'       => 'ES',
                 'name'       => 'Guyane',
             ],
             [
@@ -284,7 +284,7 @@ class VatCalculator
             ],
             [
                 'postalCode' => '/^976\d{2,}$/',
-                'code'       => 'FR',
+                'code'       => 'ES',
                 'name'       => 'Mayotte',
             ],
         ],
@@ -652,14 +652,15 @@ class VatCalculator
 
     /**
      * @param $vatNumber
+     * @param $requestorVatNumber
      *
      * @throws VATCheckUnavailableException
      *
      * @return bool
      */
-    public function isValidVATNumber($vatNumber)
+    public function isValidVATNumber($vatNumber, $requestorVatNumber = null)
     {
-        $details = self::getVATDetails($vatNumber);
+        $details = self::getVATDetails($vatNumber, $requestorVatNumber);
 
         if ($details) {
             return $details->valid;
@@ -675,19 +676,36 @@ class VatCalculator
      *
      * @return object|false
      */
-    public function getVATDetails($vatNumber)
+    public function getVATDetails($vatNumber, $requestorVat = null)
     {
         $vatNumber = str_replace([' ', '-', '.', ','], '', trim($vatNumber));
         $countryCode = substr($vatNumber, 0, 2);
         $vatNumber = substr($vatNumber, 2);
+
+        if(!$requestorVat) {
+            $requestorVat = $this->config->get('vat_calculator.business_vat_number');
+        }
+
+        $requestorCountryCode = substr($requestorVat, 0, 2);
+        $requestorVatNumber = substr($requestorVat, 2);
+
+        //dd('test' . $requestorVatNumber);
+
         $this->initSoapClient();
         $client = $this->soapClient;
         if ($client) {
             try {
-                $result = $client->checkVat([
+                $result = $client->checkVatApprox([
                     'countryCode' => $countryCode,
                     'vatNumber' => $vatNumber,
+                    'requesterCountryCode' => $requestorCountryCode,
+                    'requesterVatNumber' => $requestorVatNumber
                 ]);
+
+                // ensure backwards compatibility when moving from checkVat service to checkVatApprox service
+                $result->name = $result->traderName;
+                $result->address = $result->traderAddress;
+
                 return $result;
             } catch (SoapFault $e) {
                 if (isset($this->config) && $this->config->get('vat_calculator.forward_soap_faults')) {
