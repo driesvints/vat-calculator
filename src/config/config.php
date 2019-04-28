@@ -48,5 +48,17 @@ return [
     */
     'business_country_code' => '',
 
+    /*
+    |--------------------------------------------------------------------------
+    | Business VAT number
+    |--------------------------------------------------------------------------
+    |
+    | If you want VIES to return a request identifier for logging purposes,
+    | you need to enter your VAT number here to have it included in the requests
+    | to the VIES validation service.
+    |
+    */
+    'business_vat_number' => '',
+
     'forward_soap_faults' => false,
 ];
