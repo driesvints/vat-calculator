@@ -690,8 +690,6 @@ class VatCalculator
         $requestorCountryCode = substr($requestorVat, 0, 2);
         $requestorVatNumber = substr($requestorVat, 2);
 
-        //dd('test' . $requestorVatNumber);
-
         $this->initSoapClient();
         $client = $this->soapClient;
         if ($client) {
