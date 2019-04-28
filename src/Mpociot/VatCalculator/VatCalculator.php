@@ -671,6 +671,7 @@ class VatCalculator
 
     /**
      * @param $vatNumber
+     * @param $requestorVat
      *
      * @throws VATCheckUnavailableException
      *
