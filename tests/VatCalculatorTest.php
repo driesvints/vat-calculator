@@ -492,7 +492,7 @@ class VatCalculatorTest extends PHPUnit
 
     public function testCanResolveInvalidIPToCountry()
     {
-        self::$file_get_contents_result = '0';
+        self::$file_get_contents_result = false;
         $vatCalculator = new VatCalculator();
         $country = $vatCalculator->getIPBasedCountry();
         $this->assertFalse($country);
