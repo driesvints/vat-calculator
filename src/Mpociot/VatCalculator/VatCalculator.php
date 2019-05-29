@@ -17,7 +17,7 @@ class VatCalculator
     /**
      * We're using the free ip2c service to lookup IP 2 country.
      */
-    const GEOCODE_SERVICE_URL = 'https://ip2c.org/';
+    const GEOCODE_SERVICE_URL = 'https://api.ip2country.info/ip?';
 
     protected $soapClient;
 
