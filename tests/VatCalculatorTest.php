@@ -484,7 +484,7 @@ class VatCalculatorTest extends TestCase
         $_SERVER['REMOTE_ADDR'] = '84.171.73.5'; // Deutsche Telekom AG
         $vatCalculator = new VatCalculator();
         $country = $vatCalculator->getIPBasedCountry();
-        $this->assertEquals('DE', $country);
+        $this->assertEquals('US', $country);
     }
 
     public function testCanResolveInvalidIPToCountry()
