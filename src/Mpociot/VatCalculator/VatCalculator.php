@@ -425,15 +425,13 @@ class VatCalculator
         $ip = $this->getClientIP();
         $url = self::GEOCODE_SERVICE_URL.$ip;
         $result = file_get_contents($url);
-        switch ($result[0]) {
-            case '1':
-                $data = explode(';', $result);
-
-                return $data[1];
-                break;
-            default:
-                return false;
+        if ($result != false) {
+            $json = json_decode($result);
+            $countryCode = $json->countryCode;
+        } else {
+            $countryCode = false;
         }
+        return $countryCode;
     }
 
     /**
