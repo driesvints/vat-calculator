@@ -83,6 +83,10 @@ The third parameter is the postal code of the customer.
 
 As a fourth parameter, you can pass in a boolean indicating whether the customer is a company or a private person. If the customer is a company, which you should check by <a href="#validate-eu-vat-numbers">validating the VAT number</a>, the net price gets returned.
 
+Fifth optional parameter defines which VAT rate to use if there are more defined for the particular country (`'high'`, `'low'`, `null` - the default when just one rate is defined).
+
+The sixth parameter, optional, specifies the date to use the VAT rate for. This is needed when a country changes its VAT rate and you want to calculate a price with the previous rate. Pass `DateTime` or `DateTimeImmutable` object. Current date used when not specified.
+
 
 ```php
 $grossPrice = VatCalculator::calculate( 24.00, 'DE', '12345', $isCompany = true );

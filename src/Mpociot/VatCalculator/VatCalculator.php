@@ -49,7 +49,15 @@ class VatCalculator
             'rate' => 0.21,
         ],
         'DE' => [ // Germany
-            'rate'       => 0.16,
+            'rate'  => 0.19,
+            'since' => [
+                '2021-01-01 00:00:00 Europe/Berlin' => [
+                    'rate' => 0.19,
+                ],
+                '2020-07-01 00:00:00 Europe/Berlin' => [
+                    'rate' => 0.16,
+                ],
+            ],
             'exceptions' => [
                 'Heligoland'            => 0,
                 'Büsingen am Hochrhein' => 0,
@@ -383,6 +391,11 @@ class VatCalculator
     protected $businessCountryCode;
 
     /**
+     * @var \DateTimeImmutable
+     */
+    private $now;
+
+    /**
      * @param \Illuminate\Contracts\Config\Repository
      */
     public function __construct($config = null)
@@ -393,6 +406,8 @@ class VatCalculator
         if (isset($this->config) && $this->config->has($businessCountryKey)) {
             $this->setBusinessCountryCode($this->config->get($businessCountryKey, ''));
         }
+
+        $this->now = new \DateTimeImmutable();
     }
 
     /**
@@ -459,10 +474,11 @@ class VatCalculator
      * @param null|string $postalCode  The postal code to use for the rate exception lookup
      * @param null|bool   $company
      * @param null|string $type        The type can be low or high
+     * @param \DateTimeInterface|null $date Date to use the VAT rate for, null for current date
      *
      * @return float
      */
-    public function calculate($netPrice, $countryCode = null, $postalCode = null, $company = null, $type = null)
+    public function calculate($netPrice, $countryCode = null, $postalCode = null, $company = null, $type = null, $date = null)
     {
         if ($countryCode) {
             $this->setCountryCode($countryCode);
@@ -474,7 +490,7 @@ class VatCalculator
             $this->setCompany($company);
         }
         $this->netPrice = floatval($netPrice);
-        $this->taxRate = $this->getTaxRateForLocation($this->getCountryCode(), $this->getPostalCode(), $this->isCompany(), $type);
+        $this->taxRate = $this->getTaxRateForLocation($this->getCountryCode(), $this->getPostalCode(), $this->isCompany(), $type, $date);
         $this->taxValue = $this->taxRate * $this->netPrice;
         $this->value = $this->netPrice + $this->taxValue;
 
@@ -490,10 +506,11 @@ class VatCalculator
      * @param null|string $postalCode  The postal code to use for the rate exception lookup
      * @param null|bool   $company
      * @param null|string $type        The type can be low or high
+     * @param \DateTimeInterface|null $date Date to use the VAT rate for, null for current date
      *
      * @return float
      */
-    public function calculateNet($gross, $countryCode = null, $postalCode = null, $company = null, $type = null)
+    public function calculateNet($gross, $countryCode = null, $postalCode = null, $company = null, $type = null, $date = null)
     {
         if ($countryCode) {
             $this->setCountryCode($countryCode);
@@ -506,7 +523,7 @@ class VatCalculator
         }
 
         $this->value = floatval($gross);
-        $this->taxRate = $this->getTaxRateForLocation($this->getCountryCode(), $this->getPostalCode(), $this->isCompany(), $type);
+        $this->taxRate = $this->getTaxRateForLocation($this->getCountryCode(), $this->getPostalCode(), $this->isCompany(), $type, $date);
         $this->taxValue = $this->taxRate > 0 ? $this->value / (1 + $this->taxRate) * $this->taxRate : 0;
         $this->netPrice = $this->value - $this->taxValue;
 
@@ -609,10 +626,11 @@ class VatCalculator
      * @param string|null $postalCode
      * @param bool|false  $company
      * @param string|null $type
+     * @param \DateTimeInterface|null $date Date to use the VAT rate for, null for current date
      *
      * @return float
      */
-    public function getTaxRateForLocation($countryCode, $postalCode = null, $company = false, $type = null)
+    public function getTaxRateForLocation($countryCode, $postalCode = null, $company = false, $type = null, $date = null)
     {
         if ($company && strtoupper($countryCode) !== strtoupper($this->businessCountryCode)) {
             return 0;
@@ -631,7 +649,7 @@ class VatCalculator
                     return $this->taxRules[$postalCodeException['code']]['exceptions'][$postalCodeException['name']];
                 }
 
-                return $this->taxRules[$postalCodeException['code']]['rate'];
+                return $this->getRules($postalCodeException['code'], $date)['rate'];
             }
         }
 
@@ -639,7 +657,22 @@ class VatCalculator
             return isset($this->taxRules[strtoupper($countryCode)]['rates'][$type]) ? $this->taxRules[strtoupper($countryCode)]['rates'][$type] : 0;
         }
 
-        return isset($this->taxRules[strtoupper($countryCode)]['rate']) ? $this->taxRules[strtoupper($countryCode)]['rate'] : 0;
+        return $this->getRules(strtoupper($countryCode), $date)['rate'];
+    }
+
+    private function getRules($countryCode, $date): array
+    {
+        if (!isset($this->taxRules[$countryCode])) {
+            return ['rate' => 0];
+        }
+        if (isset($this->taxRules[$countryCode]['since'])) {
+            foreach ($this->taxRules[$countryCode]['since'] as $since => $rates) {
+                if (new \DateTimeImmutable($since) <= ($date !== null ? $date : $this->now)) {
+                    return $rates;
+                }
+            }
+        }
+        return $this->taxRules[$countryCode];
     }
 
     /**

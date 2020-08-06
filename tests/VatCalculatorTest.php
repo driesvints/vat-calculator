@@ -2,6 +2,7 @@
 
 namespace Mpociot\VatCalculator;
 
+use DateTimeImmutable;
 use Mockery as m;
 use PHPUnit_Framework_TestCase as PHPUnit;
 
@@ -69,7 +70,7 @@ class VatCalculatorTest extends PHPUnit
             ->andReturn(false);
 
         $vatCalculator = new VatCalculator($config);
-        $result = $vatCalculator->calculate($net, $countryCode);
+        $result = $vatCalculator->calculate($net, $countryCode, null, null, null, new DateTimeImmutable('2020-06-05 12:34:56'));
         $this->assertEquals(28.56, $result);
         $this->assertEquals(0.19, $vatCalculator->getTaxRate());
         $this->assertEquals(4.56, $vatCalculator->getTaxValue());
@@ -81,7 +82,7 @@ class VatCalculatorTest extends PHPUnit
         $countryCode = 'DE';
 
         $vatCalculator = new VatCalculator();
-        $result = $vatCalculator->calculate($net, $countryCode);
+        $result = $vatCalculator->calculate($net, $countryCode, null, null, null, new DateTimeImmutable('2020-06-05 12:34:56'));
         $this->assertEquals(28.56, $result);
         $this->assertEquals(0.19, $vatCalculator->getTaxRate());
         $this->assertEquals(4.56, $vatCalculator->getTaxValue());
@@ -151,7 +152,7 @@ class VatCalculatorTest extends PHPUnit
         $countryCode = 'DE';
 
         $vatCalculator = new VatCalculator();
-        $result = $vatCalculator->calculate($net, $countryCode);
+        $result = $vatCalculator->calculate($net, $countryCode, null, null, null, new DateTimeImmutable('2020-06-05 12:34:56'));
         $this->assertEquals(28.56, $result);
         $this->assertEquals(0.19, $vatCalculator->getTaxRate());
         $this->assertEquals(4.56, $vatCalculator->getTaxValue());
@@ -532,7 +533,7 @@ class VatCalculatorTest extends PHPUnit
             ->andReturn($countryCode);
 
         $vatCalculator = new VatCalculator($config);
-        $result = $vatCalculator->calculate($net, $countryCode, null, true);
+        $result = $vatCalculator->calculate($net, $countryCode, null, true, null, new DateTimeImmutable('2020-06-05 12:34:56'));
         $this->assertEquals(28.56, $result);
         $this->assertEquals(0.19, $vatCalculator->getTaxRate());
         $this->assertEquals(4.56, $vatCalculator->getTaxValue());
@@ -545,7 +546,7 @@ class VatCalculatorTest extends PHPUnit
 
         $vatCalculator = new VatCalculator();
         $vatCalculator->setBusinessCountryCode('DE');
-        $result = $vatCalculator->calculate($net, $countryCode, null, true);
+        $result = $vatCalculator->calculate($net, $countryCode, null, true, null, new DateTimeImmutable('2020-06-05 12:34:56'));
         $this->assertEquals(28.56, $result);
         $this->assertEquals(0.19, $vatCalculator->getTaxRate());
         $this->assertEquals(4.56, $vatCalculator->getTaxValue());
@@ -706,7 +707,7 @@ class VatCalculatorTest extends PHPUnit
             ->andReturn(false);
 
         $vatCalculator = new VatCalculator($config);
-        $result = $vatCalculator->calculateNet($gross, $countryCode);
+        $result = $vatCalculator->calculateNet($gross, $countryCode, null, null, null, new DateTimeImmutable('2020-06-05 12:34:56'));
         $this->assertEquals(24.00, $result);
         $this->assertEquals(0.19, $vatCalculator->getTaxRate());
         $this->assertEquals(4.56, $vatCalculator->getTaxValue());
@@ -718,7 +719,7 @@ class VatCalculatorTest extends PHPUnit
         $countryCode = 'DE';
 
         $vatCalculator = new VatCalculator();
-        $result = $vatCalculator->calculateNet($gross, $countryCode);
+        $result = $vatCalculator->calculateNet($gross, $countryCode, null, null, null, new DateTimeImmutable('2020-06-05 12:34:56'));
         $this->assertEquals(24.00, $result);
         $this->assertEquals(0.19, $vatCalculator->getTaxRate());
         $this->assertEquals(4.56, $vatCalculator->getTaxValue());
@@ -789,7 +790,7 @@ class VatCalculatorTest extends PHPUnit
 
         $vatCalculator = new VatCalculator();
 
-        $result = $vatCalculator->calculateNet($gross, $countryCode);
+        $result = $vatCalculator->calculateNet($gross, $countryCode, null, null, null, new DateTimeImmutable('2020-06-05 12:34:56'));
         $this->assertEquals(24.00, $result);
         $this->assertEquals(0.19, $vatCalculator->getTaxRate());
         $this->assertEquals(4.56, $vatCalculator->getTaxValue());
@@ -922,5 +923,27 @@ class VatCalculatorTest extends PHPUnit
         $result = $vatCalculator->calculate($gross, $countryCode, $postalCode, $company, $type);
 
         $this->assertEquals(26.16, $result);
+    }
+
+    public function testCalculateVatVariousDates()
+    {
+        $net = 24.00;
+        $countryCode = 'DE';
+
+        $vatCalculator = new VatCalculator();
+        $result = $vatCalculator->calculate($net, $countryCode, null, null, null, new DateTimeImmutable('2020-06-05 12:34:56'));
+        $this->assertEquals(28.56, $result);
+        $this->assertEquals(0.19, $vatCalculator->getTaxRate());
+        $this->assertEquals(4.56, $vatCalculator->getTaxValue());
+
+        $result = $vatCalculator->calculate($net, $countryCode, null, null, null, new DateTimeImmutable('2020-07-05 12:34:56'));
+        $this->assertEquals(27.84, $result);
+        $this->assertEquals(0.16, $vatCalculator->getTaxRate());
+        $this->assertEquals(3.84, $vatCalculator->getTaxValue());
+
+        $result = $vatCalculator->calculate($net, $countryCode, null, null, null, new DateTimeImmutable('2021-01-05 12:34:56'));
+        $this->assertEquals(28.56, $result);
+        $this->assertEquals(0.19, $vatCalculator->getTaxRate());
+        $this->assertEquals(4.56, $vatCalculator->getTaxValue());
     }
 }
