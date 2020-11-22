@@ -74,7 +74,7 @@ $grossPrice = $vatCalculator->calculate( 49.99, 'LU' );
 ## Usage
 <a name="calculate-the-gross-price"></a>
 ### Calculate the gross price
-To calculate the gross price use the `calculate` method with a net price and a country code as paremeters.
+To calculate the gross price use the `calculate` method with a net price and a country code as parameters.
 
 ```php
 $grossPrice = VatCalculator::calculate( 24.00, 'DE' );
@@ -155,7 +155,7 @@ try {
 
 <a name="laravel-validator-extension"></a>
 ### Laravel Validator Extension
-If you want to include the VAT number validation directly in your existing Form Requests / Validations, use the `vat_number` validtion rule.
+If you want to include the VAT number validation directly in your existing Form Requests / Validations, use the `vat_number` validation rule.
 
 Example:
 
@@ -386,7 +386,7 @@ By default, the VAT Calculator has all EU VAT rules predefined, so that it can e
 
 If you need to define other VAT rates, you can do so by publishing the configuration and add more rules.
 
-The configuration file also determines wether you want to use the VAT Calculator JS routes or not.
+The configuration file also determines whether you want to use the VAT Calculator JS routes or not.
 
 **Important:** Be sure to set your business country code in the configuration file, to get correct VAT calculation when selling to business customers in your own country.
 
