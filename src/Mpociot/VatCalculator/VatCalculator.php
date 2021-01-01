@@ -49,7 +49,7 @@ class VatCalculator
             'rate' => 0.21,
         ],
         'DE' => [ // Germany
-            'rate'       => 0.16,
+            'rate'       => 0.19,
             'exceptions' => [
                 'Heligoland'            => 0,
                 'Büsingen am Hochrhein' => 0,
