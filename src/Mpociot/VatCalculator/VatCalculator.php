@@ -89,14 +89,6 @@ class VatCalculator
                 'Mayotte'    => 0,
             ],
         ],
-        'GB' => [ // United Kingdom
-            'rate'       => 0.20,
-            'exceptions' => [
-                // UK RAF Bases in Cyprus are taxed at Cyprus rate
-                'Akrotiri' => 0.19,
-                'Dhekelia' => 0.19,
-            ],
-        ],
         'GR' => [ // Greece
             'rate'       => 0.24,
             'exceptions' => [
@@ -286,18 +278,6 @@ class VatCalculator
                 'postalCode' => '/^976\d{2,}$/',
                 'code'       => 'FR',
                 'name'       => 'Mayotte',
-            ],
-        ],
-        'GB' => [
-            // Akrotiri
-            [
-                'postalCode' => '/^BFPO57|BF12AT$/',
-                'code'       => 'CY',
-            ],
-            // Dhekelia
-            [
-                'postalCode' => '/^BFPO58|BF12AU$/',
-                'code'       => 'CY',
             ],
         ],
         'GR' => [
