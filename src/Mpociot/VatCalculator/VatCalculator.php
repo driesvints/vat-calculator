@@ -12,19 +12,19 @@ class VatCalculator
     /**
      * VAT Service check URL provided by the EU.
      */
-    const VAT_SERVICE_URL = 'http://ec.europa.eu/taxation_customs/vies/checkVatService.wsdl';
+    const VAT_SERVICE_URL = 'https://ec.europa.eu/taxation_customs/vies/checkVatService.wsdl';
 
     /**
      * We're using the free ip2c service to lookup IP 2 country.
      */
-    const GEOCODE_SERVICE_URL = 'http://ip2c.org/';
+    const GEOCODE_SERVICE_URL = 'https://ip2c.org/';
 
     protected $soapClient;
 
     /**
      * All available tax rules and their exceptions.
      *
-     * Taken from: http://ec.europa.eu/taxation_customs/resources/documents/taxation/vat/how_vat_works/rates/vat_rates_en.pdf
+     * Taken from: https://ec.europa.eu/taxation_customs/resources/documents/taxation/vat/how_vat_works/rates/vat_rates_en.pdf
      *
      * @var array
      */
