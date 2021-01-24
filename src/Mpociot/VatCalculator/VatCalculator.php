@@ -422,16 +422,20 @@ class VatCalculator
      */
     public function getIPBasedCountry()
     {
-        $ip = $this->getClientIP();
+        if (! $ip = $this->getClientIP()) {
+            return false;
+        }
+
         $url = self::GEOCODE_SERVICE_URL.$ip;
         $result = file_get_contents($url);
+
         if ($result != false) {
             $json = json_decode($result);
-            $countryCode = $json->countryCode;
-        } else {
-            $countryCode = false;
+
+            return $json->countryCode;
         }
-        return $countryCode;
+
+        return false;
     }
 
     /**
