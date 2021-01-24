@@ -5,8 +5,8 @@
          colors="true"
 >
     <testsuites>
-        <testsuite name="VatCalculator Suite">
-            <directory>tests/</directory>
+        <testsuite name="VatCalculator Test Suite">
+            <directory>tests</directory>
         </testsuite>
     </testsuites>
 </phpunit>

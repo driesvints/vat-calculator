@@ -29,7 +29,6 @@ class BillableWithinTheEUTraitTest extends TestCase
 
     public function testTaxPercentGetsCalculated()
     {
-        m::close();
         $countryCode = 'DE';
         $company = false;
 
