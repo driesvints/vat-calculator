@@ -13,7 +13,7 @@
     <img src="https://img.shields.io/packagist/dt/mpociot/vat-calculator" alt="Total Downloads">
 </a>
 
-Handle all the hard stuff related to EU MOSS tax/vat regulations, the way it should be. Can be used with **Laravel 5 / Cashier** &mdash; or **standalone**.
+Handle all the hard stuff related to EU MOSS tax/vat regulations, the way it should be. Integrates with **Laravel and Cashier** &mdash; or in a **standalone** PHP application.
 
 ```php
 // Easy to use!
@@ -29,6 +29,7 @@ VatCalculator::isValidVATNumber('NL123456789B01');
 
 ## Contents
 
+- [Requirements](#requirements)
 - [Installation](#installation)
     - [Standalone](#standalone)
 - [Usage](#usage)
@@ -51,6 +52,11 @@ VatCalculator::isValidVATNumber('NL123456789B01');
 - [Maintainers](#maintainers)
 - [License](#license)
 
+## Requirements
+
+- PHP 5.5 or higher
+- (optional) Laravel 5.0 or higher
+
 ## Installation
 
 In order to install the VAT Calculator, just run
@@ -61,8 +67,7 @@ composer require mpociot/vat-calculator
 
 ### Standalone
 
-You can also use this package without Laravel. Simply create a new instance of the VAT calculator and use it.
-All documentation examples use the Laravel 5 facade code, so make sure not to call the methods as if they were static methods.
+You can also use this package without Laravel. Simply create a new instance of the VAT calculator and use it. All documentation examples use the Laravel Facade code, so make sure not to call the methods as if they were static methods.
 
 Example:
 
