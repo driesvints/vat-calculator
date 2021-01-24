@@ -1,9 +1,7 @@
-VatCalculator
-================
+# Vat Calculator
 
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
 [![Build Status](https://travis-ci.org/mpociot/vat-calculator.svg)](https://travis-ci.org/mpociot/vat-calculator)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/mpociot/vat-calculator/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/mpociot/vat-calculator/?branch=master)
 [![codecov.io](https://codecov.io/github/mpociot/vat-calculator/coverage.svg?branch=master)](https://codecov.io/github/mpociot/vat-calculator?branch=master)
 [![StyleCI](https://styleci.io/repos/41703624/shield)](https://styleci.io/repos/41703624)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/adecb98a-8484-48cb-be13-803decc475bc/mini.png)](https://insight.sensiolabs.com/projects/adecb98a-8484-48cb-be13-803decc475bc)
@@ -42,6 +40,7 @@ VatCalculator::isValidVATNumber('NL123456789B01');
 		- [Preconfigured routes](#preconfigured-routes)
 - [Configuration (optional)](#configuration)
 - [Changelog](#changelog)
+- [Maintainers](#maintainers)
 - [License](#license)
 
 <a name="installation"></a>
@@ -398,11 +397,14 @@ $ php artisan vendor:publish --provider="Mpociot\VatCalculator\VatCalculatorServ
 
 This will create a `vat_calculator.php` in your config directory.
 
-<a name="changelog"></a>
 ## Changelog
-Please see [CHANGELOG](CHANGELOG.md) for more information.
 
+Check out the [CHANGELOG](CHANGELOG.md) in this repository for all the recent changes.
 
-<a name="license"></a>
+## Maintainers
+
+Vat Calculator is developed and maintained by [Marcel Pociot](https://pociot.dev) & [Dries Vints](https://driesvints.com).
+
 ## License
-This library is licensed under the MIT license. Please see [License file](LICENSE.md) for more information.
+
+Vat Calculator is open-sourced software licensed under [the MIT license](LICENSE.md).
