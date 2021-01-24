@@ -1,10 +1,17 @@
 # Vat Calculator
 
-[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
-[![Build Status](https://travis-ci.org/mpociot/vat-calculator.svg)](https://travis-ci.org/mpociot/vat-calculator)
-[![codecov.io](https://codecov.io/github/mpociot/vat-calculator/coverage.svg?branch=master)](https://codecov.io/github/mpociot/vat-calculator?branch=master)
-[![StyleCI](https://styleci.io/repos/41703624/shield)](https://styleci.io/repos/41703624)
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/adecb98a-8484-48cb-be13-803decc475bc/mini.png)](https://insight.sensiolabs.com/projects/adecb98a-8484-48cb-be13-803decc475bc)
+<a href="https://github.com/mpociot/vat-calculator/actions">
+    <img src="https://github.com/mpociot/vat-calculator/workflows/Tests/badge.svg" alt="Tests">
+</a>
+<a href="https://github.styleci.io/repos/41703624">
+    <img src="https://github.styleci.io/repos/41703624/shield?style=flat" alt="Code Style">
+</a>
+<a href="https://packagist.org/packages/mpociot/vat-calculator">
+    <img src="https://img.shields.io/packagist/v/mpociot/vat-calculator" alt="Latest Stable Version">
+</a>
+<a href="https://packagist.org/packages/mpociot/vat-calculator">
+    <img src="https://img.shields.io/packagist/dt/mpociot/vat-calculator" alt="Total Downloads">
+</a>
 
 Handle all the hard stuff related to EU MOSS tax/vat regulations, the way it should be.
 Can be used with **Laravel 5 / Cashier** &mdash; or **standalone**.
