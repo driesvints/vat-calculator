@@ -74,7 +74,7 @@ $grossPrice = $vatCalculator->calculate( 49.99, 'LU' );
 ## Usage
 <a name="calculate-the-gross-price"></a>
 ### Calculate the gross price
-To calculate the gross price use the `calculate` method with a net price and a country code as paremeters.
+To calculate the gross price use the `calculate` method with a net price and a country code as parameters.
 
 ```php
 $grossPrice = VatCalculator::calculate( 24.00, 'DE' );
