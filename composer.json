@@ -15,6 +15,7 @@
     ],
     "require": {
         "php": ">=5.5.9",
+        "ext-json": "*",
         "ext-soap": "*"
     },
     "require-dev": {
@@ -36,10 +37,6 @@
             "Tests\\": "tests"
         }
     },
-    "minimum-stability": "stable",
-    "scripts": {
-        "test": "phpunit"
-    },
     "extra": {
         "laravel": {
             "providers": [
@@ -49,5 +46,10 @@
                 "VatCalculator": "Mpociot\\VatCalculator\\Facades\\VatCalculator"
             }
         }
-    }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
