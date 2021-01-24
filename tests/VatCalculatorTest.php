@@ -1,6 +1,6 @@
 <?php
 
-namespace Mpociot\VatCalculator\Tests;
+namespace Tests;
 
 use Mockery as m;
 use Mpociot\VatCalculator\VatCalculator;

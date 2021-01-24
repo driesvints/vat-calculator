@@ -1,6 +1,6 @@
 <?php
 
-namespace Mpociot\VatCalculator\tests;
+namespace Tests;
 
 use Illuminate\Support\Facades\Validator;
 use Mockery as m;
