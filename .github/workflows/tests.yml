@@ -23,7 +23,7 @@ jobs:
           - php: 7.2
             laravel: 8.0
         include:
-          - php: 7.0
+          - php: 7.1
             laravel: 5.5
 
     name: PHP ${{ matrix.php }} - Laravel ${{ matrix.laravel }}
