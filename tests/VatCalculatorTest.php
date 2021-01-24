@@ -6,11 +6,6 @@ use Mockery as m;
 use Mpociot\VatCalculator\VatCalculator;
 use PHPUnit\Framework\TestCase;
 
-function file_get_contents($url)
-{
-    return VatCalculatorTest::$file_get_contents_result ?: \file_get_contents($url);
-}
-
 class VatCalculatorTest extends TestCase
 {
     public static $file_get_contents_result;
@@ -486,7 +481,8 @@ class VatCalculatorTest extends TestCase
 
     public function testCanResolveIPToCountry()
     {
-        self::$file_get_contents_result = '1;DE;DEU;Deutschland';
+        $_SERVER['REMOTE_ADDR'] = '84.171.73.5';
+
         $vatCalculator = new VatCalculator();
         $country = $vatCalculator->getIPBasedCountry();
         $this->assertEquals('DE', $country);
@@ -494,7 +490,8 @@ class VatCalculatorTest extends TestCase
 
     public function testCanResolveInvalidIPToCountry()
     {
-        self::$file_get_contents_result = '0';
+        $_SERVER['REMOTE_ADDR'] = '';
+
         $vatCalculator = new VatCalculator();
         $country = $vatCalculator->getIPBasedCountry();
         $this->assertFalse($country);
@@ -502,8 +499,8 @@ class VatCalculatorTest extends TestCase
 
     public function testCanHandleIPServiceDowntime()
     {
-        self::$file_get_contents_result = false;
         $_SERVER['REMOTE_ADDR'] = '';
+
         $vatCalculator = new VatCalculator();
         $country = $vatCalculator->getIPBasedCountry();
         $this->assertFalse($country);
