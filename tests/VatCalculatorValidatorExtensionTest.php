@@ -11,15 +11,12 @@ use Orchestra\Testbench\TestCase;
 
 class VatCalculatorValidatorExtensionTest extends TestCase
 {
-    protected $translator;
-    protected $data;
-    protected $rules;
-    protected $messages;
-
-    public function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
+
         m::close();
+
         VatCalculator::clearResolvedInstances();
     }
 

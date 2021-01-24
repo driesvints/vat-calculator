@@ -1,4 +1,4 @@
-# Vat Calculator
+# VatCalculator
 
 <a href="https://github.com/mpociot/vat-calculator/actions">
     <img src="https://github.com/mpociot/vat-calculator/workflows/Tests/badge.svg" alt="Tests">
