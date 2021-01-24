@@ -1,16 +1,17 @@
 <?php
 
-namespace Mpociot\VatCalculator\Tests;
+namespace Tests;
 
 use Mockery as m;
 use Mpociot\VatCalculator\Facades\VatCalculator;
-use PHPUnit_Framework_TestCase as PHPUnit;
+use PHPUnit\Framework\TestCase;
 
-class BillableWithinTheEUTraitTest extends PHPUnit
+class BillableWithinTheEUTraitTest extends TestCase
 {
-    public function tearDown()
+    protected function tearDown(): void
     {
         VatCalculator::clearResolvedInstances();
+
         m::close();
     }
 
@@ -28,7 +29,6 @@ class BillableWithinTheEUTraitTest extends PHPUnit
 
     public function testTaxPercentGetsCalculated()
     {
-        m::close();
         $countryCode = 'DE';
         $company = false;
 
