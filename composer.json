@@ -1,17 +1,22 @@
 {
     "name": "mpociot/vat-calculator",
     "description": "EU VAT calculation, the way it should be.",
-    "keywords": ["VAT","Tax","EU MOSS", "VAT ID", "tax calculation", "vat calculation", "cashier"],
+    "keywords": ["VAT", "Tax", "EU MOSS", "VAT ID", "Tax calculation", "VAT calculation", "Cashier"],
     "license": "MIT",
     "authors": [
         {
             "name": "Marcel Pociot",
             "email": "m.pociot@gmail.com"
+        },
+        {
+            "name": "Dries Vints",
+            "homepage": "https://driesvints.com",
+            "role": "Developer"
         }
     ],
     "require": {
-      "php": ">=5.5.9",
-      "ext-soap": "*"
+        "php": ">=5.5.9",
+        "ext-soap": "*"
     },
     "require-dev": {
         "illuminate/support": "~5.0",
