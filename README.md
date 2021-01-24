@@ -1,4 +1,4 @@
-# VatCalculator
+# VAT Calculator
 
 <a href="https://github.com/mpociot/vat-calculator/actions">
     <img src="https://github.com/mpociot/vat-calculator/workflows/Tests/badge.svg" alt="Tests">
@@ -413,8 +413,8 @@ Check out the [CHANGELOG](CHANGELOG.md) in this repository for all the recent ch
 
 ## Maintainers
 
-Vat Calculator is developed and maintained by [Marcel Pociot](https://pociot.dev) & [Dries Vints](https://driesvints.com).
+VAT Calculator is developed and maintained by [Marcel Pociot](https://pociot.dev) & [Dries Vints](https://driesvints.com).
 
 ## License
 
-Vat Calculator is open-sourced software licensed under [the MIT license](LICENSE.md).
+VAT Calculator is open-sourced software licensed under [the MIT license](LICENSE.md).
