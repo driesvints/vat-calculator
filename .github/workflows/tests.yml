@@ -20,6 +20,8 @@ jobs:
             laravel: 5.5
           - php: 7.0
             laravel: 8.0
+          - php: 7.2
+            laravel: 8.0
         include:
           - php: 5.6
             laravel: 5.0
