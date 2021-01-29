@@ -638,7 +638,9 @@ class VatCalculator
         }
 
         if ($type !== null) {
-            return isset($this->taxRules[strtoupper($countryCode)]['rates'][$type]) ? $this->taxRules[strtoupper($countryCode)]['rates'][$type] : 0;
+            if (isset($this->taxRules[strtoupper($countryCode)]['rates'][$type])) {
+                return $this->taxRules[strtoupper($countryCode)]['rates'][$type];
+            }
         }
 
         return isset($this->taxRules[strtoupper($countryCode)]['rate']) ? $this->taxRules[strtoupper($countryCode)]['rate'] : 0;
