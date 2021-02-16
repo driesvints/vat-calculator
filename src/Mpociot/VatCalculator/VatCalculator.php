@@ -472,7 +472,7 @@ class VatCalculator
         if ($postalCode) {
             $this->setPostalCode($postalCode);
         }
-        if (!is_null($company) && $company !== $this->isCompany()) {
+        if (! is_null($company) && $company !== $this->isCompany()) {
             $this->setCompany($company);
         }
         $this->netPrice = floatval($netPrice);
@@ -503,7 +503,7 @@ class VatCalculator
         if ($postalCode) {
             $this->setPostalCode($postalCode);
         }
-        if (!is_null($company) && $company !== $this->isCompany()) {
+        if (! is_null($company) && $company !== $this->isCompany()) {
             $this->setCompany($company);
         }
 
@@ -626,7 +626,7 @@ class VatCalculator
 
         if (isset($this->postalCodeExceptions[$countryCode]) && $postalCode !== null) {
             foreach ($this->postalCodeExceptions[$countryCode] as $postalCodeException) {
-                if (!preg_match($postalCodeException['postalCode'], $postalCode)) {
+                if (! preg_match($postalCodeException['postalCode'], $postalCode)) {
                     continue;
                 }
                 if (isset($postalCodeException['name'])) {
@@ -690,6 +690,7 @@ class VatCalculator
                     'countryCode' => $countryCode,
                     'vatNumber' => $vatNumber,
                 ]);
+
                 return $result;
             } catch (SoapFault $e) {
                 if (isset($this->config) && $this->config->get('vat_calculator.forward_soap_faults')) {

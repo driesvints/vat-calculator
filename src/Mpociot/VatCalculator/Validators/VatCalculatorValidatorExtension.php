@@ -2,7 +2,6 @@
 
 namespace Mpociot\VatCalculator\Validators;
 
-use Illuminate\Validation\Validator;
 use Mpociot\VatCalculator\Exceptions\VATCheckUnavailableException;
 use Mpociot\VatCalculator\Facades\VatCalculator;
 
