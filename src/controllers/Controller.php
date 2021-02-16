@@ -2,12 +2,12 @@
 
 namespace Mpociot\VatCalculator\Http;
 
+use Illuminate\Contracts\Config\Repository as ConfigRepository;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Response;
 use Mpociot\VatCalculator\Exceptions\VATCheckUnavailableException;
 use Mpociot\VatCalculator\VatCalculator;
-use Illuminate\Contracts\Config\Repository as ConfigRepository;
 
 class Controller extends BaseController
 {
@@ -42,7 +42,7 @@ class Controller extends BaseController
      */
     public function calculateGrossPrice(Request $request)
     {
-        if (!$request->has('netPrice')) {
+        if (! $request->has('netPrice')) {
             return Response::json([
                 'error' => "The 'netPrice' parameter is missing",
             ], 422);

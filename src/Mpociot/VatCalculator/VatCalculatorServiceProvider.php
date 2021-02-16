@@ -9,9 +9,7 @@ namespace Mpociot\VatCalculator;
  * @package Teamwork
  */
 
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
-use Mpociot\VatCalculator\Facades\VatCalculator;
 
 class VatCalculatorServiceProvider extends ServiceProvider
 {
