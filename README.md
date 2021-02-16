@@ -411,7 +411,7 @@ Check out the [CHANGELOG](CHANGELOG.md) in this repository for all the recent ch
 
 ## Maintainers
 
-VatCalculator is developed and maintained by [Marcel Pociot](https://pociot.dev) & [Dries Vints](https://driesvints.com).
+VatCalculator is maintained by [Dries Vints](https://driesvints.com). Originally created by [Marcel Pociot](https://pociot.dev).
 
 ## License
 
