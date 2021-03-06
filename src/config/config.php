@@ -1,11 +1,5 @@
 <?php
 
-/**
- * This file is part of VatCalculator.
- *
- * @license MIT
- */
-
 return [
 
     /*
@@ -19,6 +13,7 @@ return [
     | at this point
     |
     */
+
     'rules' => [
         // 'XX' => 0.17,
     ],
@@ -34,6 +29,7 @@ return [
     | to false.
     |
     */
+
     'use_routes' => true,
 
     /*
@@ -46,7 +42,9 @@ return [
     | when charging a B2B (company) customer inside your business country.
     |
     */
+
     'business_country_code' => '',
 
     'forward_soap_faults' => false,
+
 ];
