@@ -27,31 +27,6 @@ VatCalculator::getTaxRateForLocation('NL');
 VatCalculator::isValidVATNumber('NL123456789B01');
 ```
 
-## Contents
-
-- [Requirements](#requirements)
-- [Installation](#installation)
-    - [Standalone](#standalone)
-- [Usage](#usage)
-    - [Calculate the gross price](#calculate-the-gross-price)
-    - [Receive more information](#receive-more-information)
-    - [Validate EU VAT numbers](#validate-eu-vat-numbers)
-        - [Laravel Validator extension](#laravel-validator-extension)
-    - [Get EU VAT number details](#get-eu-vat-number-details)
-    - [Cashier integration](#cashier-integration)
-    - [Get the IP based country of your user](#get-the-ip-based-country-of-your-user)
-    - [Frontend integration - vat_calculator.js](#frontend-integration)
-        - [Integrating it in your payment form](#payment-form-integration)
-        - [Extra fields](#extra-fields)
-        - [Form attributes](#form-attributes)
-        - [Form fields](#form-fields)
-        - [Advanced usage](#advanced-usage)
-        - [Preconfigured routes](#preconfigured-routes)
-- [Configuration (optional)](#configuration)
-- [Changelog](#changelog)
-- [Maintainers](#maintainers)
-- [License](#license)
-
 ## Requirements
 
 - PHP 5.5 or higher
