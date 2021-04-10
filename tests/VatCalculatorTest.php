@@ -129,7 +129,7 @@ class VatCalculatorTest extends TestCase
                 'rates' => [
                     'high' => 0.50,
                     'low' => 0.07,
-                ]
+                ],
             ]);
 
         $config->shouldReceive('has')
