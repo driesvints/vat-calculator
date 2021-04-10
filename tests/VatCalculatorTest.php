@@ -113,6 +113,53 @@ class VatCalculatorTest extends TestCase
         $this->assertEquals(12.00, $vatCalculator->getTaxValue());
     }
 
+    public function testCalculateVatWithPredefinedRulesOverwrittenByArrayAsConfiguration()
+    {
+        $net = 24.00;
+        $countryCode = 'DE';
+
+        $taxKey = 'vat_calculator.rules.'.strtoupper($countryCode);
+
+        $config = m::mock('Illuminate\Contracts\Config\Repository');
+        $config->shouldReceive('get')
+            ->times(3)
+            ->with($taxKey, 0)
+            ->andReturn(
+            ['rate'   => 0.19,
+                'rates' => [
+                    'high' => 0.50,
+                    'low' => 0.07,
+                ]
+            ]);
+
+        $config->shouldReceive('has')
+            ->times(3)
+            ->with($taxKey)
+            ->andReturn(true);
+
+        $config->shouldReceive('has')
+            ->once()
+            ->with('vat_calculator.business_country_code')
+            ->andReturn(false);
+
+        $vatCalculator = new VatCalculator($config);
+
+        $result = $vatCalculator->calculate($net, $countryCode, null, null, 'high');
+        $this->assertEquals(36.00, $result);
+        $this->assertEquals(0.50, $vatCalculator->getTaxRate());
+        $this->assertEquals(12.00, $vatCalculator->getTaxValue());
+
+        $result = $vatCalculator->calculate($net, $countryCode, null, null, 'low');
+        $this->assertEquals(25.68, $result);
+        $this->assertEquals(0.07, $vatCalculator->getTaxRate());
+        $this->assertEquals(1.68, $vatCalculator->getTaxValue());
+
+        $result = $vatCalculator->calculate($net, $countryCode);
+        $this->assertEquals(28.56, $result);
+        $this->assertEquals(0.19, $vatCalculator->getTaxRate());
+        $this->assertEquals(4.56, $vatCalculator->getTaxValue());
+    }
+
     public function testCalculatVatWithCountryDirectSet()
     {
         $net = 24.00;

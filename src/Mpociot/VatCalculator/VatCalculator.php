@@ -621,7 +621,17 @@ class VatCalculator
         }
         $taxKey = 'vat_calculator.rules.'.strtoupper($countryCode);
         if (isset($this->config) && $this->config->has($taxKey)) {
-            return $this->config->get($taxKey, 0);
+            $config = $this->config->get($taxKey, 0);
+
+            if(!is_array($config)){
+                return $config;
+            }
+
+            if ($type !== null && isset($config['rates'][$type])) {
+                return  $config['rates'][$type];
+            }
+
+            return isset($config['rate']) ? $config['rate'] : 0;
         }
 
         if (isset($this->postalCodeExceptions[$countryCode]) && $postalCode !== null) {

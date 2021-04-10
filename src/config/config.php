@@ -16,6 +16,8 @@ return [
 
     'rules' => [
         // 'XX' => 0.17,
+        // or
+        // 'XX' => [rate => 0.17, rates => ['high' => 0.50, 'low' => 0.07]]
     ],
 
     /*
