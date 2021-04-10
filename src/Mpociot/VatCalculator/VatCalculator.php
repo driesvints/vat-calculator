@@ -623,7 +623,7 @@ class VatCalculator
         if (isset($this->config) && $this->config->has($taxKey)) {
             $config = $this->config->get($taxKey, 0);
 
-            if(! is_array($config)) {
+            if (! is_array($config)) {
                 return $config;
             }
 
