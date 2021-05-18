@@ -2,7 +2,7 @@
 
 This changelog follows [the Keep a Changelog standard](https://keepachangelog.com) (as of 2.4.2).
 
-## [Unreleased](https://github.com/mpociot/vat-calculator/compare/2.4.2...2.x)
+## [Unreleased](https://github.com/mpociot/vat-calculator/compare/2.4.2...main)
 
 
 ## [2.4.2 (2021-01-24)](https://github.com/mpociot/vat-calculator/compare/2.4.1...2.4.2)
