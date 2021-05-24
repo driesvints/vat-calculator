@@ -2,7 +2,13 @@
 
 This changelog follows [the Keep a Changelog standard](https://keepachangelog.com) (as of 2.4.2).
 
-## [Unreleased](https://github.com/mpociot/vat-calculator/compare/2.4.2...2.x)
+## [Unreleased](https://github.com/mpociot/vat-calculator/compare/2.5.0...2.x)
+
+
+## [2.5.0 (2021-05-24)](https://github.com/mpociot/vat-calculator/compare/2.4.2...2.5.0)
+
+### Added
+- Validate UK VAT numbers ([#116](https://github.com/driesvints/vat-calculator/pull/116))
 
 
 ## [2.4.2 (2021-01-24)](https://github.com/mpociot/vat-calculator/compare/2.4.1...2.4.2)
