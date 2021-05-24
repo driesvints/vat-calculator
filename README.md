@@ -137,28 +137,31 @@ try {
 
 #### UK VAT Numbers
 
-UK VAT numbers are returns a little differently:
+UK VAT numbers are formatted a little differently:
 
-```
-array(2) {
-  ["target"]=>
-  array(3) {
-    ["name"]=>
-    string(26) "Credite Sberger Donal Inc."
-    ["vatNumber"]=>
-    string(9) "553557881"
-    ["address"]=>
+```php
+try {
+    $vat_details = VatCalculator::getVATDetails('GB 553557881');
+    print_r($vat_details);
+    /* Outputs
     array(3) {
-      ["line1"]=>
-      string(18) "131B Barton Hamlet"
-      ["postcode"]=>
-      string(8) "SW97 5CK"
-      ["countryCode"]=>
-      string(2) "GB"
+        ["name"]=>
+            string(26) "Credite Sberger Donal Inc."
+        ["vatNumber"]=>
+            string(9) "553557881"
+        ["address"]=>
+            array(3) {
+                ["line1"]=>
+                    string(18) "131B Barton Hamlet"
+                ["postcode"]=>
+                    string(8) "SW97 5CK"
+                ["countryCode"]=>
+                    string(2) "GB"
+            }
     }
-  }
-  ["processingDate"]=>
-  string(25) "2021-05-24T21:04:40+01:00"
+    */
+} catch( VATCheckUnavailableException $e ){
+    // Please handle me
 }
 ```
 
