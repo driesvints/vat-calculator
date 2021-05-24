@@ -479,6 +479,24 @@ class VatCalculatorTest extends TestCase
         $vatCalculator->isValidVATNumber($vatNumber);
     }
 
+    public function testCanValidateValidUKVATNumber()
+    {
+        $config = m::mock('Illuminate\Contracts\Config\Repository');
+
+        $config->shouldReceive('has')
+            ->once()
+            ->with('vat_calculator.business_country_code')
+            ->andReturn(false);
+
+        $result = new \stdClass();
+        $result->valid = true;
+
+        $vatNumber = 'GB 553557881';
+        $vatCalculator = new VatCalculator($config);
+        $result = $vatCalculator->testing()->isValidVATNumber($vatNumber);
+        $this->assertTrue($result);
+    }
+
     /**
      * @link https://tools.tracemyip.org/search--country/germany
      */
