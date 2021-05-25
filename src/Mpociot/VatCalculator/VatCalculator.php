@@ -688,7 +688,7 @@ class VatCalculator
         $countryCode = substr($vatNumber, 0, 2);
         $vatNumber = substr($vatNumber, 2);
 
-        if (strtoupper($countryCode) === 'GB' && extension_loaded('curl')) {
+        if (strtoupper($countryCode) === 'GB') {
             $apiHeaders = get_headers("$this->ukValidationEndpoint/organisations/vat/check-vat-number/lookup/$vatNumber");
             $apiHeaders = explode(' ', $apiHeaders[0]);
             $apiStatusCode = (int) $apiHeaders[1];
