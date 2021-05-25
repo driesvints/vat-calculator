@@ -2,21 +2,28 @@
 
 This changelog follows [the Keep a Changelog standard](https://keepachangelog.com) (as of 2.4.2).
 
-## [Unreleased](https://github.com/mpociot/vat-calculator/compare/2.5.0...2.x)
+
+## [Unreleased](https://github.com/driesvints/vat-calculator/compare/2.5.1...2.x)
 
 
-## [2.5.0 (2021-05-24)](https://github.com/mpociot/vat-calculator/compare/2.4.2...2.5.0)
+## [2.5.1 (2021-05-25)](https://github.com/driesvints/vat-calculator/compare/2.5.0...2.5.1)
+
+### Fixed
+- Fix invalid UK VAT number validation ([6e674e4](https://github.com/driesvints/vat-calculator/commit/6e674e41d413c219f5e66ba53946a8138f88e6bc))
+
+
+## [2.5.0 (2021-05-24)](https://github.com/driesvints/vat-calculator/compare/2.4.2...2.5.0)
 
 ### Added
 - Validate UK VAT numbers ([#116](https://github.com/driesvints/vat-calculator/pull/116))
 
 
-## [2.4.2 (2021-01-24)](https://github.com/mpociot/vat-calculator/compare/2.4.1...2.4.2)
+## [2.4.2 (2021-01-24)](https://github.com/driesvints/vat-calculator/compare/2.4.1...2.4.2)
 
 ### Fixed
-- Revert temporary german VAT change ([#102](https://github.com/mpociot/vat-calculator/pull/102))
-- Use HTTPS for links ([#105](https://github.com/mpociot/vat-calculator/pull/105))
-- Fix IPV6 resolving ([#83](https://github.com/mpociot/vat-calculator/pull/83), [3c6b16d](https://github.com/mpociot/vat-calculator/commit/3c6b16d819a1f2fff61fce16b625a184d1c2fac2))
+- Revert temporary german VAT change ([#102](https://github.com/driesvints/vat-calculator/pull/102))
+- Use HTTPS for links ([#105](https://github.com/driesvints/vat-calculator/pull/105))
+- Fix IPV6 resolving ([#83](https://github.com/driesvints/vat-calculator/pull/83), [3c6b16d](https://github.com/driesvints/vat-calculator/commit/3c6b16d819a1f2fff61fce16b625a184d1c2fac2))
 
 
 ## 2.0.0 (2016-06-28)
