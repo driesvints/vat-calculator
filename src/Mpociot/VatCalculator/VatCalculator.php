@@ -699,7 +699,7 @@ class VatCalculator
 
             $response = json_decode($result, true, 512, JSON_OBJECT_AS_ARRAY);
 
-            if (isset($response['code']) && $response['code'] === 'NOT_FOUND') {
+            if (isset($response['code'])) {
                 return false;
             }
 
