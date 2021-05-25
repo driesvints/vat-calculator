@@ -24,9 +24,6 @@
         "orchestra/testbench": "~3.5|^4.0|^5.0|^6.0",
         "phpunit/phpunit": "^6.5|^7.5|^8.5|^9.5"
     },
-    "suggest": {
-        "ext-curl": "Required when you need to validate UK VAT numbers."
-    },
     "autoload": {
         "classmap": [
             "src/controllers/Controller.php"
