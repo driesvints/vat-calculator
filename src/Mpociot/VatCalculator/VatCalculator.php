@@ -703,7 +703,6 @@ class VatCalculator
             );
 
             return $response['target'];
-
         } else {
             $this->initSoapClient();
             $client = $this->soapClient;
