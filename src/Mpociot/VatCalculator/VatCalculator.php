@@ -383,6 +383,11 @@ class VatCalculator
     protected $businessCountryCode;
 
     /**
+     * @var string
+     */
+    protected $ukValidationEndpoint = 'https://api.service.hmrc.gov.uk';
+
+    /**
      * @param \Illuminate\Contracts\Config\Repository
      */
     public function __construct($config = null)
@@ -664,10 +669,10 @@ class VatCalculator
         $details = self::getVATDetails($vatNumber);
 
         if ($details) {
-            return $details->valid;
-        } else {
-            return false;
+            return is_array($details) ? isset($details['vatNumber']) : $details->valid;
         }
+
+        return false;
     }
 
     /**
@@ -682,25 +687,43 @@ class VatCalculator
         $vatNumber = str_replace([' ', "\xC2\xA0", "\xA0", '-', '.', ','], '', trim($vatNumber));
         $countryCode = substr($vatNumber, 0, 2);
         $vatNumber = substr($vatNumber, 2);
-        $this->initSoapClient();
-        $client = $this->soapClient;
-        if ($client) {
-            try {
-                $result = $client->checkVat([
-                    'countryCode' => $countryCode,
-                    'vatNumber' => $vatNumber,
-                ]);
 
-                return $result;
-            } catch (SoapFault $e) {
-                if (isset($this->config) && $this->config->get('vat_calculator.forward_soap_faults')) {
-                    throw new VATCheckUnavailableException($e->getMessage(), $e->getCode(), $e->getPrevious());
-                }
+        if (strtoupper($countryCode) === 'GB' && extension_loaded('curl')) {
+            $curl_handle = curl_init();
+            curl_setopt($curl_handle, CURLOPT_URL, "$this->ukValidationEndpoint/organisations/vat/check-vat-number/lookup/$vatNumber");
+            curl_setopt($curl_handle, CURLOPT_CONNECTTIMEOUT, 2);
+            curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($curl_handle, CURLOPT_USERAGENT, 'VatCalculator');
+            $result = curl_exec($curl_handle);
+            curl_close($curl_handle);
 
+            $response = json_decode($result, true, 512, JSON_OBJECT_AS_ARRAY);
+
+            if (isset($response['code'])) {
                 return false;
             }
+
+            return $response['target'];
+        } else {
+            $this->initSoapClient();
+            $client = $this->soapClient;
+
+            if ($client) {
+                try {
+                    return $client->checkVat([
+                        'countryCode' => $countryCode,
+                        'vatNumber' => $vatNumber,
+                    ]);
+                } catch (SoapFault $e) {
+                    if (isset($this->config) && $this->config->get('vat_calculator.forward_soap_faults')) {
+                        throw new VATCheckUnavailableException($e->getMessage(), $e->getCode(), $e->getPrevious());
+                    }
+
+                    return false;
+                }
+            }
+            throw new VATCheckUnavailableException('The VAT check service is currently unavailable. Please try again later.');
         }
-        throw new VATCheckUnavailableException('The VAT check service is currently unavailable. Please try again later.');
     }
 
     /**
@@ -730,5 +753,16 @@ class VatCalculator
     public function setSoapClient($soapClient)
     {
         $this->soapClient = $soapClient;
+    }
+
+    /**
+     * @return $this
+     * @internal This method is not covered by our BC policy.
+     */
+    public function testing()
+    {
+        $this->ukValidationEndpoint = 'https://test-api.service.hmrc.gov.uk';
+
+        return $this;
     }
 }

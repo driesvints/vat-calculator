@@ -13,7 +13,7 @@
     <img src="https://img.shields.io/packagist/dt/mpociot/vat-calculator" alt="Total Downloads">
 </a>
 
-Handle all the hard stuff related to EU MOSS tax/vat regulations, the way it should be. Integrates with **Laravel and Cashier** &mdash; or in a **standalone** PHP application.
+Handle all the hard stuff related to EU MOSS tax/vat regulations, the way it should be. Integrates with **Laravel and Cashier** &mdash; or in a **standalone** PHP application. Originally created by [Marcel Pociot](https://pociot.dev).
 
 ```php
 // Easy to use!
@@ -129,6 +129,36 @@ try {
         [name] => Name of the company
         [address] => Address of the company
     )
+    */
+} catch( VATCheckUnavailableException $e ){
+    // Please handle me
+}
+```
+
+#### UK VAT Numbers
+
+UK VAT numbers are formatted a little differently:
+
+```php
+try {
+    $vat_details = VatCalculator::getVATDetails('GB 553557881');
+    print_r($vat_details);
+    /* Outputs
+    array(3) {
+        ["name"]=>
+            string(26) "Credite Sberger Donal Inc."
+        ["vatNumber"]=>
+            string(9) "553557881"
+        ["address"]=>
+            array(3) {
+                ["line1"]=>
+                    string(18) "131B Barton Hamlet"
+                ["postcode"]=>
+                    string(8) "SW97 5CK"
+                ["countryCode"]=>
+                    string(2) "GB"
+            }
+    }
     */
 } catch( VATCheckUnavailableException $e ){
     // Please handle me
