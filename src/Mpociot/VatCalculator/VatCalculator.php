@@ -689,21 +689,21 @@ class VatCalculator
         $vatNumber = substr($vatNumber, 2);
 
         if (strtoupper($countryCode) === 'GB' && extension_loaded('curl')) {
-            $curl_handle = curl_init();
-            curl_setopt($curl_handle, CURLOPT_URL, "$this->ukValidationEndpoint/organisations/vat/check-vat-number/lookup/$vatNumber");
-            curl_setopt($curl_handle, CURLOPT_CONNECTTIMEOUT, 2);
-            curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($curl_handle, CURLOPT_USERAGENT, 'VatCalculator');
-            $result = curl_exec($curl_handle);
-            curl_close($curl_handle);
+            $apiHeaders = get_headers("$this->ukValidationEndpoint/organisations/vat/check-vat-number/lookup/$vatNumber");
+            $apiHeaders = explode(' ', $apiHeaders[0]);
+            $apiStatusCode = (int) $apiHeaders[1];
 
-            $response = json_decode($result, true, 512, JSON_OBJECT_AS_ARRAY);
-
-            if (isset($response['code'])) {
+            if ($apiStatusCode !== 200) {
                 return false;
             }
 
+            $response = json_decode(
+                file_get_contents("$this->ukValidationEndpoint/organisations/vat/check-vat-number/lookup/$vatNumber"),
+                true
+            );
+
             return $response['target'];
+
         } else {
             $this->initSoapClient();
             $client = $this->soapClient;
