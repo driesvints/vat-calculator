@@ -693,14 +693,18 @@ class VatCalculator
             $apiHeaders = explode(' ', $apiHeaders[0]);
             $apiStatusCode = (int) $apiHeaders[1];
 
-            if ($apiStatusCode !== 200) {
+            if ($apiStatusCode === 400 || $apiStatusCode === 404) {
                 return false;
             }
 
-            $apiResponse = file_get_contents("$this->ukValidationEndpoint/organisations/vat/check-vat-number/lookup/$vatNumber");
-            $apiResponse = json_decode($apiResponse, true);
+            if ($apiStatusCode === 200) {
+                $apiResponse = file_get_contents("$this->ukValidationEndpoint/organisations/vat/check-vat-number/lookup/$vatNumber");
+                $apiResponse = json_decode($apiResponse, true);
 
-            return $apiResponse['target'];
+                return $apiResponse['target'];
+            }
+
+            throw new VATCheckUnavailableException("The UK VAT check service is currently unavailable (status code $apiStatusCode). Please try again later.");
         } else {
             $this->initSoapClient();
             $client = $this->soapClient;
@@ -719,6 +723,7 @@ class VatCalculator
                     return false;
                 }
             }
+
             throw new VATCheckUnavailableException('The VAT check service is currently unavailable. Please try again later.');
         }
     }
