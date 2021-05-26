@@ -3,7 +3,14 @@
 This changelog follows [the Keep a Changelog standard](https://keepachangelog.com) (as of 2.4.2).
 
 
-## [Unreleased](https://github.com/mpociot/vat-calculator/compare/2.5.1...main)
+## [Unreleased](https://github.com/driesvints/vat-calculator/compare/2.5.2...main)
+
+
+## [2.5.2 (2021-05-26)](https://github.com/driesvints/vat-calculator/compare/2.5.1...2.5.2)
+
+### Changed
+- Using get_headers to avoid 404 status code with file_get_contents ([#119](https://github.com/driesvints/vat-calculator/pull/119))
+- Throw unavailable exception for UK VAT API ([3c937b4](https://github.com/driesvints/vat-calculator/commit/3c937b4cde8e3a8936eecf4ce56395f2daa6baa6))
 
 
 ## [2.5.1 (2021-05-25)](https://github.com/driesvints/vat-calculator/compare/2.5.0...2.5.1)
