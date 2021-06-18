@@ -381,6 +381,10 @@ class VatCalculator
      * @var string
      */
     protected $businessCountryCode;
+    /**
+     * @var string
+     */
+    protected $businessVatNumber;
 
     /**
      * @var string
@@ -398,6 +402,13 @@ class VatCalculator
         if (isset($this->config) && $this->config->has($businessCountryKey)) {
             $this->setBusinessCountryCode($this->config->get($businessCountryKey, ''));
         }
+
+        $businessVatNumberKey = 'vat_calculator.business_vat_number';
+        if (isset($this->config) && $this->config->has($businessVatNumberKey)) {
+            $this->setBusinessVatNumber($this->config->get($businessVatNumberKey, null));
+        }
+
+
     }
 
     /**
@@ -593,6 +604,14 @@ class VatCalculator
     }
 
     /**
+     * @param string $businessVatNumber
+     */
+    public function setBusinessVatNumber($businessVatNumber)
+    {
+        $this->businessVatNumber = $businessVatNumber;
+    }
+
+    /**
      * Returns the tax rate for the given country code.
      * This method is used to allow backwards compatibility.
      *
@@ -713,7 +732,7 @@ class VatCalculator
             if ($client) {
                 try {
                     // include requester information when provided
-                    $requesterVatNumber = $requesterVatNumber ?: config('vat_calculator.business_vat_number');
+                    $requesterVatNumber = $requesterVatNumber ?: $this->businessVatNumber;
                     if(!is_null($requesterVatNumber)) {
                         $requesterVatNumber = str_replace([' ', "\xC2\xA0", "\xA0", '-', '.', ','], '', trim($requesterVatNumber));
                         $viesResponse = $client->checkVatApprox([
