@@ -135,6 +135,37 @@ try {
 }
 ```
 
+#### Logging VIES request identifiers
+
+VIES allows you to include your own VAT number to be identified as the requester of the VIES request.
+In such cases, VIES will log your request, and assign the request a requestIdentifier which you may log into your database as proof of your consultation.
+In order to do so, you may pass your own businesses VAT number as the second parameter to the `getVATDetails` method:
+
+```php
+try {
+    $vat_details = VatCalculator::getVATDetails('NL 123456789 B01', 'BE 0123456789');
+    print_r($vat_details);
+    /* Outputs
+    stdClass Object
+    (
+        [countryCode] => NL
+        [vatNumber] => 123456789B01
+        [requestDate] => 2017-04-06+02:00
+        [valid] => false
+        [name] => Name of the company
+        [address] => Address of the company
+        [requestIdentifier] => WAPIAAAAXogiZNof
+        [requesterCountryCode] => BE
+        [requesterVatNumber] => 0123456789
+    )
+    */
+} catch( VATCheckUnavailableException $e ){
+    // Please handle me
+}
+```
+
+The returned requestIdentifier can then be logged in your database to serve as proof of your consultation.
+
 #### UK VAT Numbers
 
 UK VAT numbers are formatted a little differently:
