@@ -45,6 +45,27 @@ return [
 
     'business_country_code' => '',
 
+    /*
+    |--------------------------------------------------------------------------
+    | Business vat number
+    |--------------------------------------------------------------------------
+    |
+    | This should be the VAT number of your business.
+    | It is used to identify your business as the requester for any calls made
+    | to the VIES validation service to fetch the VAT details of any given
+    | VAT number, at which time VIES will return a requestIdentifier you can
+    | log in your database which may serve as proof of your consultation should
+    | your VAT administration ever request it.
+    |
+    | Please note: when you enter an invalid VAT number here, VIES validation service
+    | will throw an exception and you will not be able to validate any VAT number.
+    |
+    | Setting value to null will disable the option.
+    |
+    */
+
+    'business_vat_number' => null,
+
     'forward_soap_faults' => false,
 
 ];
