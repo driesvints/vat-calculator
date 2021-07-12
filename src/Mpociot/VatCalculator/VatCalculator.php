@@ -3,6 +3,7 @@
 namespace Mpociot\VatCalculator;
 
 use Illuminate\Contracts\Config\Repository;
+use Illuminate\Support\Arr;
 use Mpociot\VatCalculator\Exceptions\VATCheckUnavailableException;
 use SoapClient;
 use SoapFault;
@@ -395,8 +396,9 @@ class VatCalculator
         $this->config = $config;
 
         $businessCountryKey = 'vat_calculator.business_country_code';
-        if (isset($this->config) && $this->config->has($businessCountryKey)) {
-            $this->setBusinessCountryCode($this->config->get($businessCountryKey, ''));
+
+        if (isset($this->config) && Arr::has($this->config, $businessCountryKey)) {
+            $this->setBusinessCountryCode(Arr::get($this->config, $businessCountryKey, ''));
         }
     }
 
@@ -454,7 +456,7 @@ class VatCalculator
     {
         $taxKey = 'vat_calculator.rules.'.strtoupper($countryCode);
 
-        return isset($this->taxRules[strtoupper($countryCode)]) || (isset($this->config) && $this->config->has($taxKey));
+        return isset($this->taxRules[strtoupper($countryCode)]) || (isset($this->config) && Arr::has($this->config, $taxKey));
     }
 
     /**
@@ -625,7 +627,7 @@ class VatCalculator
             return 0;
         }
         $taxKey = 'vat_calculator.rules.'.strtoupper($countryCode);
-        if (isset($this->config) && $this->config->has($taxKey)) {
+        if (isset($this->config) && Arr::has($this->config, $taxKey)) {
             return $this->config->get($taxKey, 0);
         }
 
