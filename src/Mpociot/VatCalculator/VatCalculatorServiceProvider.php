@@ -29,23 +29,16 @@ class VatCalculatorServiceProvider extends ServiceProvider
     {
         $this->publishConfig();
         $this->registerValidatorExtension();
-        $this->registerRoutes();
     }
 
     /**
-     * Publish Teamwork configuration.
+     * Publish configuration.
      */
     protected function publishConfig()
     {
-        // Publish config files
         $this->publishes([
-            __DIR__.'/../../config/config.php'           => config_path('vat_calculator.php'),
-            __DIR__.'/../../public/js/vat_calculator.js' => public_path('js/vat_calculator.js'),
+            __DIR__.'/../../config/config.php' => config_path('vat_calculator.php'),
         ]);
-
-        $this->publishes([
-            __DIR__.'/../../public/js/vat_calculator.js' => base_path('resources/assets/js/vat_calculator.js'),
-        ], 'vatcalculator-spark');
     }
 
     /**
@@ -110,17 +103,5 @@ class VatCalculatorServiceProvider extends ServiceProvider
 
         $this->app['validator']->extend('vat_number',
             'Mpociot\VatCalculator\Validators\VatCalculatorValidatorExtension@validateVatNumber');
-    }
-
-    /**
-     * Register predefined routes, used for the
-     * handy javascript toolkit.
-     */
-    protected function registerRoutes()
-    {
-        $config = $this->app->make('Illuminate\Contracts\Config\Repository');
-        if ($config->get('vat_calculator.use_routes', true)) {
-            include __DIR__.'/../../routes.php';
-        }
     }
 }
