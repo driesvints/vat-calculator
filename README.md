@@ -17,8 +17,7 @@ Handle all the hard stuff related to EU MOSS tax/vat regulations, the way it sho
 
 ```php
 // Easy to use!
-$countryCode = VatCalculator::getIPBasedCountry();
-VatCalculator::calculate(24.00, $countryCode);
+VatCalculator::calculate(24.00, $countryCode = 'DE');
 VatCalculator::calculate(24.00, $countryCode, $postalCode);
 VatCalculator::calculate(71.00, 'DE', '41352', $isCompany = true);
 VatCalculator::getTaxRateForLocation('NL');
@@ -49,8 +48,7 @@ use Mpociot\VatCalculator\VatCalculator;
 
 $vatCalculator = new VatCalculator();
 $vatCalculator->setBusinessCountryCode('DE');
-$countryCode = $vatCalculator->getIPBasedCountry();
-$grossPrice = $vatCalculator->calculate( 49.99, 'LU' );
+$grossPrice = $vatCalculator->calculate(49.99, $countryCode = 'LU');
 ```
 
 ## Usage
@@ -230,18 +228,6 @@ $user->useTaxFrom('NL')->asBusiness();
 
 $user->subscription('monthly')->create($creditCardToken);
 ```
-
-## Get the IP based Country of your user
-
-Right now you'll need to show your users a way to select their country - probably a drop down - to use this country for the VAT calculation.
-
-This package has a small helper function, that tries to lookup the Country of the user, based on the IP they have.
-
-```php
-$countryCode = VatCalculator::getIPBasedCountry();
-```
-
-The `$countryCode` will either be `false`, if the service is unavailable, or the country couldn't be looked up. Otherwise the variable contains the two-letter country code, which can be used to prefill the user selection.
 
 ## Configuration
 

@@ -515,48 +515,6 @@ class VatCalculatorTest extends TestCase
         $this->assertFalse($result);
     }
 
-    /**
-     * @link https://tools.tracemyip.org/search--country/germany
-     */
-    public function testCanResolveIPToCountry()
-    {
-        $_SERVER['REMOTE_ADDR'] = '84.171.73.5'; // Deutsche Telekom AG
-
-        $vatCalculator = new VatCalculator();
-        $country = $vatCalculator->getIPBasedCountry();
-        $this->assertEquals('DE', $country);
-    }
-
-    /**
-     * @link https://tools.tracemyip.org/search--country/germany
-     */
-    public function testCanResolveIP6ToCountry()
-    {
-        $_SERVER['REMOTE_ADDR'] = '2001:16b8:1866:b500:c07:d1eb:b865:6d35'; // Versatel Deutschland
-
-        $vatCalculator = new VatCalculator();
-        $country = $vatCalculator->getIPBasedCountry();
-        $this->assertEquals('DE', $country);
-    }
-
-    public function testCanResolveInvalidIPToCountry()
-    {
-        $_SERVER['REMOTE_ADDR'] = '';
-
-        $vatCalculator = new VatCalculator();
-        $country = $vatCalculator->getIPBasedCountry();
-        $this->assertFalse($country);
-    }
-
-    public function testCanHandleIPServiceDowntime()
-    {
-        $_SERVER['REMOTE_ADDR'] = '';
-
-        $vatCalculator = new VatCalculator();
-        $country = $vatCalculator->getIPBasedCountry();
-        $this->assertFalse($country);
-    }
-
     public function testCompanyInBusinessCountryGetsValidVATRate()
     {
         $net = 24.00;
