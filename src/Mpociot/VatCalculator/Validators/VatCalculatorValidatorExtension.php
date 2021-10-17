@@ -10,11 +10,10 @@ class VatCalculatorValidatorExtension
     /**
      * Usage: vat_number.
      *
-     * @param string $attribute
-     * @param mixed  $value
-     * @param array  $parameters
+     * @param  string  $attribute
+     * @param  mixed  $value
+     * @param  array  $parameters
      * @param $validator
-     *
      * @return bool
      */
     public function validateVatNumber($attribute, $value, $parameters, $validator)

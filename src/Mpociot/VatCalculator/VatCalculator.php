@@ -447,7 +447,6 @@ class VatCalculator
      * Determines if you need to collect VAT for the given country code.
      *
      * @param $countryCode
-     *
      * @return bool
      */
     public function shouldCollectVAT($countryCode)
@@ -461,12 +460,11 @@ class VatCalculator
      * Calculate the VAT based on the net price, country code and indication if the
      * customer is a company or not.
      *
-     * @param int|float   $netPrice    The net price to use for the calculation
-     * @param null|string $countryCode The country code to use for the rate lookup
-     * @param null|string $postalCode  The postal code to use for the rate exception lookup
-     * @param null|bool   $company
-     * @param null|string $type        The type can be low or high
-     *
+     * @param  int|float  $netPrice  The net price to use for the calculation
+     * @param  null|string  $countryCode  The country code to use for the rate lookup
+     * @param  null|string  $postalCode  The postal code to use for the rate exception lookup
+     * @param  null|bool  $company
+     * @param  null|string  $type  The type can be low or high
      * @return float
      */
     public function calculate($netPrice, $countryCode = null, $postalCode = null, $company = null, $type = null)
@@ -492,12 +490,11 @@ class VatCalculator
      * Calculate the net price on the gross price, country code and indication if the
      * customer is a company or not.
      *
-     * @param int|float   $gross       The gross price to use for the calculation
-     * @param null|string $countryCode The country code to use for the rate lookup
-     * @param null|string $postalCode  The postal code to use for the rate exception lookup
-     * @param null|bool   $company
-     * @param null|string $type        The type can be low or high
-     *
+     * @param  int|float  $gross  The gross price to use for the calculation
+     * @param  null|string  $countryCode  The country code to use for the rate lookup
+     * @param  null|string  $postalCode  The postal code to use for the rate exception lookup
+     * @param  null|bool  $company
+     * @param  null|string  $type  The type can be low or high
      * @return float
      */
     public function calculateNet($gross, $countryCode = null, $postalCode = null, $company = null, $type = null)
@@ -537,7 +534,7 @@ class VatCalculator
     }
 
     /**
-     * @param mixed $countryCode
+     * @param  mixed  $countryCode
      */
     public function setCountryCode($countryCode)
     {
@@ -553,7 +550,7 @@ class VatCalculator
     }
 
     /**
-     * @param mixed $postalCode
+     * @param  mixed  $postalCode
      */
     public function setPostalCode($postalCode)
     {
@@ -577,7 +574,7 @@ class VatCalculator
     }
 
     /**
-     * @param bool $company
+     * @param  bool  $company
      */
     public function setCompany($company)
     {
@@ -585,7 +582,7 @@ class VatCalculator
     }
 
     /**
-     * @param string $businessCountryCode
+     * @param  string  $businessCountryCode
      */
     public function setBusinessCountryCode($businessCountryCode)
     {
@@ -597,9 +594,8 @@ class VatCalculator
      * This method is used to allow backwards compatibility.
      *
      * @param $countryCode
-     * @param bool $company
-     * @param string $type
-     *
+     * @param  bool  $company
+     * @param  string  $type
      * @return float
      */
     public function getTaxRateForCountry($countryCode, $company = false, $type = null)
@@ -612,11 +608,10 @@ class VatCalculator
      * If a postal code is provided, it will try to lookup the different
      * postal code exceptions that are possible.
      *
-     * @param string      $countryCode
-     * @param string|null $postalCode
-     * @param bool|false  $company
-     * @param string|null $type
-     *
+     * @param  string  $countryCode
+     * @param  string|null  $postalCode
+     * @param  bool|false  $company
+     * @param  string|null  $type
      * @return float
      */
     public function getTaxRateForLocation($countryCode, $postalCode = null, $company = false, $type = null)
@@ -659,10 +654,9 @@ class VatCalculator
 
     /**
      * @param $vatNumber
+     * @return bool
      *
      * @throws VATCheckUnavailableException
-     *
-     * @return bool
      */
     public function isValidVATNumber($vatNumber)
     {
@@ -677,10 +671,9 @@ class VatCalculator
 
     /**
      * @param $vatNumber
+     * @return object|false
      *
      * @throws VATCheckUnavailableException
-     *
-     * @return object|false
      */
     public function getVATDetails($vatNumber)
     {
@@ -729,9 +722,9 @@ class VatCalculator
     }
 
     /**
-     * @throws VATCheckUnavailableException
-     *
      * @return void
+     *
+     * @throws VATCheckUnavailableException
      */
     public function initSoapClient()
     {
@@ -750,7 +743,7 @@ class VatCalculator
     }
 
     /**
-     * @param SoapClient $soapClient
+     * @param  SoapClient  $soapClient
      */
     public function setSoapClient($soapClient)
     {
@@ -759,6 +752,7 @@ class VatCalculator
 
     /**
      * @return $this
+     *
      * @internal This method is not covered by our BC policy.
      */
     public function testing()

@@ -22,9 +22,8 @@ trait BillableWithinTheEU
     protected $userIsCompany = false;
 
     /**
-     * @param string     $countryCode
-     * @param bool|false $company
-     *
+     * @param  string  $countryCode
+     * @param  bool|false  $company
      * @return $this
      */
     public function setTaxForCountry($countryCode, $company = false)
@@ -37,7 +36,6 @@ trait BillableWithinTheEU
 
     /**
      * @param $countryCode
-     *
      * @return $this
      */
     public function useTaxFrom($countryCode)

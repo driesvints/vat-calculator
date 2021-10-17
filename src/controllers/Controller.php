@@ -36,8 +36,7 @@ class Controller extends BaseController
     /**
      * Returns the tax rate for the given country.
      *
-     * @param Request $request
-     *
+     * @param  Request  $request
      * @return \Illuminate\Http\Response
      */
     public function calculateGrossPrice(Request $request)
@@ -80,11 +79,10 @@ class Controller extends BaseController
     /**
      * Returns the tax rate for the given country.
      *
-     * @param string $vat_id
+     * @param  string  $vat_id
+     * @return \Illuminate\Http\Response
      *
      * @throws \Mpociot\VatCalculator\Exceptions\VATCheckUnavailableException
-     *
-     * @return \Illuminate\Http\Response
      */
     public function validateVATID($vat_id)
     {
