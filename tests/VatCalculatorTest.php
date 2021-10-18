@@ -626,13 +626,13 @@ class VatCalculatorTest extends TestCase
         $this->assertEquals(0.21, $vatCalculator->getTaxRate());
         $this->assertEquals(5.04, $vatCalculator->getTaxValue());
 
-        // Valid UK post code
-        $postalCode = 'S1A 2AA';
-        $result = $vatCalculator->calculate($net, 'GB', $postalCode, false);
-        //Expect standard rate for UK
-        $this->assertEquals(28.80, $result);
-        $this->assertEquals(0.20, $vatCalculator->getTaxRate());
-        $this->assertEquals(4.80, $vatCalculator->getTaxValue());
+        // Valid BE post code
+        $postalCode = '2000';
+        $result = $vatCalculator->calculate($net, 'BE', $postalCode, false);
+        //Expect standard rate for BE
+        $this->assertEquals(29.04, $result);
+        $this->assertEquals(0.21, $vatCalculator->getTaxRate());
+        $this->assertEquals(5.04, $vatCalculator->getTaxValue());
     }
 
     public function testShouldCollectVAT()
