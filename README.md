@@ -235,8 +235,6 @@ By default, the VatCalculator has all EU VAT rules predefined, so that it can ea
 
 If you need to define other VAT rates, you can do so by publishing the configuration and add more rules.
 
-The configuration file also determines whether you want to use the VatCalculator JS routes or not.
-
 **Important:** Be sure to set your business country code in the configuration file, to get correct VAT calculation when selling to business customers in your own country.
 
 To publish the configuration files, run the `vendor:publish` command
