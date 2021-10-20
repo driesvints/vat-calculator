@@ -3,7 +3,7 @@
 This changelog follows [the Keep a Changelog standard](https://keepachangelog.com) (as of 2.4.2).
 
 
-## [Unreleased](https://github.com/driesvints/vat-calculator/compare/3.0.0...main)
+## [Unreleased](https://github.com/driesvints/vat-calculator/compare/3.0.0...3.x)
 
 
 ## [3.0.0 (2021-10-20)](https://github.com/driesvints/vat-calculator/compare/2.5.2...3.0.0)
