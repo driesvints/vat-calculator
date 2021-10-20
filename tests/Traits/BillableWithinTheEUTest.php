@@ -1,18 +1,25 @@
 <?php
 
-namespace Tests;
+namespace Tests\Traits;
 
 use Mockery as m;
 use Mpociot\VatCalculator\Facades\VatCalculator;
+use Mpociot\VatCalculator\Traits\BillableWithinTheEU;
+use Mpociot\VatCalculator\VatCalculatorServiceProvider;
 use PHPUnit\Framework\TestCase;
 
-class BillableWithinTheEUTraitTest extends TestCase
+class BillableWithinTheEUTest extends TestCase
 {
     protected function tearDown(): void
     {
-        VatCalculator::clearResolvedInstances();
+        parent::tearDown();
 
         m::close();
+    }
+
+    protected function getPackageProviders($app)
+    {
+        return [VatCalculatorServiceProvider::class];
     }
 
     public function testTaxPercentZeroByDefault()
@@ -22,7 +29,7 @@ class BillableWithinTheEUTraitTest extends TestCase
             ->with(null, false)
             ->andReturn(0);
 
-        $billable = new BillableWithinTheEUTraitTestStub();
+        $billable = new BillableWithinTheEUTestStub();
         $taxPercent = $billable->getTaxPercent();
         $this->assertEquals(0, $taxPercent);
     }
@@ -37,7 +44,7 @@ class BillableWithinTheEUTraitTest extends TestCase
             ->with($countryCode, $company)
             ->andReturn(0.19);
 
-        $billable = new BillableWithinTheEUTraitTestStub();
+        $billable = new BillableWithinTheEUTestStub();
         $billable->setTaxForCountry($countryCode, $company);
         $taxPercent = $billable->getTaxPercent();
         $this->assertEquals(19, $taxPercent);
@@ -52,7 +59,7 @@ class BillableWithinTheEUTraitTest extends TestCase
             ->with($countryCode, $company)
             ->andReturn(0.19);
 
-        $billable = new BillableWithinTheEUTraitTestStub();
+        $billable = new BillableWithinTheEUTestStub();
         $billable->useTaxFrom($countryCode);
         $taxPercent = $billable->getTaxPercent();
         $this->assertEquals(19, $taxPercent);
@@ -67,7 +74,7 @@ class BillableWithinTheEUTraitTest extends TestCase
             ->with($countryCode, $company)
             ->andReturn(0);
 
-        $billable = new BillableWithinTheEUTraitTestStub();
+        $billable = new BillableWithinTheEUTestStub();
         $billable->useTaxFrom($countryCode)->asBusiness();
         $taxPercent = $billable->getTaxPercent();
         $this->assertEquals(0, $taxPercent);
@@ -83,14 +90,14 @@ class BillableWithinTheEUTraitTest extends TestCase
             ->with($countryCode, $company)
             ->andReturn(0.19);
 
-        $billable = new BillableWithinTheEUTraitTestStub();
+        $billable = new BillableWithinTheEUTestStub();
         $billable->useTaxFrom($countryCode)->asIndividual();
         $taxPercent = $billable->getTaxPercent();
         $this->assertEquals(19, $taxPercent);
     }
 }
 
-class BillableWithinTheEUTraitTestStub
+class BillableWithinTheEUTestStub
 {
-    use \Mpociot\VatCalculator\Traits\BillableWithinTheEU;
+    use BillableWithinTheEU;
 }

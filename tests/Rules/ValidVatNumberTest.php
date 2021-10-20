@@ -17,8 +17,6 @@ class ValidVatNumberTest extends TestCase
         parent::tearDown();
 
         m::close();
-
-        VatCalculator::clearResolvedInstances();
     }
 
     protected function getPackageProviders($app)
