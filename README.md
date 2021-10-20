@@ -159,9 +159,9 @@ try {
 }
 ```
 
-### Laravel
+## Laravel
 
-#### Configuration
+### Configuration
 
 By default, the VatCalculator has all EU VAT rules predefined, so that it can easily be updated, if it changes for a specific country.
 
@@ -177,7 +177,7 @@ php artisan vendor:publish --provider="Mpociot\VatCalculator\VatCalculatorServic
 
 This will create a `vat_calculator.php` in your config directory.
 
-#### ValidVatNumber Validation Rule
+### ValidVatNumber Validation Rule
 
 VatCalculator also ships with a `ValidVatNumber` validation rule for VAT Numbers. You can use this when validation input from a form request or a standalone validator instance:
 
@@ -197,7 +197,7 @@ if ($validator->passes()) {
 
 > **Note:** The validator extension returns `false` when the VAT ID Check SOAP API is unavailable.
 
-#### Cashier Stripe Integration
+### Cashier Stripe Integration
 
 > ⚠️ Note that at the moment this package is not compatible with Cashier Stripe v13 because it still relies on the old `taxPercentage` method which has been removed from Cashier v13. You can still use it on older Cashier Stripe versions in the meantime.
 
