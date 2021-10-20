@@ -58,15 +58,15 @@ $grossPrice = $vatCalculator->calculate(49.99, $countryCode = 'LU');
 To calculate the gross price use the `calculate` method with a net price and a country code as parameters.
 
 ```php
-$grossPrice = VatCalculator::calculate( 24.00, 'DE' );
+$grossPrice = VatCalculator::calculate(24.00, 'DE');
 ```
 
 The third parameter is the postal code of the customer.
 
-As a fourth parameter, you can pass in a boolean indicating whether the customer is a company or a private person. If the customer is a company, which you should check by <a href="#validate-eu-vat-numbers">validating the VAT number</a>, the net price gets returned.
+As a fourth parameter, you can pass in a boolean indicating whether the customer is a company or a private person. If the customer is a company, which you should check by validating the VAT number, the net price gets returned.
 
 ```php
-$grossPrice = VatCalculator::calculate( 24.00, 'DE', '12345', $isCompany = true );
+$grossPrice = VatCalculator::calculate(24.00, 'DE', '12345', $isCompany = true);
 ```
 
 ### Receive more information
@@ -74,7 +74,7 @@ $grossPrice = VatCalculator::calculate( 24.00, 'DE', '12345', $isCompany = true 
 After calculating the gross price you can extract more information from the VatCalculator.
 
 ```php
-$grossPrice = VatCalculator::calculate( 24.00, 'DE' ); // 28.56
+$grossPrice = VatCalculator::calculate(24.00, 'DE'); // 28.56
 $taxRate = VatCalculator::getTaxRate(); // 0.19
 $netPrice = VatCalculator::getNetPrice(); // 24.00
 $taxValue = VatCalculator::getTaxValue(); // 4.56
@@ -87,13 +87,11 @@ in the first place.
 
 ```php
 if (VatCalculator::shouldCollectVAT('DE')) {
-
+    // This country code requires VAT collection...
 }
 ```
 
-To validate your customers VAT numbers, you can use the `isValidVATNumber` method.
-The VAT number should be in a format specified by the [VIES](http://ec.europa.eu/taxation_customs/vies/faqvies.do#item_11).
-The given VAT numbers will be truncated and non relevant characters / whitespace will automatically be removed.
+To validate your customers VAT numbers, you can use the `isValidVATNumber` method. The VAT number should be in a format specified by the [VIES](http://ec.europa.eu/taxation_customs/vies/faqvies.do#item_11). The given VAT numbers will be truncated and non relevant characters / whitespace will automatically be removed.
 
 This service relies on a third party SOAP API provided by the EU. If, for whatever reason, this API is unavailable a `VATCheckUnavailableException` will be thrown.
 
@@ -101,15 +99,13 @@ This service relies on a third party SOAP API provided by the EU. If, for whatev
 try {
     $validVAT = VatCalculator::isValidVATNumber('NL 123456789 B01');
 } catch (VATCheckUnavailableException $e) {
-    // Please handle me
+    // The VAT check API is unavailable...
 }
 ```
 
 ### Get EU VAT number details
 
-To get the details of a VAT number, you can use the `getVATDetails` method.
-The VAT number should be in a format specified by the [VIES](http://ec.europa.eu/taxation_customs/vies/faqvies.do#item_11).
-The given VAT numbers will be truncated and non relevant characters / whitespace will automatically be removed.
+To get the details of a VAT number, you can use the `getVATDetails` method. The VAT number should be in a format specified by the [VIES](http://ec.europa.eu/taxation_customs/vies/faqvies.do#item_11). The given VAT numbers will be truncated and non relevant characters / whitespace will automatically be removed.
 
 This service relies on a third party SOAP API provided by the EU. If, for whatever reason, this API is unavailable a `VATCheckUnavailableException` will be thrown.
 
@@ -129,7 +125,7 @@ try {
     )
     */
 } catch (VATCheckUnavailableException $e) {
-    // Please handle me
+    // The VAT check API is unavailable...
 }
 ```
 
@@ -159,13 +155,13 @@ try {
     }
     */
 } catch (VATCheckUnavailableException $e) {
-    // Please handle me
+    // The VAT check API is unavailable...
 }
 ```
 
 ### Laravel
 
-### Configuration
+#### Configuration
 
 By default, the VatCalculator has all EU VAT rules predefined, so that it can easily be updated, if it changes for a specific country.
 
