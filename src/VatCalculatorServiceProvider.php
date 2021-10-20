@@ -14,13 +14,6 @@ class VatCalculatorServiceProvider extends ServiceProvider implements Deferrable
         $this->registerVatCalculator();
     }
 
-    public function boot(): void
-    {
-        $this->publishes([
-            __DIR__.'/../config/vat_calculator.php' => config_path('vat_calculator.php'),
-        ]);
-    }
-
     protected function mergeConfig(): void
     {
         $this->mergeConfigFrom(__DIR__.'/../config/vat_calculator.php', 'vat_calculator');
@@ -35,5 +28,17 @@ class VatCalculatorServiceProvider extends ServiceProvider implements Deferrable
         });
 
         $this->app->bind('vatcalculator', VatCalculator::class);
+    }
+
+    public function boot(): void
+    {
+        $this->publishes([
+            __DIR__.'/../config/vat_calculator.php' => config_path('vat_calculator.php'),
+        ]);
+    }
+
+    public function provides(): array
+    {
+        return [VatCalculator::class, 'vatcalculator'];
     }
 }
