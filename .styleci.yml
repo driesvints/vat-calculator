@@ -1,5 +1,5 @@
 php:
   preset: laravel
-  php: 8
+  version: 8
 css: true
 js: true
