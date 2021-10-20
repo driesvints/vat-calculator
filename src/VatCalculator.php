@@ -14,12 +14,15 @@ class VatCalculator
      */
     const VAT_SERVICE_URL = 'https://ec.europa.eu/taxation_customs/vies/checkVatService.wsdl';
 
+    /**
+     * @var SoapClient
+     */
     protected $soapClient;
 
     /**
      * All available tax rules and their exceptions.
      *
-     * Taken from: https://ec.europa.eu/taxation_customs/resources/documents/taxation/vat/how_vat_works/rates/vat_rates_en.pdf
+     * Taken from: https://taxfoundation.org/value-added-tax-2021-vat-rates-in-europe/
      *
      * @var array
      */
