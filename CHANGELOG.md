@@ -3,7 +3,23 @@
 This changelog follows [the Keep a Changelog standard](https://keepachangelog.com) (as of 2.4.2).
 
 
-## [Unreleased](https://github.com/driesvints/vat-calculator/compare/2.5.2...main)
+## [Unreleased](https://github.com/driesvints/vat-calculator/compare/3.0.0...main)
+
+
+## [3.0.0 (2021-10-20)](https://github.com/driesvints/vat-calculator/compare/2.5.2...3.0.0)
+
+### Changed
+- Drop support for PHP 7.2 and below ([#131](https://github.com/driesvints/vat-calculator/pull/131))
+- Drop support for Laravel 5.8 and below ([#131](https://github.com/driesvints/vat-calculator/pull/131))
+- Refactor validation rule ([#133](https://github.com/driesvints/vat-calculator/pull/133))
+
+### Fixed
+- Remove incorrect VAT rates ([#130](https://github.com/driesvints/vat-calculator/pull/130))
+
+### Removed
+- Remove front-end functionality ([#128](https://github.com/driesvints/vat-calculator/pull/128))
+- Remove translations ([5097c75](https://github.com/driesvints/vat-calculator/commit/5097c752dffa3ca823010816078805017fec2c75))
+- Remove IP lookup functionality ([#129](https://github.com/driesvints/vat-calculator/pull/129))
 
 
 ## [2.5.2 (2021-05-26)](https://github.com/driesvints/vat-calculator/compare/2.5.1...2.5.2)
