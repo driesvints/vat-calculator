@@ -12,9 +12,9 @@ trait BillableWithinTheEU
     protected $stripeTaxPercent = 0;
 
     /**
-     * @var
+     * @var string
      */
-    protected $userCountryCode;
+    protected $userCountryCode = '';
 
     /**
      * @var bool
@@ -23,7 +23,7 @@ trait BillableWithinTheEU
 
     /**
      * @param  string  $countryCode
-     * @param  bool|false  $company
+     * @param  bool  $company
      * @return $this
      */
     public function setTaxForCountry($countryCode, $company = false)
@@ -35,12 +35,12 @@ trait BillableWithinTheEU
     }
 
     /**
-     * @param $countryCode
+     * @param  string  $countryCode
      * @return $this
      */
     public function useTaxFrom($countryCode)
     {
-        $this->userCountryCode = $countryCode;
+        $this->userCountryCode = $countryCode ?? '';
 
         return $this;
     }

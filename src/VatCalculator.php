@@ -557,7 +557,7 @@ class VatCalculator
      *
      * @param  string  $countryCode
      * @param  string|null  $postalCode
-     * @param  bool|false  $company
+     * @param  bool  $company
      * @param  string|null  $type
      * @return float
      */
