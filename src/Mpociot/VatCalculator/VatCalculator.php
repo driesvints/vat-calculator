@@ -324,12 +324,12 @@ class VatCalculator
     /**
      * @var string
      */
-    protected $countryCode;
+    protected $countryCode = '';
 
     /**
      * @var string
      */
-    protected $postalCode;
+    protected $postalCode = '';
 
     /**
      * @var Repository
@@ -361,7 +361,7 @@ class VatCalculator
     /**
      * @var string
      */
-    protected $businessCountryCode;
+    protected $businessCountryCode = '';
 
     /**
      * @var string
@@ -384,7 +384,7 @@ class VatCalculator
     /**
      * Determines if you need to collect VAT for the given country code.
      *
-     * @param $countryCode
+     * @param  string  $countryCode
      * @return bool
      */
     public function shouldCollectVAT($countryCode)
