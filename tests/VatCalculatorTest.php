@@ -361,7 +361,7 @@ class VatCalculatorTest extends TestCase
             ->method('checkVat')
             ->with([
                 'countryCode' => 'DE',
-                'vatNumber'   => '190098891',
+                'vatNumber' => '190098891',
             ])
             ->willReturn($result);
 
@@ -382,7 +382,7 @@ class VatCalculatorTest extends TestCase
             ->method('checkVat')
             ->with([
                 'countryCode' => 'So',
-                'vatNumber'   => 'meInvalidNumber',
+                'vatNumber' => 'meInvalidNumber',
             ])
             ->willReturn($result);
 
@@ -400,7 +400,7 @@ class VatCalculatorTest extends TestCase
             ->method('checkVat')
             ->with([
                 'countryCode' => 'So',
-                'vatNumber'   => 'meInvalidNumber',
+                'vatNumber' => 'meInvalidNumber',
             ])
             ->willThrowException(new \SoapFault('Server', 'Something went wrong'));
 
@@ -418,7 +418,7 @@ class VatCalculatorTest extends TestCase
             ->method('checkVat')
             ->with([
                 'countryCode' => 'So',
-                'vatNumber'   => 'meInvalidNumber',
+                'vatNumber' => 'meInvalidNumber',
             ])
             ->willThrowException(new \SoapFault('Server', 'Something went wrong'));
 
@@ -448,7 +448,7 @@ class VatCalculatorTest extends TestCase
             ->method('checkVat')
             ->with([
                 'countryCode' => 'So',
-                'vatNumber'   => 'meInvalidNumber',
+                'vatNumber' => 'meInvalidNumber',
             ])
             ->willThrowException(new \SoapFault('Server', 'Something went wrong'));
 
