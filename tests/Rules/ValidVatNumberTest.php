@@ -1,15 +1,16 @@
 <?php
 
-namespace Tests;
+namespace Tests\Rules;
 
 use Illuminate\Support\Facades\Validator;
 use Mockery as m;
 use Mpociot\VatCalculator\Exceptions\VATCheckUnavailableException;
 use Mpociot\VatCalculator\Facades\VatCalculator;
+use Mpociot\VatCalculator\Rules\ValidVatNumber;
 use Mpociot\VatCalculator\VatCalculatorServiceProvider;
 use Orchestra\Testbench\TestCase;
 
-class VatCalculatorValidatorExtensionTest extends TestCase
+class ValidVatNumberTest extends TestCase
 {
     protected function tearDown(): void
     {
@@ -34,7 +35,10 @@ class VatCalculatorValidatorExtensionTest extends TestCase
             ->once()
             ->andReturnTrue();
 
-        $validator = Validator::make(['vat_number' => $vatNumber], ['vat_number' => 'required|vat_number']);
+        $validator = Validator::make(
+            ['vat_number' => $vatNumber],
+            ['vat_number' => ['required', new ValidVatNumber]]
+        );
 
         $this->assertTrue($validator->passes());
     }
@@ -48,7 +52,10 @@ class VatCalculatorValidatorExtensionTest extends TestCase
             ->once()
             ->andReturnFalse();
 
-        $validator = Validator::make(['vat_number' => $vatNumber], ['vat_number' => 'required|vat_number']);
+        $validator = Validator::make(
+            ['vat_number' => $vatNumber],
+            ['vat_number' => ['required', new ValidVatNumber]]
+        );
 
         $this->assertTrue($validator->fails());
     }
@@ -62,7 +69,10 @@ class VatCalculatorValidatorExtensionTest extends TestCase
             ->once()
             ->andThrow(new VATCheckUnavailableException());
 
-        $validator = Validator::make(['vat_number' => $vatNumber], ['vat_number' => 'required|vat_number']);
+        $validator = Validator::make(
+            ['vat_number' => $vatNumber],
+            ['vat_number' => ['required', new ValidVatNumber]]
+        );
 
         $this->assertTrue($validator->fails());
     }
@@ -76,7 +86,10 @@ class VatCalculatorValidatorExtensionTest extends TestCase
             ->once()
             ->andThrow(new VATCheckUnavailableException());
 
-        $validator = Validator::make(['vat_number' => $vatNumber], ['vat_number' => 'required|vat_number']);
+        $validator = Validator::make(
+            ['vat_number' => $vatNumber],
+            ['vat_number' => ['required', new ValidVatNumber]]
+        );
 
         $errors = $validator->errors()->toArray();
 
