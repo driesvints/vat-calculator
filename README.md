@@ -51,6 +51,10 @@ $vatCalculator->setBusinessCountryCode('DE');
 $grossPrice = $vatCalculator->calculate(49.99, $countryCode = 'LU');
 ```
 
+## Upgrading
+
+Please refer to [`the upgrade guide`](UPGRADE.md) when upgrading the library.
+
 ## Usage
 
 ### Calculate the gross price
