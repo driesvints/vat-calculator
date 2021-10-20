@@ -75,9 +75,9 @@ After calculating the gross price you can extract more information from the VatC
 
 ```php
 $grossPrice = VatCalculator::calculate( 24.00, 'DE' ); // 28.56
-$taxRate    = VatCalculator::getTaxRate(); // 0.19
-$netPrice   = VatCalculator::getNetPrice(); // 24.00
-$taxValue   = VatCalculator::getTaxValue(); // 4.56
+$taxRate = VatCalculator::getTaxRate(); // 0.19
+$netPrice = VatCalculator::getNetPrice(); // 24.00
+$taxValue = VatCalculator::getTaxValue(); // 4.56
 ```
 
 ### Validate EU VAT numbers
@@ -100,7 +100,7 @@ This service relies on a third party SOAP API provided by the EU. If, for whatev
 ```php
 try {
     $validVAT = VatCalculator::isValidVATNumber('NL 123456789 B01');
-} catch( VATCheckUnavailableException $e ){
+} catch (VATCheckUnavailableException $e) {
     // Please handle me
 }
 ```
@@ -128,7 +128,7 @@ try {
         [address] => Address of the company
     )
     */
-} catch( VATCheckUnavailableException $e ){
+} catch (VATCheckUnavailableException $e) {
     // Please handle me
 }
 ```
@@ -158,35 +158,54 @@ try {
             }
     }
     */
-} catch( VATCheckUnavailableException $e ){
+} catch (VATCheckUnavailableException $e) {
     // Please handle me
 }
 ```
 
-<a name="laravel-validator-extension"></a>
-### Laravel Validator Extension
-If you want to include the VAT number validation directly in your existing Form Requests / Validations, use the `vat_number` validation rule.
+### Laravel
 
-Example:
+### Configuration
 
-```php
-$rules = array(
-    'first_name'  => 'required',
-    'last_name'   => 'required',
-    'company_vat' => 'vat_number'
-);
+By default, the VatCalculator has all EU VAT rules predefined, so that it can easily be updated, if it changes for a specific country.
 
-$validator = Validator::make(Input::all(), $rules);
+If you need to define other VAT rates, you can do so by publishing the configuration and add more rules.
+
+> **Note:** Be sure to set your business country code in the configuration file, to get correct VAT calculation when selling to business customers in your own country.
+
+To publish the configuration files, run the `vendor:publish` command
+
+```bash
+php artisan vendor:publish --provider="Mpociot\VatCalculator\VatCalculatorServiceProvider"
 ```
 
-**Important:** The validator extension returns `false` when the VAT ID Check SOAP API is unavailable.
+This will create a `vat_calculator.php` in your config directory.
 
-<a name="cashier-integration"></a>
-### Cashier integration
+#### ValidVatNumber Validation Rule
 
-> ⚠️ Note that at the moment this package is not compatible with Cashier v13 because it still relies on the old `taxPercentage` method which has been removed from Cashier v13. You can still use it on older Cashier versions in the meantime.
+VatCalculator also ships with a `ValidVatNumber` validation rule for VAT Numbers. You can use this when validation input from a form request or a standalone validator instance:
 
-If you want to use this package in combination with [Laravel Cashier](https://github.com/laravel/cashier/) you can let your billable model use the `BillableWithinTheEU` trait. Because this trait overrides the `taxPercentage` method of the `Billable` trait, we have to explicitly tell our model to do so.
+```php
+use Mpociot\VatCalculator\Rules\ValidVatNumber;
+
+$validator = Validator::make(Input::all(), [
+    'first_name' => 'required',
+    'last_name' => 'required',
+    'company_vat' => ['required', new ValidVatNumber],
+]);
+
+if ($validator->passes()) {
+    // Input is correct...
+}
+```
+
+> **Note:** The validator extension returns `false` when the VAT ID Check SOAP API is unavailable.
+
+#### Cashier Stripe Integration
+
+> ⚠️ Note that at the moment this package is not compatible with Cashier Stripe v13 because it still relies on the old `taxPercentage` method which has been removed from Cashier v13. You can still use it on older Cashier Stripe versions in the meantime.
+
+If you want to use this package in combination with [Laravel Cashier Stripe](https://github.com/laravel/cashier-stripe/) you can let your billable model use the `BillableWithinTheEU` trait. Because this trait overrides the `taxPercentage` method of the `Billable` trait, we have to explicitly tell our model to do so.
 
 ```php
 use Laravel\Cashier\Billable;
@@ -228,22 +247,6 @@ $user->useTaxFrom('NL')->asBusiness();
 
 $user->subscription('monthly')->create($creditCardToken);
 ```
-
-## Configuration
-
-By default, the VatCalculator has all EU VAT rules predefined, so that it can easily be updated, if it changes for a specific country.
-
-If you need to define other VAT rates, you can do so by publishing the configuration and add more rules.
-
-**Important:** Be sure to set your business country code in the configuration file, to get correct VAT calculation when selling to business customers in your own country.
-
-To publish the configuration files, run the `vendor:publish` command
-
-```bash
-php artisan vendor:publish --provider="Mpociot\VatCalculator\VatCalculatorServiceProvider"
-```
-
-This will create a `vat_calculator.php` in your config directory.
 
 ## Changelog
 

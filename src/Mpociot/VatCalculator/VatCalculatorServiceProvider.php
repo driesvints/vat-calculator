@@ -2,13 +2,6 @@
 
 namespace Mpociot\VatCalculator;
 
-/*
- * This file is part of Teamwork
- *
- * @license MIT
- * @package Teamwork
- */
-
 use Illuminate\Support\ServiceProvider;
 
 class VatCalculatorServiceProvider extends ServiceProvider
@@ -28,7 +21,6 @@ class VatCalculatorServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->publishConfig();
-        $this->registerValidatorExtension();
     }
 
     /**
@@ -92,16 +84,5 @@ class VatCalculatorServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(
             __DIR__.'/../../config/config.php', 'vat_calculator'
         );
-    }
-
-    protected function registerValidatorExtension()
-    {
-        $this->loadTranslationsFrom(
-            __DIR__.'/../../lang',
-            'vatnumber-validator'
-        );
-
-        $this->app['validator']->extend('vat_number',
-            'Mpociot\VatCalculator\Validators\VatCalculatorValidatorExtension@validateVatNumber');
     }
 }
