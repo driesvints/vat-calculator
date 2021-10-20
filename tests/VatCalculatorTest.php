@@ -3,7 +3,6 @@
 namespace Tests;
 
 use Mockery as m;
-use Mpociot\VatCalculator\Facades\VatCalculator as VatCalculatorFacade;
 use Mpociot\VatCalculator\VatCalculator;
 use PHPUnit\Framework\TestCase;
 
