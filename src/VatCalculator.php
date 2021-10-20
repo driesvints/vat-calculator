@@ -376,6 +376,7 @@ class VatCalculator
         $this->config = $config;
 
         $businessCountryKey = 'vat_calculator.business_country_code';
+
         if (isset($this->config) && $this->config->has($businessCountryKey)) {
             $this->setBusinessCountryCode($this->config->get($businessCountryKey, ''));
         }
@@ -410,12 +411,15 @@ class VatCalculator
         if ($countryCode) {
             $this->setCountryCode($countryCode);
         }
+
         if ($postalCode) {
             $this->setPostalCode($postalCode);
         }
-        if (! is_null($company) && $company !== $this->isCompany()) {
+
+        if ($company && $company !== $this->isCompany()) {
             $this->setCompany($company);
         }
+
         $this->netPrice = floatval($netPrice);
         $this->taxRate = $this->getTaxRateForLocation($this->getCountryCode(), $this->getPostalCode(), $this->isCompany(), $type);
         $this->taxValue = $this->taxRate * $this->netPrice;
@@ -440,10 +444,12 @@ class VatCalculator
         if ($countryCode) {
             $this->setCountryCode($countryCode);
         }
+
         if ($postalCode) {
             $this->setPostalCode($postalCode);
         }
-        if (! is_null($company) && $company !== $this->isCompany()) {
+
+        if ($company && $company !== $this->isCompany()) {
             $this->setCompany($company);
         }
 
@@ -476,7 +482,7 @@ class VatCalculator
      */
     public function setCountryCode($countryCode)
     {
-        $this->countryCode = $countryCode;
+        $this->countryCode = $countryCode ?? '';
     }
 
     /**
@@ -492,7 +498,7 @@ class VatCalculator
      */
     public function setPostalCode($postalCode)
     {
-        $this->postalCode = $postalCode;
+        $this->postalCode = $postalCode ?? '';
     }
 
     /**
@@ -531,14 +537,14 @@ class VatCalculator
      * Returns the tax rate for the given country code.
      * This method is used to allow backwards compatibility.
      *
-     * @param $countryCode
+     * @param  string  $countryCode
      * @param  bool  $company
-     * @param  string  $type
+     * @param  string|null  $type
      * @return float
      */
     public function getTaxRateForCountry($countryCode, $company = false, $type = null)
     {
-        return $this->getTaxRateForLocation($countryCode, null, $company, $type);
+        return $this->getTaxRateForLocation($countryCode, '', $company, $type);
     }
 
     /**
@@ -557,16 +563,19 @@ class VatCalculator
         if ($company && strtoupper($countryCode) !== strtoupper($this->businessCountryCode)) {
             return 0;
         }
+
         $taxKey = 'vat_calculator.rules.'.strtoupper($countryCode);
+
         if (isset($this->config) && $this->config->has($taxKey)) {
             return $this->config->get($taxKey, 0);
         }
 
-        if (isset($this->postalCodeExceptions[$countryCode]) && $postalCode !== null) {
+        if (isset($this->postalCodeExceptions[$countryCode]) && $postalCode) {
             foreach ($this->postalCodeExceptions[$countryCode] as $postalCodeException) {
                 if (! preg_match($postalCodeException['postalCode'], $postalCode)) {
                     continue;
                 }
+
                 if (isset($postalCodeException['name'])) {
                     return $this->taxRules[$postalCodeException['code']]['exceptions'][$postalCodeException['name']];
                 }
@@ -575,7 +584,7 @@ class VatCalculator
             }
         }
 
-        if ($type !== null) {
+        if ($type) {
             return isset($this->taxRules[strtoupper($countryCode)]['rates'][$type]) ? $this->taxRules[strtoupper($countryCode)]['rates'][$type] : 0;
         }
 
@@ -591,14 +600,14 @@ class VatCalculator
     }
 
     /**
-     * @param $vatNumber
+     * @param  string  $vatNumber
      * @return bool
      *
      * @throws VATCheckUnavailableException
      */
     public function isValidVATNumber($vatNumber)
     {
-        $details = self::getVATDetails($vatNumber);
+        $details = $this->getVATDetails($vatNumber);
 
         if ($details) {
             return is_array($details) ? isset($details['vatNumber']) : $details->valid;
@@ -608,7 +617,7 @@ class VatCalculator
     }
 
     /**
-     * @param $vatNumber
+     * @param  string  $vatNumber
      * @return object|false
      *
      * @throws VATCheckUnavailableException
@@ -669,6 +678,7 @@ class VatCalculator
         if (is_object($this->soapClient) || $this->soapClient === false) {
             return;
         }
+
         try {
             $this->soapClient = new SoapClient(self::VAT_SERVICE_URL);
         } catch (SoapFault $e) {
