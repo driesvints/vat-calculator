@@ -29,7 +29,7 @@ class VatCalculatorServiceProvider extends ServiceProvider
     protected function publishConfig()
     {
         $this->publishes([
-            __DIR__.'/../config/config.php' => config_path('vat_calculator.php'),
+            __DIR__.'/../config/vat_calculator.php' => config_path('vat_calculator.php'),
         ]);
     }
 
@@ -82,7 +82,7 @@ class VatCalculatorServiceProvider extends ServiceProvider
     protected function mergeConfig()
     {
         $this->mergeConfigFrom(
-            __DIR__.'/../config/config.php', 'vat_calculator'
+            __DIR__.'/../config/vat_calculator.php', 'vat_calculator'
         );
     }
 }
