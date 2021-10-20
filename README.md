@@ -28,8 +28,8 @@ VatCalculator::isValidVATNumber('NL123456789B01');
 
 ## Requirements
 
-- PHP 5.5 or higher
-- (optional) Laravel 5.0 or higher
+- PHP 7.3 or higher
+- (optional) Laravel 6.0 or higher
 
 ## Installation
 
