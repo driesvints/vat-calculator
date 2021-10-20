@@ -3,6 +3,7 @@
 namespace Tests;
 
 use Mockery as m;
+use Mpociot\VatCalculator\Facades\VatCalculator as VatCalculatorFacade;
 use Mpociot\VatCalculator\VatCalculator;
 use PHPUnit\Framework\TestCase;
 
@@ -12,6 +13,8 @@ class VatCalculatorTest extends TestCase
 
     protected function tearDown(): void
     {
+        parent::tearDown();
+
         m::close();
     }
 

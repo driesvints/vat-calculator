@@ -2,7 +2,9 @@
 
 namespace Mpociot\VatCalculator\Facades;
 
-class VatCalculator extends \Illuminate\Support\Facades\Facade
+use Illuminate\Support\Facades\Facade;
+
+class VatCalculator extends Facade
 {
     /**
      * Get the registered name of the component.
