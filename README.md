@@ -171,7 +171,7 @@ By default, the VatCalculator has all EU VAT rules predefined, so that it can ea
 
 If you need to define other VAT rates, you can do so by publishing the configuration and add more rules.
 
-> **Note:** Be sure to set your business country code in the configuration file, to get correct VAT calculation when selling to business customers in your own country.
+> ⚠️ Be sure to set your business country code in the configuration file, to get correct VAT calculation when selling to business customers in your own country.
 
 To publish the configuration files, run the `vendor:publish` command
 
@@ -199,7 +199,7 @@ if ($validator->passes()) {
 }
 ```
 
-> **Note:** The validator extension returns `false` when the VAT ID Check SOAP API is unavailable.
+> ⚠️ The validator extension returns `false` when the VAT ID Check SOAP API is unavailable.
 
 ### Cashier Stripe Integration
 
