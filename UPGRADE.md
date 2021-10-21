@@ -2,8 +2,6 @@
 
 ## Upgrading from v2 to v3
 
-Version 3 of VatCalculator doesn't comes with many breaking changes but we'll go over the ones that made it in below.
-
 ### Minimum Versions
 
 PR: https://github.com/driesvints/vat-calculator/pull/131
