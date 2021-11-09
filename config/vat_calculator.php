@@ -36,8 +36,8 @@ return [
     | Enable SOAP fault exception throwing
     |--------------------------------------------------------------------------
     |
-    | By default, SOAP faults for the VIES VAT API checks are handled 
-    | gracefully by returning them as false. However, you can enable 
+    | By default, SOAP faults for the VIES VAT API checks are handled
+    | gracefully by returning them as false. However, you can enable
     | this setting to throw them as exceptions instead.
     |
     */
