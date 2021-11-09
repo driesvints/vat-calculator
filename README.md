@@ -181,6 +181,20 @@ php artisan vendor:publish --provider="Mpociot\VatCalculator\VatCalculatorServic
 
 This will create a `vat_calculator.php` in your config directory.
 
+#### Handling SOAP Faults
+
+If for some reason, SOAP faults happen when the VIES API is faulty, these errors will be handled gracefully and `false` will be returned. However, if you explicitly want to be aware of any SOAP faults you may instruct VatCalculator to throw them as a `VATCheckUnavailableException`. The `VATCheckUnavailableException` will then contain the specific message of the SOAP fault.
+
+Set the option to `true` in your config file:
+
+```php
+<?php
+
+return [
+    'forward_soap_faults' => true,
+];
+```
+
 ### ValidVatNumber Validation Rule
 
 VatCalculator also ships with a `ValidVatNumber` validation rule for VAT Numbers. You can use this when validation input from a form request or a standalone validator instance:
