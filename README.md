@@ -26,6 +26,8 @@ VatCalculator::getTaxRateForLocation('NL');
 VatCalculator::isValidVATNumber('NL123456789B01');
 ```
 
+> ⚠️ This package does not provide any promises for correctly calculated taxes. You are still responsible to making sure that any calculated tax is correct for your use case. If you're uncertain if a certain tax is correct or not, it's best that you talk to an accountant.
+
 ## Requirements
 
 - PHP 7.3 or higher
