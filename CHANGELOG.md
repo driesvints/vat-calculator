@@ -3,7 +3,13 @@
 This changelog follows [the Keep a Changelog standard](https://keepachangelog.com) (as of 2.4.2).
 
 
-## [Unreleased](https://github.com/driesvints/vat-calculator/compare/3.0.1...3.x)
+## [Unreleased](https://github.com/driesvints/vat-calculator/compare/3.0.2...3.x)
+
+
+## [3.0.2 (2022-01-11)](https://github.com/driesvints/vat-calculator/compare/3.0.1...3.0.2)
+
+### Fixed
+- Correct VAT and postal code for Campione d'Italia ([#138](https://github.com/driesvints/vat-calculator/pull/138))
 
 
 ## [3.0.1 (2022-01-10)](https://github.com/driesvints/vat-calculator/compare/3.0.0...3.0.1)
