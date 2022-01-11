@@ -105,7 +105,7 @@ class VatCalculator
         'IT' => [ // Italy
             'rate' => 0.22,
             'exceptions' => [
-                'Campione d\'Italia' => 0,
+                'Campione d\'Italia' => 0.077,
                 'Livigno' => 0,
             ],
         ],
@@ -193,11 +193,6 @@ class VatCalculator
                 'postalCode' => '/^8238$/',
                 'code' => 'DE',
                 'name' => 'Büsingen am Hochrhein',
-            ],
-            [
-                'postalCode' => '/^6911$/',
-                'code' => 'IT',
-                'name' => "Campione d'Italia",
             ],
             // The Italian city of Domodossola has a Swiss post office also
             [
