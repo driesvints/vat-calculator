@@ -1,3 +1,7 @@
+<a href="https://supportukrainenow.org/"><img src="https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/banner-direct.svg" width="100%"></a>
+
+------
+
 # VatCalculator
 
 <a href="https://github.com/mpociot/vat-calculator/actions">
