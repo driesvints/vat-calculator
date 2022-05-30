@@ -13,7 +13,7 @@
     <img src="https://img.shields.io/packagist/dt/mpociot/vat-calculator" alt="Total Downloads">
 </a>
 
-Handle all the hard stuff related to EU MOSS tax/vat regulations for digital services, the way it should be. Integrates with **Laravel and Cashier** &mdash; or in a **standalone** PHP application. Originally created by [Marcel Pociot](https://pociot.dev).
+Handle all the hard stuff related to EU MOSS tax/vat regulations, the way it should be. Integrates with **Laravel and Cashier** &mdash; or in a **standalone** PHP application. Originally created by [Marcel Pociot](https://pociot.dev).
 
 ```php
 // Easy to use!
