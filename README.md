@@ -204,6 +204,16 @@ return [
 ];
 ```
 
+You can also set a timeout for the SOAP client. By default, SOAP aborts the request to VIES after 30 seconds. If you do not want to wait that long, you can reduce the timeout, for example to 10 seconds:
+
+```php
+<?php
+
+return [
+    'soap_timeout' => 10,
+];
+```
+
 ### ValidVatNumber Validation Rule
 
 VatCalculator also ships with a `ValidVatNumber` validation rule for VAT Numbers. You can use this when validation input from a form request or a standalone validator instance:

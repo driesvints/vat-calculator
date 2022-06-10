@@ -44,4 +44,17 @@ return [
 
     'forward_soap_faults' => false,
 
+    /*
+    |--------------------------------------------------------------------------
+    | Change the SOAP timeout
+    |--------------------------------------------------------------------------
+    |
+    | By default, SOAP aborts the request to VIES after 30 seconds.
+    | If you do not want to wait that long, you can reduce the timeout.
+    | Timeout is in seconds and integer.
+    |
+    */
+
+    'soap_timeout' => 30,
+
 ];

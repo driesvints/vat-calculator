@@ -744,8 +744,15 @@ class VatCalculator
             return;
         }
 
+        // Set's default timeout time.
+        $timeout = 30;
+
+        if (isset($this->config) && $this->config->has('vat_calculator.soap_timeout')) {
+            $timeout = $this->config->get('vat_calculator.soap_timeout');
+        }
+
         try {
-            $this->soapClient = new SoapClient(self::VAT_SERVICE_URL);
+            $this->soapClient = new SoapClient(self::VAT_SERVICE_URL, ['connection_timeout' => $timeout]);
         } catch (SoapFault $e) {
             if (isset($this->config) && $this->config->get('vat_calculator.forward_soap_faults')) {
                 throw new VATCheckUnavailableException($e->getMessage(), $e->getCode(), $e->getPrevious());
