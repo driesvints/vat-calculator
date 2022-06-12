@@ -751,8 +751,10 @@ class VatCalculator
             $timeout = $this->config->get('vat_calculator.soap_timeout');
         }
 
+        $context = stream_context_create(['http' => ['timeout' => $timeout]]);
+
         try {
-            $this->soapClient = new SoapClient(self::VAT_SERVICE_URL, ['connection_timeout' => $timeout]);
+            $this->soapClient = new SoapClient(self::VAT_SERVICE_URL, ['stream_context' => $context]);
         } catch (SoapFault $e) {
             if (isset($this->config) && $this->config->get('vat_calculator.forward_soap_faults')) {
                 throw new VATCheckUnavailableException($e->getMessage(), $e->getCode(), $e->getPrevious());
