@@ -109,6 +109,16 @@ try {
 }
 ```
 
+Alternatively, it is also possible to validate only the format of the VAT Number specified by [VIES](http://ec.europa.eu/taxation_customs/vies/faqvies.do#item_11). This is useful, if you do not want to wait for a response from the SOAP API.
+
+```php
+// This check will return false because no connection to VIES could be made...
+$validVAT = VatCalculator::isValidVATNumber('NL 123456789 B01');
+
+// This check will return true because only the format is checked...
+$validVAT = VatCalculator::isValidVatNumberFormat('NL 123456789 B01');
+```
+
 ### Get EU VAT number details
 
 To get the details of a VAT number, you can use the `getVATDetails` method. The VAT number should be in a format specified by the [VIES](http://ec.europa.eu/taxation_customs/vies/faqvies.do#item_11). The given VAT numbers will be truncated and non relevant characters / whitespace will automatically be removed.
@@ -194,6 +204,16 @@ Set the option to `true` in your config file:
 
 return [
     'forward_soap_faults' => true,
+];
+```
+
+You can also set a timeout for the SOAP client. By default, SOAP aborts the request to VIES after 30 seconds. If you do not want to wait that long, you can reduce the timeout, for example to 10 seconds:
+
+```php
+<?php
+
+return [
+    'soap_timeout' => 10,
 ];
 ```
 
