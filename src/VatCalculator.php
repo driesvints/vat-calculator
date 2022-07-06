@@ -320,9 +320,10 @@ class VatCalculator
     ];
 
     /**
-     * Regular expression patterns per country code for VAT
+     * Regular expression patterns per country code for VAT.
      *
      * @var array
+     *
      * @link https://ec.europa.eu/taxation_customs/vies/faq.html?locale=en#item_11
      */
     protected $patterns = [
@@ -353,7 +354,7 @@ class VatCalculator
         'RO' => '\d{2,10}',
         'SE' => '\d{12}',
         'SI' => '\d{8}',
-        'SK' => '\d{10}'
+        'SK' => '\d{10}',
     ];
 
     /**
@@ -430,7 +431,7 @@ class VatCalculator
      */
     public function shouldCollectVAT($countryCode)
     {
-        $taxKey = 'vat_calculator.rules.' . strtoupper($countryCode);
+        $taxKey = 'vat_calculator.rules.'.strtoupper($countryCode);
 
         return isset($this->taxRules[strtoupper($countryCode)]) || (isset($this->config) && $this->config->has($taxKey));
     }
@@ -604,7 +605,7 @@ class VatCalculator
             return 0;
         }
 
-        $taxKey = 'vat_calculator.rules.' . strtoupper($countryCode);
+        $taxKey = 'vat_calculator.rules.'.strtoupper($countryCode);
 
         if (isset($this->config) && $this->config->has($taxKey)) {
             return $this->config->get($taxKey, 0);
@@ -656,11 +657,11 @@ class VatCalculator
         $countryCode = substr($vatNumber, 0, 2);
         $vatNumber = substr($vatNumber, 2);
 
-        if (!isset($this->patterns[$countryCode])) {
+        if (! isset($this->patterns[$countryCode])) {
             return false;
         }
 
-        return preg_match('/^' . $this->patterns[$countryCode] . '$/', $vatNumber) > 0;
+        return preg_match('/^'.$this->patterns[$countryCode].'$/', $vatNumber) > 0;
     }
 
     /**

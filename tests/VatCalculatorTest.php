@@ -90,7 +90,7 @@ class VatCalculatorTest extends TestCase
         $net = 24.00;
         $countryCode = 'DE';
 
-        $taxKey = 'vat_calculator.rules.' . strtoupper($countryCode);
+        $taxKey = 'vat_calculator.rules.'.strtoupper($countryCode);
 
         $config = m::mock('Illuminate\Contracts\Config\Repository');
         $config->shouldReceive('get')
@@ -123,12 +123,12 @@ class VatCalculatorTest extends TestCase
         $config = m::mock('Illuminate\Contracts\Config\Repository');
         $config->shouldReceive('get')
             ->once()
-            ->with('vat_calculator.rules.' . $countryCode, 0)
+            ->with('vat_calculator.rules.'.$countryCode, 0)
             ->andReturn(0.19);
 
         $config->shouldReceive('has')
             ->once()
-            ->with('vat_calculator.rules.' . $countryCode)
+            ->with('vat_calculator.rules.'.$countryCode)
             ->andReturn(true);
 
         $config->shouldReceive('has')
@@ -163,12 +163,12 @@ class VatCalculatorTest extends TestCase
         $config = m::mock('Illuminate\Contracts\Config\Repository');
         $config->shouldReceive('get')
             ->once()
-            ->with('vat_calculator.rules.' . $countryCode, 0)
+            ->with('vat_calculator.rules.'.$countryCode, 0)
             ->andReturn(0.19);
 
         $config->shouldReceive('has')
             ->once()
-            ->with('vat_calculator.rules.' . $countryCode)
+            ->with('vat_calculator.rules.'.$countryCode)
             ->andReturn(true);
 
         $config->shouldReceive('has')
@@ -263,12 +263,12 @@ class VatCalculatorTest extends TestCase
         $config = m::mock('Illuminate\Contracts\Config\Repository');
         $config->shouldReceive('get')
             ->once()
-            ->with('vat_calculator.rules.' . $countryCode, 0)
+            ->with('vat_calculator.rules.'.$countryCode, 0)
             ->andReturn(0.19);
 
         $config->shouldReceive('has')
             ->once()
-            ->with('vat_calculator.rules.' . $countryCode)
+            ->with('vat_calculator.rules.'.$countryCode)
             ->andReturn(true);
 
         $config->shouldReceive('has')
@@ -288,12 +288,12 @@ class VatCalculatorTest extends TestCase
         $config = m::mock('Illuminate\Contracts\Config\Repository');
         $config->shouldReceive('get')
             ->once()
-            ->with('vat_calculator.rules.' . $countryCode, 0)
+            ->with('vat_calculator.rules.'.$countryCode, 0)
             ->andReturn(0.19);
 
         $config->shouldReceive('has')
             ->once()
-            ->with('vat_calculator.rules.' . $countryCode)
+            ->with('vat_calculator.rules.'.$countryCode)
             ->andReturn(true);
 
         $config->shouldReceive('has')
@@ -356,7 +356,7 @@ class VatCalculatorTest extends TestCase
         $result = new \stdClass();
         $result->valid = true;
 
-        $vatCheck = $this->getMockFromWsdl(__DIR__ . '/checkVatService.wsdl', 'VATService');
+        $vatCheck = $this->getMockFromWsdl(__DIR__.'/checkVatService.wsdl', 'VATService');
         $vatCheck->expects($this->any())
             ->method('checkVat')
             ->with([
@@ -377,7 +377,7 @@ class VatCalculatorTest extends TestCase
         $result = new \stdClass();
         $result->valid = false;
 
-        $vatCheck = $this->getMockFromWsdl(__DIR__ . '/checkVatService.wsdl', 'VATService');
+        $vatCheck = $this->getMockFromWsdl(__DIR__.'/checkVatService.wsdl', 'VATService');
         $vatCheck->expects($this->any())
             ->method('checkVat')
             ->with([
@@ -395,7 +395,7 @@ class VatCalculatorTest extends TestCase
 
     public function testValidateVATNumberReturnsFalseOnSoapFailure()
     {
-        $vatCheck = $this->getMockFromWsdl(__DIR__ . '/checkVatService.wsdl', 'VATService');
+        $vatCheck = $this->getMockFromWsdl(__DIR__.'/checkVatService.wsdl', 'VATService');
         $vatCheck->expects($this->any())
             ->method('checkVat')
             ->with([
@@ -413,7 +413,7 @@ class VatCalculatorTest extends TestCase
 
     public function testValidateVATNumberReturnsFalseOnSoapFailureWithoutForwarding()
     {
-        $vatCheck = $this->getMockFromWsdl(__DIR__ . '/checkVatService.wsdl', 'VATService');
+        $vatCheck = $this->getMockFromWsdl(__DIR__.'/checkVatService.wsdl', 'VATService');
         $vatCheck->expects($this->any())
             ->method('checkVat')
             ->with([
@@ -443,7 +443,7 @@ class VatCalculatorTest extends TestCase
     {
         $this->expectException(\Mpociot\VatCalculator\Exceptions\VATCheckUnavailableException::class);
 
-        $vatCheck = $this->getMockFromWsdl(__DIR__ . '/checkVatService.wsdl', 'VATService');
+        $vatCheck = $this->getMockFromWsdl(__DIR__.'/checkVatService.wsdl', 'VATService');
         $vatCheck->expects($this->any())
             ->method('checkVat')
             ->with([
@@ -649,7 +649,7 @@ class VatCalculatorTest extends TestCase
     public function testShouldCollectVATFromConfig()
     {
         $countryCode = 'TEST';
-        $taxKey = 'vat_calculator.rules.' . strtoupper($countryCode);
+        $taxKey = 'vat_calculator.rules.'.strtoupper($countryCode);
 
         $config = m::mock('Illuminate\Contracts\Config\Repository');
 
@@ -739,7 +739,7 @@ class VatCalculatorTest extends TestCase
         $gross = 36.00;
         $countryCode = 'DE';
 
-        $taxKey = 'vat_calculator.rules.' . strtoupper($countryCode);
+        $taxKey = 'vat_calculator.rules.'.strtoupper($countryCode);
 
         $config = m::mock('Illuminate\Contracts\Config\Repository');
         $config->shouldReceive('get')
@@ -772,12 +772,12 @@ class VatCalculatorTest extends TestCase
         $config = m::mock('Illuminate\Contracts\Config\Repository');
         $config->shouldReceive('get')
             ->once()
-            ->with('vat_calculator.rules.' . $countryCode, 0)
+            ->with('vat_calculator.rules.'.$countryCode, 0)
             ->andReturn(0.19);
 
         $config->shouldReceive('has')
             ->once()
-            ->with('vat_calculator.rules.' . $countryCode)
+            ->with('vat_calculator.rules.'.$countryCode)
             ->andReturn(true);
 
         $config->shouldReceive('has')
@@ -813,12 +813,12 @@ class VatCalculatorTest extends TestCase
         $config = m::mock('Illuminate\Contracts\Config\Repository');
         $config->shouldReceive('get')
             ->once()
-            ->with('vat_calculator.rules.' . $countryCode, 0)
+            ->with('vat_calculator.rules.'.$countryCode, 0)
             ->andReturn(0.19);
 
         $config->shouldReceive('has')
             ->once()
-            ->with('vat_calculator.rules.' . $countryCode)
+            ->with('vat_calculator.rules.'.$countryCode)
             ->andReturn(true);
 
         $config->shouldReceive('has')
