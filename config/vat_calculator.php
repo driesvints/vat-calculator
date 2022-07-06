@@ -51,7 +51,7 @@ return [
     |
     | By default, SOAP aborts the request to VIES after 30 seconds.
     | If you do not want to wait that long, you can reduce the timeout.
-    | Timeout is in seconds and integer.
+    | The timeout is specified in seconds.
     |
     */
 

@@ -612,7 +612,7 @@ class VatCalculator
 
         if (isset($this->postalCodeExceptions[$countryCode]) && $postalCode) {
             foreach ($this->postalCodeExceptions[$countryCode] as $postalCodeException) {
-                if (!preg_match($postalCodeException['postalCode'], $postalCode)) {
+                if (! preg_match($postalCodeException['postalCode'], $postalCode)) {
                     continue;
                 }
 
@@ -640,10 +640,9 @@ class VatCalculator
     }
 
     /**
-     * Validate a VAT number format. This does not check whether the VAT number was really issued.
+     * Validate a VAT number format without checking if the VAT number was really issued.
      *
-     * @param string $vatNumber
-     *
+     * @param  string  $vatNumber
      * @return bool
      */
     public function isValidVatNumberFormat($vatNumber)

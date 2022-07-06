@@ -109,11 +109,14 @@ try {
 }
 ```
 
-Alternatively, it is also possible to validate only the format of the VAT Number specified by [VIES](http://ec.europa.eu/taxation_customs/vies/faqvies.do#item_11). Useful if you do not want to wait for a response from the SOAP API.
+Alternatively, it is also possible to validate only the format of the VAT Number specified by [VIES](http://ec.europa.eu/taxation_customs/vies/faqvies.do#item_11). This is useful, if you do not want to wait for a response from the SOAP API.
 
 ```php
-    $validVAT = VatCalculator::isValidVATNumber('NL 123456789 B01'); // false 
-    $validVAT = VatCalculator::isValidVatNumberFormat('NL 123456789 B01'); // true (format is correct)
+// This check will return false because no connection to VIES could be made...
+$validVAT = VatCalculator::isValidVATNumber('NL 123456789 B01');
+
+// This check will return true because only the format is checked...
+$validVAT = VatCalculator::isValidVatNumberFormat('NL 123456789 B01');
 ```
 
 ### Get EU VAT number details
