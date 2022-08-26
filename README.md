@@ -243,7 +243,7 @@ if ($validator->passes()) {
 ### Cashier Stripe Integration
 
 > **Note**  
-> At the moment this package is not compatible with Cashier Stripe v13 because it still relies on the old `taxPercentage` method which has been removed from Cashier v13. You can still use it on older Cashier Stripe versions in the meantime.
+> At the moment this package is not compatible with Cashier Stripe v13 or v14 because it still relies on the old `taxPercentage` method which has been removed from Cashier v13. You can still use it on older Cashier Stripe versions in the meantime.
 
 If you want to use this package in combination with [Laravel Cashier Stripe](https://github.com/laravel/cashier-stripe/) you can let your billable model use the `BillableWithinTheEU` trait. Because this trait overrides the `taxPercentage` method of the `Billable` trait, we have to explicitly tell our model to do so.
 
