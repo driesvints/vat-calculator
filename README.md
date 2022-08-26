@@ -26,7 +26,8 @@ VatCalculator::getTaxRateForLocation('NL');
 VatCalculator::isValidVATNumber('NL123456789B01');
 ```
 
-> ⚠️ This package does not provide any promises for correctly calculated taxes. You are still responsible to making sure that any calculated tax is correct for your use case. If you're uncertain if a certain tax is correct or not, it's best that you talk to an accountant.
+> **Warning**  
+> This package does not provide any promises for correctly calculated taxes. You are still responsible to making sure that any calculated tax is correct for your use case. If you're uncertain if a certain tax is correct or not, it's best that you talk to an accountant.
 
 ## Requirements
 
@@ -183,7 +184,8 @@ By default, the VatCalculator has all EU VAT rules predefined, so that it can ea
 
 If you need to define other VAT rates, you can do so by publishing the configuration and add more rules.
 
-> ⚠️ Be sure to set your business country code in the configuration file, to get correct VAT calculation when selling to business customers in your own country.
+> **Warning**  
+> Be sure to set your business country code in the configuration file, to get correct VAT calculation when selling to business customers in your own country.
 
 To publish the configuration files, run the `vendor:publish` command
 
@@ -235,11 +237,13 @@ if ($validator->passes()) {
 }
 ```
 
-> ⚠️ The validator extension returns `false` when the VAT ID Check SOAP API is unavailable.
+> **Warning**  
+> The validator extension returns `false` when the VAT ID Check SOAP API is unavailable.
 
 ### Cashier Stripe Integration
 
-> ⚠️ Note that at the moment this package is not compatible with Cashier Stripe v13 because it still relies on the old `taxPercentage` method which has been removed from Cashier v13. You can still use it on older Cashier Stripe versions in the meantime.
+> **Note**  
+> At the moment this package is not compatible with Cashier Stripe v13 because it still relies on the old `taxPercentage` method which has been removed from Cashier v13. You can still use it on older Cashier Stripe versions in the meantime.
 
 If you want to use this package in combination with [Laravel Cashier Stripe](https://github.com/laravel/cashier-stripe/) you can let your billable model use the `BillableWithinTheEU` trait. Because this trait overrides the `taxPercentage` method of the `Billable` trait, we have to explicitly tell our model to do so.
 
