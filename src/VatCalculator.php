@@ -463,8 +463,8 @@ class VatCalculator
 
         $this->netPrice = floatval($netPrice);
         $this->taxRate = $this->getTaxRateForLocation($this->getCountryCode(), $this->getPostalCode(), $this->isCompany(), $type);
-        $this->taxValue = $this->taxRate * $this->netPrice;
-        $this->value = $this->netPrice + $this->taxValue;
+        $this->taxValue = round($this->taxRate * $this->netPrice, 2);
+        $this->value = round($this->netPrice + $this->taxValue, 2);
 
         return $this->value;
     }
@@ -496,8 +496,8 @@ class VatCalculator
 
         $this->value = floatval($gross);
         $this->taxRate = $this->getTaxRateForLocation($this->getCountryCode(), $this->getPostalCode(), $this->isCompany(), $type);
-        $this->taxValue = $this->taxRate > 0 ? $this->value / (1 + $this->taxRate) * $this->taxRate : 0;
-        $this->netPrice = $this->value - $this->taxValue;
+        $this->taxValue = round($this->taxRate > 0 ? $this->value / (1 + $this->taxRate) * $this->taxRate : 0, 2);
+        $this->netPrice = round($this->value - $this->taxValue, 2);
 
         return $this->netPrice;
     }
