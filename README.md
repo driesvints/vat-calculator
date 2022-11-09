@@ -1,10 +1,10 @@
 # VatCalculator
 
-<a href="https://github.com/mpociot/vat-calculator/actions">
-    <img src="https://github.com/mpociot/vat-calculator/workflows/Tests/badge.svg" alt="Tests">
+<a href="https://github.com/driesvints/vat-calculator/actions">
+    <img src="https://github.com/driesvints/vat-calculator/workflows/Tests/badge.svg" alt="Tests">
 </a>
-<a href="https://github.styleci.io/repos/41703624">
-    <img src="https://github.styleci.io/repos/41703624/shield?style=flat" alt="Code Style">
+<a href="https://github.com/driesvints/vat-calculator/actions/workflows/coding-standards.yml">
+    <img src="https://github.com/driesvints/vat-calculator/actions/workflows/coding-standards.yml/badge.svg" alt="Coding Standards" />
 </a>
 <a href="https://packagist.org/packages/mpociot/vat-calculator">
     <img src="https://img.shields.io/packagist/v/mpociot/vat-calculator" alt="Latest Stable Version">

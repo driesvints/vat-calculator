@@ -1,7 +1,0 @@
-php:
-  preset: laravel
-  version: 8
-  enabled:
-    - unalign_double_arrow
-css: true
-js: true
