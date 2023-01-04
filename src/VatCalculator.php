@@ -33,18 +33,45 @@ class VatCalculator
                 'Jungholz' => 0.19,
                 'Mittelberg' => 0.19,
             ],
+            'rates' => [
+                'high' => 0.20,
+                'low' => 0.10,
+                'low1' => 0.13,
+                'low2' => 0.05,
+                'parking' => 0.13
+            ]
         ],
         'BE' => [ // Belgium
             'rate' => 0.21,
+            'rates' => [
+                'high' => 0.21,
+                'low' => 0.09,
+                'low1' => 0.12,
+                'parking' => 0.0012
+            ]
         ],
         'BG' => [ // Bulgaria
             'rate' => 0.20,
+            'rates' => [
+                'high' => 0.20,
+                'low' => 0.09
+            ]
         ],
         'CY' => [ // Cyprus
             'rate' => 0.19,
+            'rates' => [
+                'high' => 0.19,
+                'low' => 0.05,
+                'low1' => 0.09
+            ]
         ],
         'CZ' => [ // Czech Republic
             'rate' => 0.21,
+            'rates' => [
+                'high' => 0.21,
+                'low' => 0.10,
+                'low1' => 0.15
+            ]
         ],
         'DE' => [ // Germany
             'rate' => 0.19,
@@ -52,18 +79,34 @@ class VatCalculator
                 'Heligoland' => 0,
                 'Büsingen am Hochrhein' => 0,
             ],
+            'rates' => [
+                'high' => 0.19,
+                'low' => 0.07
+            ]
         ],
         'DK' => [ // Denmark
             'rate' => 0.25,
+            'rates' => [
+                'high' => 0.25
+            ]
         ],
         'EE' => [ // Estonia
             'rate' => 0.20,
+            'rates' => [
+                'high' => 0.20,
+                'low' => 0.09
+            ]
         ],
         'EL' => [ // Hellenic Republic (Greece)
             'rate' => 0.24,
             'exceptions' => [
                 'Mount Athos' => 0,
             ],
+            'rates' => [
+                'high' => 0.24,
+                'low' => 0.06,
+                'low1' => 0.13
+            ]
         ],
         'ES' => [ // Spain
             'rate' => 0.21,
@@ -72,9 +115,19 @@ class VatCalculator
                 'Ceuta' => 0,
                 'Melilla' => 0,
             ],
+            'rates' => [
+                'high' => 0.21,
+                'low' => 0.10,
+                'super-reduced' => 0.04
+            ]
         ],
         'FI' => [ // Finland
             'rate' => 0.24,
+            'rates' => [
+                'high' => 0.24,
+                'low' => 0.10,
+                'low1' => 0.14
+            ]
         ],
         'FR' => [ // France
             'rate' => 0.20,
@@ -86,21 +139,49 @@ class VatCalculator
                 'Guyane' => 0,
                 'Mayotte' => 0,
             ],
+            'rates' => [
+                'high' => 0.20,
+                'low' => 0.055,
+                'low1' => 0.10,
+                'super-reduced' => 0.021
+            ]
         ],
         'GR' => [ // Greece
             'rate' => 0.24,
             'exceptions' => [
                 'Mount Athos' => 0,
             ],
+            'rates' => [
+                'high' => 0.24,
+                'low' => 0.06,
+                'low1' => 0.13
+            ]
         ],
         'HR' => [ // Croatia
             'rate' => 0.25,
+            'rates' => [
+                'high' => 0.25,
+                'low' => 0.05,
+                'low1' => 0.13
+            ]
         ],
         'HU' => [ // Hungary
             'rate' => 0.27,
+            'rates' => [
+                'high' => 0.27,
+                'low' => 0.05,
+                'low1' => 0.18
+            ]
         ],
         'IE' => [ // Ireland
             'rate' => 0.23,
+            'rates' => [
+                'high' => 0.23,
+                'low' => 0.09,
+                'low1' => 0.135,
+                'super-reduced' => 0.048,
+                'parking' => 0.135
+            ]
         ],
         'IT' => [ // Italy
             'rate' => 0.22,
@@ -108,18 +189,45 @@ class VatCalculator
                 'Campione d\'Italia' => 0,
                 'Livigno' => 0,
             ],
+            'rates' => [
+                'high' => 0.22,
+                'low' => 0.05,
+                'low1' => 0.10,
+                'super-reduced' => 0.04
+            ]
         ],
         'LT' => [ // Lithuania
             'rate' => 0.21,
+            'rates' => [
+                'high' => 0.21,
+                'low' => 0.05,
+                'low1' => 0.09
+            ]
         ],
         'LU' => [ // Luxembourg
-            'rate' => 0.17,
+            'rate' => 0.16,
+            'rates' => [
+                'high' => 0.16,
+                'low' => 0.07,
+                'super-reduced' => 0.03,
+                'parking' => 0.13
+            ]
         ],
         'LV' => [ // Latvia
             'rate' => 0.21,
+            'rates' => [
+                'high' => 0.21,
+                'low' => 0.05,
+                'low1' => 0.12
+            ]
         ],
         'MT' => [ // Malta
             'rate' => 0.18,
+            'rates' => [
+                'high' => 0.18,
+                'low' => 0.05,
+                'low1' => 0.07
+            ]
         ],
         'NL' => [ // Netherlands
             'rate' => 0.21,
@@ -130,6 +238,11 @@ class VatCalculator
         ],
         'PL' => [ // Poland
             'rate' => 0.23,
+            'rates' => [
+                'high' => 0.23,
+                'low' => 0.06,
+                'low1' => 0.08
+            ]
         ],
         'PT' => [ // Portugal
             'rate' => 0.23,
@@ -137,34 +250,69 @@ class VatCalculator
                 'Azores' => 0.18,
                 'Madeira' => 0.22,
             ],
+            'rates' => [
+                'high' => 0.23,
+                'low' => 0.06,
+                'low1' => 0.13,
+                'parking' => 0.13
+            ]
         ],
         'RO' => [ // Romania
             'rate' => 0.19,
+            'rates' => [
+                'high' => 0.19,
+                'low' => 0.05,
+                'low1' => 0.09
+            ]
         ],
         'SE' => [ // Sweden
             'rate' => 0.25,
+            'rates' => [
+                'high' => 0.25,
+                'low' => 0.06,
+                'low1' => 0.12
+            ]
         ],
         'SI' => [ // Slovenia
             'rate' => 0.22,
+            'rates' => [
+                'high' => 0.22,
+                'low' => 0.05,
+                'low1' => 0.095
+            ]
         ],
         'SK' => [ // Slovakia
             'rate' => 0.20,
+            'rates' => [
+                'high' => 0.20,
+                'low' => 0.10
+            ]
         ],
 
-        // Countries associated with EU countries that have a special VAT rate
+        // Countries associated with EU countries that have a special VAT rate -- https://www.easytax.co/en/countries/monaco/
         'MC' => [ // Monaco France
             'rate' => 0.20,
+            'rates' => [
+                'high' => 0.20,
+                'low' => 0.10,
+                'low1' => 0.055
+            ]
         ],
-        'IM' => [ // Isle of Man - United Kingdom
+        'IM' => [ // Isle of Man - United Kingdom -- https://www.gov.im/categories/tax-vat-and-your-money/customs-and-excise/technical-information-vat-duty-and-interest-rates/vat-rates/
             'rate' => 0.20,
+            'rates' => [
+                'high' => 0.20,
+                'low' => 0.05
+            ]
         ],
 
-        // Non-EU with their own VAT requirements
-        'CH' => [ // Switzerland
+        // Non-EU with their own VAT requirements -- https://www.estv.admin.ch/estv/en/home/value-added-tax/vat-rates-switzerland.html
+        'CH' => [ // Switzerland -- INFO: ON 01.01.2024 VAT RATES CHANGE IN CH
             'rate' => 0.077,
             'rates' => [
                 'high' => 0.077,
                 'low' => 0.025,
+                'super-reduced' => 0.037
             ],
         ],
     ];
