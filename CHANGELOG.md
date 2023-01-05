@@ -2,7 +2,13 @@
 
 This changelog follows [the Keep a Changelog standard](https://keepachangelog.com) (as of 2.4.2).
 
-## [Unreleased](https://github.com/driesvints/vat-calculator/compare/3.1.1...3.x)
+## [Unreleased](https://github.com/driesvints/vat-calculator/compare/3.1.2...3.x)
+
+## [3.1.2](https://github.com/driesvints/vat-calculator/compare/3.1.1...3.1.2) - 2022-11-09
+
+### Changed
+
+- Test on PHP 8.2 by @driesvints in https://github.com/driesvints/vat-calculator/pull/149
 
 ## [3.1.1](https://github.com/driesvints/vat-calculator/compare/3.1.0...3.1.1) - 2022-09-19
 
