@@ -4,6 +4,7 @@ namespace Mpociot\VatCalculator;
 
 use Illuminate\Contracts\Config\Repository;
 use Mpociot\VatCalculator\Exceptions\VATCheckUnavailableException;
+use Mpociot\VatCalculator\Util\ConfigWrapper;
 use SoapClient;
 use SoapFault;
 
@@ -558,11 +559,15 @@ class VatCalculator
     protected $ukValidationEndpoint = 'https://api.service.hmrc.gov.uk';
 
     /**
-     * @param \Illuminate\Contracts\Config\Repository
+     * @param Repository|array $config
      */
     public function __construct($config = null)
     {
-        $this->config = $config;
+        if($config instanceof Repository){
+            $this->config = $config;
+        }elseif(is_array($config)){
+            $this->config = new ConfigWrapper($config);
+        }
 
         $businessCountryKey = 'vat_calculator.business_country_code';
 
