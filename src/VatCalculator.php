@@ -753,7 +753,11 @@ class VatCalculator
             return 0;
         }
 
-        $taxKey = 'vat_calculator.rules.'.strtoupper($countryCode);
+        if ($type) {
+            $taxKey = 'vat_calculator.rules.'.strtoupper($countryCode).'.rates.'.$type;
+        } else {
+            $taxKey = 'vat_calculator.rules.'.strtoupper($countryCode).'.rate';
+        }
 
         if (isset($this->config) && $this->config->has($taxKey)) {
             return $this->config->get($taxKey, 0);
