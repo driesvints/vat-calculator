@@ -15,7 +15,20 @@ return [
     */
 
     'rules' => [
+        // Simple country code => rate mapping...
         // 'XX' => 0.17,
+
+        // Country code with different rates and exceptions...
+        // 'YY' => [
+        //     'rate' => 0.20,
+        //     'rates' => [
+        //         'high' => 0.20,
+        //         'low' => 0.09,
+        //     ],
+        //     'exceptions' => [
+        //         'City' => 0.19,
+        //     ],
+        // ],
     ],
 
     /*
