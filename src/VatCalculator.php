@@ -753,14 +753,17 @@ class VatCalculator
             return 0;
         }
 
-        if ($type) {
-            $taxKey = 'vat_calculator.rules.'.strtoupper($countryCode).'.rates.'.$type;
-        } else {
-            $taxKey = 'vat_calculator.rules.'.strtoupper($countryCode).'.rate';
-        }
+        $taxRules = $this->taxRules;
+        $taxKey = 'vat_calculator.rules.'.strtoupper($countryCode);
 
         if (isset($this->config) && $this->config->has($taxKey)) {
-            return $this->config->get($taxKey, 0);
+            $configTax = $this->config->get($taxKey, 0);
+
+            if (is_array($configTax)) {
+                $taxRules[$countryCode] = $configTax;
+            } else {
+                $taxRules[$countryCode]['rate'] = $configTax;
+            }
         }
 
         if (isset($this->postalCodeExceptions[$countryCode]) && $postalCode) {
@@ -770,18 +773,18 @@ class VatCalculator
                 }
 
                 if (isset($postalCodeException['name'])) {
-                    return $this->taxRules[$postalCodeException['code']]['exceptions'][$postalCodeException['name']];
+                    return $taxRules[$postalCodeException['code']]['exceptions'][$postalCodeException['name']];
                 }
 
-                return $this->taxRules[$postalCodeException['code']]['rate'];
+                return $taxRules[$postalCodeException['code']]['rate'];
             }
         }
 
         if ($type) {
-            return isset($this->taxRules[strtoupper($countryCode)]['rates'][$type]) ? $this->taxRules[strtoupper($countryCode)]['rates'][$type] : 0;
+            return isset($taxRules[strtoupper($countryCode)]['rates'][$type]) ? $taxRules[strtoupper($countryCode)]['rates'][$type] : 0;
         }
 
-        return isset($this->taxRules[strtoupper($countryCode)]['rate']) ? $this->taxRules[strtoupper($countryCode)]['rate'] : 0;
+        return isset($taxRules[strtoupper($countryCode)]['rate']) ? $taxRules[strtoupper($countryCode)]['rate'] : 0;
     }
 
     /**
