@@ -2,7 +2,11 @@
 
 This changelog follows [the Keep a Changelog standard](https://keepachangelog.com) (as of 2.4.2).
 
-## [Unreleased](https://github.com/driesvints/vat-calculator/compare/3.3.0...3.x)
+## [Unreleased](https://github.com/driesvints/vat-calculator/compare/3.4.0...3.x)
+
+## [3.4.0](https://github.com/driesvints/vat-calculator/compare/3.3.0...3.4.0) - 2023-06-09
+
+- Allow all tax rules to be overwritten by @Fossil01 & @driesvints in https://github.com/driesvints/vat-calculator/pull/156
 
 ## [3.3.0](https://github.com/driesvints/vat-calculator/compare/3.2.0...3.3.0) - 2023-01-11
 
