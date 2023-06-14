@@ -561,7 +561,7 @@ class VatCalculator
     /**
      * @param \Illuminate\Contracts\Config\Repository|array
      */
-    public function __construct($config = null)
+    public function __construct($config = [])
     {
         $this->config = $config instanceof Repository ? $this->config->get('vat_calculator', []) : $config;
 
