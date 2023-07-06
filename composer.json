@@ -3,6 +3,16 @@
     "description": "EU VAT calculation, the way it should be.",
     "keywords": ["VAT", "Tax", "EU MOSS", "VAT ID", "Tax calculation", "VAT calculation", "Cashier"],
     "license": "MIT",
+    "funding": [
+        {
+            "type": "github",
+            "url": "https://github.com/sponsors/driesvints"
+        },
+        {
+            "type": "paypal",
+            "url": "https://www.paypal.com/paypalme/driesvints"
+        }
+    ],
     "authors": [
         {
             "name": "Marcel Pociot",
