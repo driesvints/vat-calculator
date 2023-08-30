@@ -95,7 +95,7 @@ class VatCalculatorTest extends TestCase
             ->andReturn([
                 'rules' => [
                     'DE' => 0.50,
-                ]
+                ],
             ]);
 
         $vatCalculator = new VatCalculator($config);
@@ -117,7 +117,7 @@ class VatCalculatorTest extends TestCase
             ->andReturn([
                 'rules' => [
                     'DE' => 0.19,
-                ]
+                ],
             ]);
 
         $vatCalculator = new VatCalculator($config);
@@ -151,7 +151,7 @@ class VatCalculatorTest extends TestCase
             ->andReturn([
                 'rules' => [
                     'DE' => 0.19,
-                ]
+                ],
             ]);
 
         $vatCalculator = new VatCalculator($config);
@@ -615,7 +615,7 @@ class VatCalculatorTest extends TestCase
             ->andReturn([
                 'rules' => [
                     'TEST' => 0.19,
-                ]
+                ],
             ]);
 
         $vatCalculator = new VatCalculator($config);
@@ -690,7 +690,7 @@ class VatCalculatorTest extends TestCase
             ->andReturn([
                 'rules' => [
                     'DE' => 0.50,
-                ]
+                ],
             ]);
 
         $vatCalculator = new VatCalculator($config);
@@ -712,7 +712,7 @@ class VatCalculatorTest extends TestCase
             ->andReturn([
                 'rules' => [
                     'DE' => 0.19,
-                ]
+                ],
             ]);
 
         $vatCalculator = new VatCalculator($config);
@@ -747,7 +747,7 @@ class VatCalculatorTest extends TestCase
             ->andReturn([
                 'rules' => [
                     'DE' => 0.19,
-                ]
+                ],
             ]);
 
         $vatCalculator = new VatCalculator($config);

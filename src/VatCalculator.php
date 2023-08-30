@@ -4,7 +4,6 @@ namespace Mpociot\VatCalculator;
 
 use Illuminate\Contracts\Config\Repository;
 use Mpociot\VatCalculator\Exceptions\VATCheckUnavailableException;
-use Mpociot\VatCalculator\Util\ConfigWrapper;
 use SoapClient;
 use SoapFault;
 
