@@ -563,7 +563,7 @@ class VatCalculator
      */
     public function __construct($config = [])
     {
-        $this->config = $config instanceof Repository ? $this->config->get('vat_calculator', []) : $config;
+        $this->config = $config instanceof Repository ? $config->get('vat_calculator', []) : $config;
 
         if (isset($this->config['business_country_code'])) {
             $this->setBusinessCountryCode($this->config['business_country_code']);
