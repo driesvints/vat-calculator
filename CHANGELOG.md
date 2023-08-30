@@ -2,7 +2,11 @@
 
 This changelog follows [the Keep a Changelog standard](https://keepachangelog.com) (as of 2.4.2).
 
-## [Unreleased](https://github.com/driesvints/vat-calculator/compare/3.4.0...3.x)
+## [Unreleased](https://github.com/driesvints/vat-calculator/compare/3.5.0...3.x)
+
+## [3.5.0](https://github.com/driesvints/vat-calculator/compare/3.4.0...3.5.0) - 2023-08-30
+
+- Don't rely on Laravel config component by [@gregberger](https://github.com/gregberger) in https://github.com/driesvints/vat-calculator/pull/154
 
 ## [3.4.0](https://github.com/driesvints/vat-calculator/compare/3.3.0...3.4.0) - 2023-06-09
 
