@@ -4,6 +4,7 @@ namespace Mpociot\VatCalculator;
 
 use Illuminate\Contracts\Config\Repository;
 use Mpociot\VatCalculator\Exceptions\VATCheckUnavailableException;
+use Mpociot\VatCalculator\Util\ConfigWrapper;
 use SoapClient;
 use SoapFault;
 
@@ -521,7 +522,7 @@ class VatCalculator
     protected $postalCode = '';
 
     /**
-     * @var Repository
+     * @var array
      */
     protected $config;
 
@@ -558,16 +559,14 @@ class VatCalculator
     protected $ukValidationEndpoint = 'https://api.service.hmrc.gov.uk';
 
     /**
-     * @param \Illuminate\Contracts\Config\Repository
+     * @param \Illuminate\Contracts\Config\Repository|array
      */
-    public function __construct($config = null)
+    public function __construct($config = [])
     {
-        $this->config = $config;
+        $this->config = $config instanceof Repository ? $config->get('vat_calculator', []) : $config;
 
-        $businessCountryKey = 'vat_calculator.business_country_code';
-
-        if (isset($this->config) && $this->config->has($businessCountryKey)) {
-            $this->setBusinessCountryCode($this->config->get($businessCountryKey, ''));
+        if (isset($this->config['business_country_code'])) {
+            $this->setBusinessCountryCode($this->config['business_country_code']);
         }
     }
 
@@ -579,9 +578,9 @@ class VatCalculator
      */
     public function shouldCollectVAT($countryCode)
     {
-        $taxKey = 'vat_calculator.rules.'.strtoupper($countryCode);
+        $countryCode = strtoupper($countryCode);
 
-        return isset($this->taxRules[strtoupper($countryCode)]) || (isset($this->config) && $this->config->has($taxKey));
+        return isset($this->taxRules[$countryCode]) || isset($this->config['rules'][$countryCode]);
     }
 
     /**
@@ -749,15 +748,16 @@ class VatCalculator
      */
     public function getTaxRateForLocation($countryCode, $postalCode = null, $company = false, $type = null)
     {
-        if ($company && strtoupper($countryCode) !== strtoupper($this->businessCountryCode)) {
+        $countryCode = strtoupper($countryCode);
+
+        if ($company && $countryCode !== strtoupper($this->businessCountryCode)) {
             return 0;
         }
 
         $taxRules = $this->taxRules;
-        $taxKey = 'vat_calculator.rules.'.strtoupper($countryCode);
 
-        if (isset($this->config) && $this->config->has($taxKey)) {
-            $configTax = $this->config->get($taxKey, 0);
+        if (isset($this->config['rules'][$countryCode])) {
+            $configTax = $this->config['rules'][$countryCode];
 
             if (is_array($configTax)) {
                 $taxRules[$countryCode] = $configTax;
@@ -876,7 +876,7 @@ class VatCalculator
                         'vatNumber' => $vatNumber,
                     ]);
                 } catch (SoapFault $e) {
-                    if (isset($this->config) && $this->config->get('vat_calculator.forward_soap_faults')) {
+                    if ($this->config['forward_soap_faults'] ?? false) {
                         throw new VATCheckUnavailableException($e->getMessage(), $e->getCode(), $e->getPrevious());
                     }
 
@@ -902,8 +902,8 @@ class VatCalculator
         // Set's default timeout time.
         $timeout = 30;
 
-        if (isset($this->config) && $this->config->has('vat_calculator.soap_timeout')) {
-            $timeout = $this->config->get('vat_calculator.soap_timeout');
+        if (isset($this->config['soap_timeout'])) {
+            $timeout = $this->config['soap_timeout'];
         }
 
         $context = stream_context_create(['http' => ['timeout' => $timeout]]);
@@ -911,7 +911,7 @@ class VatCalculator
         try {
             $this->soapClient = new SoapClient(self::VAT_SERVICE_URL, ['stream_context' => $context]);
         } catch (SoapFault $e) {
-            if (isset($this->config) && $this->config->get('vat_calculator.forward_soap_faults')) {
+            if ($this->config['forward_soap_faults'] ?? false) {
                 throw new VATCheckUnavailableException($e->getMessage(), $e->getCode(), $e->getPrevious());
             }
 

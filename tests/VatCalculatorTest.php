@@ -23,15 +23,10 @@ class VatCalculatorTest extends TestCase
     {
         $config = m::mock(Repository::class);
 
-        $config->shouldReceive('has')
+        $config->shouldReceive('get')
             ->once()
-            ->with('vat_calculator.business_country_code')
-            ->andReturn(false);
-
-        $config->shouldReceive('has')
-            ->once()
-            ->with('vat_calculator.rules.')
-            ->andReturn(false);
+            ->with('vat_calculator', [])
+            ->andReturn([]);
 
         $net = 25.00;
 
@@ -56,17 +51,16 @@ class VatCalculatorTest extends TestCase
 
         $config = m::mock(Repository::class);
         $config->shouldReceive('get')
-            ->never();
-
-        $config->shouldReceive('has')
             ->once()
-            ->with('vat_calculator.rules.DE')
-            ->andReturn(false);
-
-        $config->shouldReceive('has')
-            ->once()
-            ->with('vat_calculator.business_country_code')
-            ->andReturn(false);
+            ->with('vat_calculator', [])
+            ->andReturn([
+                'rules' => [
+                    'DE' => [
+                        'rate' => 0.19,
+                        'exceptions' => [],
+                    ],
+                ],
+            ]);
 
         $vatCalculator = new VatCalculator($config);
         $result = $vatCalculator->calculate($net, $countryCode);
@@ -97,18 +91,12 @@ class VatCalculatorTest extends TestCase
         $config = m::mock(Repository::class);
         $config->shouldReceive('get')
             ->once()
-            ->with($taxKey, 0)
-            ->andReturn(0.50);
-
-        $config->shouldReceive('has')
-            ->once()
-            ->with($taxKey)
-            ->andReturn(true);
-
-        $config->shouldReceive('has')
-            ->once()
-            ->with('vat_calculator.business_country_code')
-            ->andReturn(false);
+            ->with('vat_calculator', [])
+            ->andReturn([
+                'rules' => [
+                    'DE' => 0.50,
+                ]
+            ]);
 
         $vatCalculator = new VatCalculator($config);
         $result = $vatCalculator->calculate($net, $countryCode);
@@ -125,18 +113,12 @@ class VatCalculatorTest extends TestCase
         $config = m::mock(Repository::class);
         $config->shouldReceive('get')
             ->once()
-            ->with('vat_calculator.rules.'.$countryCode, 0)
-            ->andReturn(0.19);
-
-        $config->shouldReceive('has')
-            ->once()
-            ->with('vat_calculator.rules.'.$countryCode)
-            ->andReturn(true);
-
-        $config->shouldReceive('has')
-            ->once()
-            ->with('vat_calculator.business_country_code')
-            ->andReturn(false);
+            ->with('vat_calculator', [])
+            ->andReturn([
+                'rules' => [
+                    'DE' => 0.19,
+                ]
+            ]);
 
         $vatCalculator = new VatCalculator($config);
         $result = $vatCalculator->calculate($net, $countryCode);
@@ -165,18 +147,12 @@ class VatCalculatorTest extends TestCase
         $config = m::mock(Repository::class);
         $config->shouldReceive('get')
             ->once()
-            ->with('vat_calculator.rules.'.$countryCode, 0)
-            ->andReturn(0.19);
-
-        $config->shouldReceive('has')
-            ->once()
-            ->with('vat_calculator.rules.'.$countryCode)
-            ->andReturn(true);
-
-        $config->shouldReceive('has')
-            ->once()
-            ->with('vat_calculator.business_country_code')
-            ->andReturn(false);
+            ->with('vat_calculator', [])
+            ->andReturn([
+                'rules' => [
+                    'DE' => 0.19,
+                ]
+            ]);
 
         $vatCalculator = new VatCalculator($config);
         $vatCalculator->setCountryCode($countryCode);
@@ -196,12 +172,9 @@ class VatCalculatorTest extends TestCase
 
         $config = m::mock(Repository::class);
         $config->shouldReceive('get')
-            ->never();
-
-        $config->shouldReceive('has')
             ->once()
-            ->with('vat_calculator.business_country_code')
-            ->andReturn(false);
+            ->with('vat_calculator', [])
+            ->andReturn([]);
 
         $vatCalculator = new VatCalculator($config);
         $result = $vatCalculator->calculate($net, $countryCode, $postalCode, $company);
@@ -218,12 +191,9 @@ class VatCalculatorTest extends TestCase
 
         $config = m::mock(Repository::class);
         $config->shouldReceive('get')
-            ->never();
-
-        $config->shouldReceive('has')
             ->once()
-            ->with('vat_calculator.business_country_code')
-            ->andReturn(false);
+            ->with('vat_calculator', [])
+            ->andReturn([]);
 
         $vatCalculator = new VatCalculator($config);
         $vatCalculator->setCompany($company);
@@ -242,12 +212,9 @@ class VatCalculatorTest extends TestCase
 
         $config = m::mock(Repository::class);
         $config->shouldReceive('get')
-            ->never();
-
-        $config->shouldReceive('has')
             ->once()
-            ->with('vat_calculator.business_country_code')
-            ->andReturn(false);
+            ->with('vat_calculator', [])
+            ->andReturn([]);
 
         $vatCalculator = new VatCalculator($config);
         $vatCalculator->setCountryCode($countryCode);
@@ -265,18 +232,12 @@ class VatCalculatorTest extends TestCase
         $config = m::mock(Repository::class);
         $config->shouldReceive('get')
             ->once()
-            ->with('vat_calculator.rules.'.$countryCode, 0)
-            ->andReturn(0.19);
-
-        $config->shouldReceive('has')
-            ->once()
-            ->with('vat_calculator.rules.'.$countryCode)
-            ->andReturn(true);
-
-        $config->shouldReceive('has')
-            ->once()
-            ->with('vat_calculator.business_country_code')
-            ->andReturn(false);
+            ->with('vat_calculator', [])
+            ->andReturn([
+                'rules' => [
+                    'DE' => 0.19,
+                ],
+            ]);
 
         $vatCalculator = new VatCalculator($config);
         $result = $vatCalculator->getTaxRateForLocation($countryCode);
@@ -290,18 +251,12 @@ class VatCalculatorTest extends TestCase
         $config = m::mock(Repository::class);
         $config->shouldReceive('get')
             ->once()
-            ->with('vat_calculator.rules.'.$countryCode, 0)
-            ->andReturn(0.19);
-
-        $config->shouldReceive('has')
-            ->once()
-            ->with('vat_calculator.rules.'.$countryCode)
-            ->andReturn(true);
-
-        $config->shouldReceive('has')
-            ->once()
-            ->with('vat_calculator.business_country_code')
-            ->andReturn(false);
+            ->with('vat_calculator', [])
+            ->andReturn([
+                'rules' => [
+                    'DE' => 0.19,
+                ],
+            ]);
 
         $vatCalculator = new VatCalculator($config);
         $result = $vatCalculator->getTaxRateForCountry($countryCode);
@@ -315,12 +270,9 @@ class VatCalculatorTest extends TestCase
 
         $config = m::mock(Repository::class);
         $config->shouldReceive('get')
-            ->never();
-
-        $config->shouldReceive('has')
             ->once()
-            ->with('vat_calculator.business_country_code')
-            ->andReturn(false);
+            ->with('vat_calculator', [])
+            ->andReturn([]);
 
         $vatCalculator = new VatCalculator($config);
         $result = $vatCalculator->getTaxRateForLocation($countryCode, null, $company);
@@ -334,12 +286,9 @@ class VatCalculatorTest extends TestCase
 
         $config = m::mock(Repository::class);
         $config->shouldReceive('get')
-            ->never();
-
-        $config->shouldReceive('has')
             ->once()
-            ->with('vat_calculator.business_country_code')
-            ->andReturn(false);
+            ->with('vat_calculator', [])
+            ->andReturn([]);
 
         $vatCalculator = new VatCalculator($config);
         $result = $vatCalculator->getTaxRateForCountry($countryCode, $company);
@@ -349,11 +298,10 @@ class VatCalculatorTest extends TestCase
     public function testCanValidateValidVATNumber()
     {
         $config = m::mock(Repository::class);
-
-        $config->shouldReceive('has')
+        $config->shouldReceive('get')
             ->once()
-            ->with('vat_calculator.business_country_code')
-            ->andReturn(false);
+            ->with('vat_calculator', [])
+            ->andReturn([]);
 
         $result = new \stdClass();
         $result->valid = true;
@@ -425,14 +373,10 @@ class VatCalculatorTest extends TestCase
             ->willThrowException(new \SoapFault('Server', 'Something went wrong'));
 
         $config = m::mock(Repository::class);
-        $config->shouldReceive('has')
-            ->once()
-            ->with('vat_calculator.business_country_code')
-            ->andReturn(false);
         $config->shouldReceive('get')
             ->once()
-            ->with('vat_calculator.forward_soap_faults')
-            ->andReturn(false);
+            ->with('vat_calculator', [])
+            ->andReturn([]);
 
         $vatNumber = 'SomeInvalidNumber';
         $vatCalculator = new VatCalculator($config);
@@ -455,14 +399,10 @@ class VatCalculatorTest extends TestCase
             ->willThrowException(new \SoapFault('Server', 'Something went wrong'));
 
         $config = m::mock(Repository::class);
-        $config->shouldReceive('has')
-            ->once()
-            ->with('vat_calculator.business_country_code')
-            ->andReturn(false);
         $config->shouldReceive('get')
             ->once()
-            ->with('vat_calculator.forward_soap_faults')
-            ->andReturn(true);
+            ->with('vat_calculator', [])
+            ->andReturn(['forward_soap_faults' => true]);
 
         $vatNumber = 'SomeInvalidNumber';
         $vatCalculator = new VatCalculator($config);
@@ -486,11 +426,10 @@ class VatCalculatorTest extends TestCase
     public function testCanValidateValidUKVATNumber()
     {
         $config = m::mock(Repository::class);
-
-        $config->shouldReceive('has')
+        $config->shouldReceive('get')
             ->once()
-            ->with('vat_calculator.business_country_code')
-            ->andReturn(false);
+            ->with('vat_calculator', [])
+            ->andReturn([]);
 
         $result = new \stdClass();
         $result->valid = true;
@@ -504,11 +443,10 @@ class VatCalculatorTest extends TestCase
     public function testCanValidateInvalidUKVATNumber()
     {
         $config = m::mock(Repository::class);
-
-        $config->shouldReceive('has')
+        $config->shouldReceive('get')
             ->once()
-            ->with('vat_calculator.business_country_code')
-            ->andReturn(false);
+            ->with('vat_calculator', [])
+            ->andReturn([]);
 
         $result = new \stdClass();
         $result->valid = true;
@@ -526,22 +464,9 @@ class VatCalculatorTest extends TestCase
 
         $config = m::mock(Repository::class);
         $config->shouldReceive('get')
-            ->never();
-
-        $config->shouldReceive('has')
             ->once()
-            ->with('vat_calculator.rules.DE')
-            ->andReturn(false);
-
-        $config->shouldReceive('has')
-            ->once()
-            ->with('vat_calculator.business_country_code')
-            ->andReturn(true);
-
-        $config->shouldReceive('get')
-            ->once()
-            ->with('vat_calculator.business_country_code', '')
-            ->andReturn($countryCode);
+            ->with('vat_calculator', [])
+            ->andReturn(['business_country_code' => 'DE']);
 
         $vatCalculator = new VatCalculator($config);
         $result = $vatCalculator->calculate($net, $countryCode, null, true);
@@ -649,23 +574,17 @@ class VatCalculatorTest extends TestCase
         $config = m::mock(Repository::class);
         $config->shouldReceive('get')
             ->once()
-            ->with($taxKey, 0)
+            ->with('vat_calculator', [])
             ->andReturn([
-                'rate' => 0.19,
-                'exceptions' => [
-                    'Heligoland' => 0.05,
+                'rules' => [
+                    'DE' => [
+                        'rate' => 0.19,
+                        'exceptions' => [
+                            'Heligoland' => 0.05,
+                        ],
+                    ],
                 ],
             ]);
-
-        $config->shouldReceive('has')
-            ->once()
-            ->with($taxKey)
-            ->andReturn(true);
-
-        $config->shouldReceive('has')
-            ->once()
-            ->with('vat_calculator.business_country_code')
-            ->andReturn(false);
 
         $vatCalculator = new VatCalculator($config);
         $postalCode = '27498'; // Heligoland
@@ -690,15 +609,14 @@ class VatCalculatorTest extends TestCase
         $taxKey = 'vat_calculator.rules.'.strtoupper($countryCode);
 
         $config = m::mock(Repository::class);
-
-        $config->shouldReceive('has')
-            ->with($taxKey)
-            ->andReturn(true);
-
-        $config->shouldReceive('has')
+        $config->shouldReceive('get')
             ->once()
-            ->with('vat_calculator.business_country_code')
-            ->andReturn(false);
+            ->with('vat_calculator', [])
+            ->andReturn([
+                'rules' => [
+                    'TEST' => 0.19,
+                ]
+            ]);
 
         $vatCalculator = new VatCalculator($config);
         $this->assertTrue($vatCalculator->shouldCollectVAT($countryCode));
@@ -707,16 +625,10 @@ class VatCalculatorTest extends TestCase
     public function testCalculateNetPriceWithoutCountry()
     {
         $config = m::mock(Repository::class);
-
-        $config->shouldReceive('has')
+        $config->shouldReceive('get')
             ->once()
-            ->with('vat_calculator.business_country_code')
-            ->andReturn(false);
-
-        $config->shouldReceive('has')
-            ->once()
-            ->with('vat_calculator.rules.')
-            ->andReturn(false);
+            ->with('vat_calculator', [])
+            ->andReturn([]);
 
         $gross = 25.00;
 
@@ -741,17 +653,9 @@ class VatCalculatorTest extends TestCase
 
         $config = m::mock(Repository::class);
         $config->shouldReceive('get')
-            ->never();
-
-        $config->shouldReceive('has')
             ->once()
-            ->with('vat_calculator.rules.DE')
-            ->andReturn(false);
-
-        $config->shouldReceive('has')
-            ->once()
-            ->with('vat_calculator.business_country_code')
-            ->andReturn(false);
+            ->with('vat_calculator', [])
+            ->andReturn([]);
 
         $vatCalculator = new VatCalculator($config);
         $result = $vatCalculator->calculateNet($gross, $countryCode);
@@ -782,18 +686,12 @@ class VatCalculatorTest extends TestCase
         $config = m::mock(Repository::class);
         $config->shouldReceive('get')
             ->once()
-            ->with($taxKey, 0)
-            ->andReturn(0.50);
-
-        $config->shouldReceive('has')
-            ->once()
-            ->with($taxKey)
-            ->andReturn(true);
-
-        $config->shouldReceive('has')
-            ->once()
-            ->with('vat_calculator.business_country_code')
-            ->andReturn(false);
+            ->with('vat_calculator', [])
+            ->andReturn([
+                'rules' => [
+                    'DE' => 0.50,
+                ]
+            ]);
 
         $vatCalculator = new VatCalculator($config);
         $result = $vatCalculator->calculateNet($gross, $countryCode);
@@ -810,18 +708,12 @@ class VatCalculatorTest extends TestCase
         $config = m::mock(Repository::class);
         $config->shouldReceive('get')
             ->once()
-            ->with('vat_calculator.rules.'.$countryCode, 0)
-            ->andReturn(0.19);
-
-        $config->shouldReceive('has')
-            ->once()
-            ->with('vat_calculator.rules.'.$countryCode)
-            ->andReturn(true);
-
-        $config->shouldReceive('has')
-            ->once()
-            ->with('vat_calculator.business_country_code')
-            ->andReturn(false);
+            ->with('vat_calculator', [])
+            ->andReturn([
+                'rules' => [
+                    'DE' => 0.19,
+                ]
+            ]);
 
         $vatCalculator = new VatCalculator($config);
         $result = $vatCalculator->calculateNet($gross, $countryCode);
@@ -851,18 +743,12 @@ class VatCalculatorTest extends TestCase
         $config = m::mock(Repository::class);
         $config->shouldReceive('get')
             ->once()
-            ->with('vat_calculator.rules.'.$countryCode, 0)
-            ->andReturn(0.19);
-
-        $config->shouldReceive('has')
-            ->once()
-            ->with('vat_calculator.rules.'.$countryCode)
-            ->andReturn(true);
-
-        $config->shouldReceive('has')
-            ->once()
-            ->with('vat_calculator.business_country_code')
-            ->andReturn(false);
+            ->with('vat_calculator', [])
+            ->andReturn([
+                'rules' => [
+                    'DE' => 0.19,
+                ]
+            ]);
 
         $vatCalculator = new VatCalculator($config);
         $vatCalculator->setCountryCode($countryCode);
@@ -882,12 +768,9 @@ class VatCalculatorTest extends TestCase
 
         $config = m::mock(Repository::class);
         $config->shouldReceive('get')
-            ->never();
-
-        $config->shouldReceive('has')
             ->once()
-            ->with('vat_calculator.business_country_code')
-            ->andReturn(false);
+            ->with('vat_calculator', [])
+            ->andReturn([]);
 
         $vatCalculator = new VatCalculator($config);
         $result = $vatCalculator->calculateNet($gross, $countryCode, $postalCode, $company);
@@ -904,12 +787,9 @@ class VatCalculatorTest extends TestCase
 
         $config = m::mock(Repository::class);
         $config->shouldReceive('get')
-            ->never();
-
-        $config->shouldReceive('has')
             ->once()
-            ->with('vat_calculator.business_country_code')
-            ->andReturn(false);
+            ->with('vat_calculator', [])
+            ->andReturn([]);
 
         $vatCalculator = new VatCalculator($config);
         $vatCalculator->setCompany($company);
@@ -928,12 +808,9 @@ class VatCalculatorTest extends TestCase
 
         $config = m::mock(Repository::class);
         $config->shouldReceive('get')
-            ->never();
-
-        $config->shouldReceive('has')
             ->once()
-            ->with('vat_calculator.business_country_code')
-            ->andReturn(false);
+            ->with('vat_calculator', [])
+            ->andReturn([]);
 
         $vatCalculator = new VatCalculator($config);
         $vatCalculator->setCountryCode($countryCode);
@@ -982,24 +859,16 @@ class VatCalculatorTest extends TestCase
         $config = m::mock(Repository::class);
         $config->shouldReceive('get')
             ->once()
-            ->with($taxKey, 0)
+            ->with('vat_calculator', [])
             ->andReturn([
-                'rate' => 0.19,
-                'rates' => [
-                    'high' => 0.19,
-                    'low' => 0.07,
+                'DE' => [
+                    'rate' => 0.19,
+                    'rates' => [
+                        'high' => 0.19,
+                        'low' => 0.07,
+                    ],
                 ],
             ]);
-
-        $config->shouldReceive('has')
-            ->once()
-            ->with($taxKey)
-            ->andReturn(true);
-
-        $config->shouldReceive('has')
-            ->once()
-            ->with('vat_calculator.business_country_code')
-            ->andReturn(false);
 
         $vatCalculator = new VatCalculator($config);
         $result = $vatCalculator->calculate($net, $countryCode, null, null, 'low');
