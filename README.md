@@ -1,7 +1,7 @@
 # VatCalculator
 
 <a href="https://github.com/driesvints/vat-calculator/actions">
-    <img src="https://github.com/driesvints/vat-calculator/workflows/Tests/badge.svg" alt="Tests">
+    <img src="https://github.com/driesvints/vat-calculator/workflows/tests/badge.svg" alt="Tests">
 </a>
 <a href="https://github.com/driesvints/vat-calculator/actions/workflows/coding-standards.yml">
     <img src="https://github.com/driesvints/vat-calculator/actions/workflows/coding-standards.yml/badge.svg" alt="Coding Standards" />
