@@ -69,8 +69,7 @@ class VatCalculator
             'rate' => 0.21,
             'rates' => [
                 'high' => 0.21,
-                'low' => 0.10,
-                'low1' => 0.15,
+                'low' => 0.12,
             ],
         ],
         'DE' => [ // Germany
