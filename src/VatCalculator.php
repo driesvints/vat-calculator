@@ -204,12 +204,12 @@ class VatCalculator
             ],
         ],
         'LU' => [ // Luxembourg
-            'rate' => 0.16,
+            'rate' => 0.17,
             'rates' => [
-                'high' => 0.16,
-                'low' => 0.07,
+                'high' => 0.17,
+                'low' => 0.08,
                 'super-reduced' => 0.03,
-                'parking' => 0.13,
+                'parking' => 0.14,
             ],
         ],
         'LV' => [ // Latvia
