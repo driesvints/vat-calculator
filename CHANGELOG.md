@@ -2,7 +2,12 @@
 
 This changelog follows [the Keep a Changelog standard](https://keepachangelog.com) (as of 2.4.2).
 
-## [Unreleased](https://github.com/driesvints/vat-calculator/compare/3.6.0...3.x)
+## [Unreleased](https://github.com/driesvints/vat-calculator/compare/3.7.0...3.x)
+
+## [3.7.0](https://github.com/driesvints/vat-calculator/compare/3.6.0...3.7.0) - 2024-01-01
+
+* Starting 2024, CZ has just one low rate 12% by [@spaze](https://github.com/spaze) in https://github.com/driesvints/vat-calculator/pull/164
+* Adjust Luxemburg rates by [@driesvints](https://github.com/driesvints) in https://github.com/driesvints/vat-calculator/pull/167
 
 ## [3.6.0](https://github.com/driesvints/vat-calculator/compare/3.5.0...3.6.0) - 2023-09-21
 
