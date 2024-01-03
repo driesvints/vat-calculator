@@ -185,7 +185,7 @@ class VatCalculator
         'IT' => [ // Italy
             'rate' => 0.22,
             'exceptions' => [
-                'Campione d\'Italia' => 0.077,
+                'Campione d\'Italia' => 0,
                 'Livigno' => 0,
             ],
             'rates' => [
