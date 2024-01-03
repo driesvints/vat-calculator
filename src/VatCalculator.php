@@ -306,12 +306,12 @@ class VatCalculator
         ],
 
         // Non-EU with their own VAT requirements -- https://www.estv.admin.ch/estv/en/home/value-added-tax/vat-rates-switzerland.html
-        'CH' => [ // Switzerland -- INFO: ON 01.01.2024 VAT RATES CHANGE IN CH
-            'rate' => 0.077,
+        'CH' => [ // Switzerland
+            'rate' => 0.081,
             'rates' => [
-                'high' => 0.077,
-                'low' => 0.025,
-                'super-reduced' => 0.037,
+                'high' => 0.081,
+                'low' => 0.026,
+                'super-reduced' => 0.038,
             ],
         ],
     ];
