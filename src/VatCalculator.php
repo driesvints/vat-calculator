@@ -246,7 +246,7 @@ class VatCalculator
         'PT' => [ // Portugal
             'rate' => 0.23,
             'exceptions' => [
-                'Azores' => 0.18,
+                'Azores' => 0.16,
                 'Madeira' => 0.22,
             ],
             'rates' => [
