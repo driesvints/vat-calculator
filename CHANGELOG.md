@@ -2,7 +2,13 @@
 
 This changelog follows [the Keep a Changelog standard](https://keepachangelog.com) (as of 2.4.2).
 
-## [Unreleased](https://github.com/driesvints/vat-calculator/compare/3.7.0...3.x)
+## [Unreleased](https://github.com/driesvints/vat-calculator/compare/3.8.0...3.x)
+
+## [3.8.0](https://github.com/driesvints/vat-calculator/compare/3.7.0...3.8.0) - 2024-01-03
+
+* Update Swiss VAT rates for 2024 by [@spaze](https://github.com/spaze) in https://github.com/driesvints/vat-calculator/pull/169
+* Update VAT rate for Azores to 16% by [@spaze](https://github.com/spaze) in https://github.com/driesvints/vat-calculator/pull/170
+* Correct VAT and postal code for Campione d'Italia by [@spaze](https://github.com/spaze) in https://github.com/driesvints/vat-calculator/pull/168
 
 ## [3.7.0](https://github.com/driesvints/vat-calculator/compare/3.6.0...3.7.0) - 2024-01-01
 
