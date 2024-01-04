@@ -2,7 +2,11 @@
 
 This changelog follows [the Keep a Changelog standard](https://keepachangelog.com) (as of 2.4.2).
 
-## [Unreleased](https://github.com/driesvints/vat-calculator/compare/3.8.0...3.x)
+## [Unreleased](https://github.com/driesvints/vat-calculator/compare/3.9.0...3.x)
+
+## [3.9.0](https://github.com/driesvints/vat-calculator/compare/3.8.0...3.9.0) - 2024-01-04
+
+- Update Estonia VAT rate by [@driesvints](https://github.com/driesvints) in https://github.com/driesvints/vat-calculator/commit/86db9c8608c026b91ce914fa7aa0ec4231faeb05
 
 ## [3.8.0](https://github.com/driesvints/vat-calculator/compare/3.7.0...3.8.0) - 2024-01-03
 
