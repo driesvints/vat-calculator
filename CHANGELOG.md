@@ -1,6 +1,10 @@
 # Changelog
 
-## [Unreleased](https://github.com/driesvints/vat-calculator/compare/3.9.0...3.x)
+## [Unreleased](https://github.com/driesvints/vat-calculator/compare/3.10.0...3.x)
+
+## [3.10.0](https://github.com/driesvints/vat-calculator/compare/3.9.0...3.10.0) - 2024-02-12
+
+* Add support for laravel 11 by [@shuvroroy](https://github.com/shuvroroy) in https://github.com/driesvints/vat-calculator/pull/172
 
 ## [3.9.0](https://github.com/driesvints/vat-calculator/compare/3.8.0...3.9.0) - 2024-01-04
 
