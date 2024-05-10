@@ -1,6 +1,10 @@
 # Changelog
 
-## [Unreleased](https://github.com/driesvints/vat-calculator/compare/3.10.0...3.x)
+## [Unreleased](https://github.com/driesvints/vat-calculator/compare/3.10.1...3.x)
+
+## [3.10.1](https://github.com/driesvints/vat-calculator/compare/3.10.0...3.10.1) - 2024-05-10
+
+* Reduced rate and parking rate corrected for Belgium by [@edwwaarrdd](https://github.com/edwwaarrdd) in https://github.com/driesvints/vat-calculator/pull/173
 
 ## [3.10.0](https://github.com/driesvints/vat-calculator/compare/3.9.0...3.10.0) - 2024-02-12
 
