@@ -45,9 +45,9 @@ class VatCalculator
             'rate' => 0.21,
             'rates' => [
                 'high' => 0.21,
-                'low' => 0.09,
+                'low' => 0.06,
                 'low1' => 0.12,
-                'parking' => 0.0012,
+                'parking' => 0.12,
             ],
         ],
         'BG' => [ // Bulgaria
