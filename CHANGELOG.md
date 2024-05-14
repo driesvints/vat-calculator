@@ -1,6 +1,10 @@
 # Changelog
 
-## [Unreleased](https://github.com/driesvints/vat-calculator/compare/3.10.1...3.x)
+## [Unreleased](https://github.com/driesvints/vat-calculator/compare/3.11.0...3.x)
+
+## [3.11.0](https://github.com/driesvints/vat-calculator/compare/3.10.1...3.11.0) - 2024-05-14
+
+* Update postal code exceptions for Portugal by [@toyi](https://github.com/toyi) in https://github.com/driesvints/vat-calculator/pull/174
 
 ## [3.10.1](https://github.com/driesvints/vat-calculator/compare/3.10.0...3.10.1) - 2024-05-10
 
