@@ -449,12 +449,12 @@ class VatCalculator
         ],
         'PT' => [
             [
-                'postalCode' => '/^9[0-4]\d{2,}$/',
+                'postalCode' => '/^9[0-4]\d{2,}(?:-\d+)*$/',
                 'code' => 'PT',
                 'name' => 'Madeira',
             ],
             [
-                'postalCode' => '/^9[5-9]\d{2,}$/',
+                'postalCode' => '/^9[5-9]\d{2,}(?:-\d+)*$/',
                 'code' => 'PT',
                 'name' => 'Azores',
             ],

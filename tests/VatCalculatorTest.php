@@ -540,6 +540,12 @@ class VatCalculatorTest extends TestCase
         $this->assertEquals(29.28, $result);
         $this->assertEquals(0.22, $vatCalculator->getTaxRate());
         $this->assertEquals(5.28, $vatCalculator->getTaxValue());
+
+        $postalCode = '9500-339'; // Azores
+        $result = $vatCalculator->calculate($net, 'PT', $postalCode, false);
+        $this->assertEquals(27.84, $result);
+        $this->assertEquals(0.16, $vatCalculator->getTaxRate());
+        $this->assertEquals(3.84, $vatCalculator->getTaxValue());
     }
 
     public function testPostalCodesWithoutExceptionsGetStandardRate()
