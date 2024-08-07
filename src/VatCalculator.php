@@ -121,9 +121,9 @@ class VatCalculator
             ],
         ],
         'FI' => [ // Finland
-            'rate' => 0.24,
+            'rate' => 0.255,
             'rates' => [
-                'high' => 0.24,
+                'high' => 0.255,
                 'low' => 0.10,
                 'low1' => 0.14,
             ],
