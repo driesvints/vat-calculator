@@ -39,7 +39,7 @@ class VatCalculatorTest extends TestCase
     {
         $net = 25.00;
 
-        $vatCalculator = new VatCalculator();
+        $vatCalculator = new VatCalculator;
         $result = $vatCalculator->calculate($net);
         $this->assertEquals(25.00, $result);
     }
@@ -74,7 +74,7 @@ class VatCalculatorTest extends TestCase
         $net = 24.00;
         $countryCode = 'DE';
 
-        $vatCalculator = new VatCalculator();
+        $vatCalculator = new VatCalculator;
         $result = $vatCalculator->calculate($net, $countryCode);
         $this->assertEquals(28.56, $result);
         $this->assertEquals(0.19, $vatCalculator->getTaxRate());
@@ -132,7 +132,7 @@ class VatCalculatorTest extends TestCase
         $net = 24.00;
         $countryCode = 'DE';
 
-        $vatCalculator = new VatCalculator();
+        $vatCalculator = new VatCalculator;
         $result = $vatCalculator->calculate($net, $countryCode);
         $this->assertEquals(28.56, $result);
         $this->assertEquals(0.19, $vatCalculator->getTaxRate());
@@ -303,7 +303,7 @@ class VatCalculatorTest extends TestCase
             ->with('vat_calculator', [])
             ->andReturn([]);
 
-        $result = new \stdClass();
+        $result = new \stdClass;
         $result->valid = true;
 
         $vatCheck = $this->getMockFromWsdl(__DIR__.'/checkVatService.wsdl', 'VATService');
@@ -324,7 +324,7 @@ class VatCalculatorTest extends TestCase
 
     public function testCanValidateInvalidVATNumber()
     {
-        $result = new \stdClass();
+        $result = new \stdClass;
         $result->valid = false;
 
         $vatCheck = $this->getMockFromWsdl(__DIR__.'/checkVatService.wsdl', 'VATService');
@@ -337,7 +337,7 @@ class VatCalculatorTest extends TestCase
             ->willReturn($result);
 
         $vatNumber = 'SomeInvalidNumber';
-        $vatCalculator = new VatCalculator();
+        $vatCalculator = new VatCalculator;
         $vatCalculator->setSoapClient($vatCheck);
         $result = $vatCalculator->isValidVATNumber($vatNumber);
         $this->assertFalse($result);
@@ -355,7 +355,7 @@ class VatCalculatorTest extends TestCase
             ->willThrowException(new \SoapFault('Server', 'Something went wrong'));
 
         $vatNumber = 'SomeInvalidNumber';
-        $vatCalculator = new VatCalculator();
+        $vatCalculator = new VatCalculator;
         $vatCalculator->setSoapClient($vatCheck);
         $result = $vatCalculator->isValidVATNumber($vatNumber);
         $this->assertFalse($result);
@@ -414,11 +414,11 @@ class VatCalculatorTest extends TestCase
     {
         $this->expectException(VATCheckUnavailableException::class);
 
-        $result = new \stdClass();
+        $result = new \stdClass;
         $result->valid = false;
 
         $vatNumber = 'SomeInvalidNumber';
-        $vatCalculator = new VatCalculator();
+        $vatCalculator = new VatCalculator;
         $vatCalculator->setSoapClient(false);
         $vatCalculator->isValidVATNumber($vatNumber);
     }
@@ -431,7 +431,7 @@ class VatCalculatorTest extends TestCase
             ->with('vat_calculator', [])
             ->andReturn([]);
 
-        $result = new \stdClass();
+        $result = new \stdClass;
         $result->valid = true;
 
         $vatNumber = 'GB 553557881';
@@ -448,7 +448,7 @@ class VatCalculatorTest extends TestCase
             ->with('vat_calculator', [])
             ->andReturn([]);
 
-        $result = new \stdClass();
+        $result = new \stdClass;
         $result->valid = true;
 
         $vatNumber = 'GB Invalid';
@@ -480,7 +480,7 @@ class VatCalculatorTest extends TestCase
         $net = 24.00;
         $countryCode = 'DE';
 
-        $vatCalculator = new VatCalculator();
+        $vatCalculator = new VatCalculator;
         $vatCalculator->setBusinessCountryCode('DE');
         $result = $vatCalculator->calculate($net, $countryCode, null, true);
         $this->assertEquals(28.56, $result);
@@ -493,7 +493,7 @@ class VatCalculatorTest extends TestCase
         $net = 24.00;
         $countryCode = 'DE';
 
-        $vatCalculator = new VatCalculator();
+        $vatCalculator = new VatCalculator;
         $vatCalculator->setBusinessCountryCode('NL');
         $result = $vatCalculator->calculate($net, $countryCode, null, true);
         $this->assertEquals(24.00, $result);
@@ -506,7 +506,7 @@ class VatCalculatorTest extends TestCase
         $net = 24.00;
         $countryCode = 'XXX';
 
-        $vatCalculator = new VatCalculator();
+        $vatCalculator = new VatCalculator;
         $result = $vatCalculator->calculate($net, $countryCode, null, true);
         $this->assertEquals(24.00, $result);
         $this->assertEquals(0.00, $vatCalculator->getTaxRate());
@@ -516,7 +516,7 @@ class VatCalculatorTest extends TestCase
     public function testChecksPostalCodeForVATExceptions()
     {
         $net = 24.00;
-        $vatCalculator = new VatCalculator();
+        $vatCalculator = new VatCalculator;
         $postalCode = '27498'; // Heligoland
         $result = $vatCalculator->calculate($net, 'DE', $postalCode, false);
         $this->assertEquals(24.00, $result);
@@ -551,7 +551,7 @@ class VatCalculatorTest extends TestCase
     public function testPostalCodesWithoutExceptionsGetStandardRate()
     {
         $net = 24.00;
-        $vatCalculator = new VatCalculator();
+        $vatCalculator = new VatCalculator;
 
         // Invalid post code
         $postalCode = 'IGHJ987ERT35';
@@ -602,7 +602,7 @@ class VatCalculatorTest extends TestCase
 
     public function testShouldCollectVAT()
     {
-        $vatCalculator = new VatCalculator();
+        $vatCalculator = new VatCalculator;
         $this->assertTrue($vatCalculator->shouldCollectVAT('DE'));
         $this->assertTrue($vatCalculator->shouldCollectVAT('NL'));
         $this->assertFalse($vatCalculator->shouldCollectVAT(''));
@@ -647,7 +647,7 @@ class VatCalculatorTest extends TestCase
     {
         $gross = 25.00;
 
-        $vatCalculator = new VatCalculator();
+        $vatCalculator = new VatCalculator;
         $result = $vatCalculator->calculateNet($gross);
         $this->assertEquals(25.00, $result);
     }
@@ -675,7 +675,7 @@ class VatCalculatorTest extends TestCase
         $gross = 28.56;
         $countryCode = 'DE';
 
-        $vatCalculator = new VatCalculator();
+        $vatCalculator = new VatCalculator;
         $result = $vatCalculator->calculateNet($gross, $countryCode);
         $this->assertEquals(24.00, $result);
         $this->assertEquals(0.19, $vatCalculator->getTaxRate());
@@ -733,7 +733,7 @@ class VatCalculatorTest extends TestCase
         $gross = 28.56;
         $countryCode = 'DE';
 
-        $vatCalculator = new VatCalculator();
+        $vatCalculator = new VatCalculator;
 
         $result = $vatCalculator->calculateNet($gross, $countryCode);
         $this->assertEquals(24.00, $result);
@@ -835,7 +835,7 @@ class VatCalculatorTest extends TestCase
         $type = 'high';
         $postalCode = null;
 
-        $vatCalculator = new VatCalculator();
+        $vatCalculator = new VatCalculator;
         $result = $vatCalculator->calculate($gross, $countryCode, $postalCode, $company, $type);
 
         $this->assertEquals(29.04, $result);
@@ -849,7 +849,7 @@ class VatCalculatorTest extends TestCase
         $type = 'low';
         $postalCode = null;
 
-        $vatCalculator = new VatCalculator();
+        $vatCalculator = new VatCalculator;
         $result = $vatCalculator->calculate($gross, $countryCode, $postalCode, $company, $type);
 
         $this->assertEquals(26.16, $result);
@@ -927,7 +927,7 @@ class VatCalculatorTest extends TestCase
             'SK1234567890',
         ];
 
-        $vatCalculator = new VatCalculator();
+        $vatCalculator = new VatCalculator;
 
         foreach ($valid as $format) {
             $this->assertTrue($vatCalculator->isValidVatNumberFormat($format), "{$format} did not pass validation.");

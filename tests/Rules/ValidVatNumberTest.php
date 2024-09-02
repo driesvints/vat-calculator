@@ -65,7 +65,7 @@ class ValidVatNumberTest extends TestCase
         VatCalculator::shouldReceive('isValidVATNumber')
             ->with($vatNumber)
             ->once()
-            ->andThrow(new VATCheckUnavailableException());
+            ->andThrow(new VATCheckUnavailableException);
 
         $validator = Validator::make(
             ['vat_number' => $vatNumber],
@@ -82,7 +82,7 @@ class ValidVatNumberTest extends TestCase
         VatCalculator::shouldReceive('isValidVATNumber')
             ->with($vatNumber)
             ->once()
-            ->andThrow(new VATCheckUnavailableException());
+            ->andThrow(new VATCheckUnavailableException);
 
         $validator = Validator::make(
             ['vat_number' => $vatNumber],

@@ -29,7 +29,7 @@ class BillableWithinTheEUTest extends TestCase
             ->with(null, false)
             ->andReturn(0);
 
-        $billable = new BillableWithinTheEUTestStub();
+        $billable = new BillableWithinTheEUTestStub;
         $taxPercent = $billable->getTaxPercent();
         $this->assertEquals(0, $taxPercent);
     }
@@ -44,7 +44,7 @@ class BillableWithinTheEUTest extends TestCase
             ->with($countryCode, $company)
             ->andReturn(0.19);
 
-        $billable = new BillableWithinTheEUTestStub();
+        $billable = new BillableWithinTheEUTestStub;
         $billable->setTaxForCountry($countryCode, $company);
         $taxPercent = $billable->getTaxPercent();
         $this->assertEquals(19, $taxPercent);
@@ -59,7 +59,7 @@ class BillableWithinTheEUTest extends TestCase
             ->with($countryCode, $company)
             ->andReturn(0.19);
 
-        $billable = new BillableWithinTheEUTestStub();
+        $billable = new BillableWithinTheEUTestStub;
         $billable->useTaxFrom($countryCode);
         $taxPercent = $billable->getTaxPercent();
         $this->assertEquals(19, $taxPercent);
@@ -74,7 +74,7 @@ class BillableWithinTheEUTest extends TestCase
             ->with($countryCode, $company)
             ->andReturn(0);
 
-        $billable = new BillableWithinTheEUTestStub();
+        $billable = new BillableWithinTheEUTestStub;
         $billable->useTaxFrom($countryCode)->asBusiness();
         $taxPercent = $billable->getTaxPercent();
         $this->assertEquals(0, $taxPercent);
@@ -90,7 +90,7 @@ class BillableWithinTheEUTest extends TestCase
             ->with($countryCode, $company)
             ->andReturn(0.19);
 
-        $billable = new BillableWithinTheEUTestStub();
+        $billable = new BillableWithinTheEUTestStub;
         $billable->useTaxFrom($countryCode)->asIndividual();
         $taxPercent = $billable->getTaxPercent();
         $this->assertEquals(19, $taxPercent);
