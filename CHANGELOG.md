@@ -1,6 +1,10 @@
 # Changelog
 
-## [Unreleased](https://github.com/driesvints/vat-calculator/compare/3.11.0...3.x)
+## [Unreleased](https://github.com/driesvints/vat-calculator/compare/3.12.0...3.x)
+
+## [3.12.0](https://github.com/driesvints/vat-calculator/compare/3.11.0...3.12.0) - 2024-09-02
+
+* Update Finland rates by [@jevgeni-sultanov](https://github.com/jevgeni-sultanov) in https://github.com/driesvints/vat-calculator/pull/177
 
 ## [3.11.0](https://github.com/driesvints/vat-calculator/compare/3.10.1...3.11.0) - 2024-05-14
 
