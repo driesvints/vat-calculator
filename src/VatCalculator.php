@@ -729,6 +729,17 @@ class VatCalculator
     }
 
     /**
+     * Returns all tax rates for the given country code.
+     *
+     * @param  string  $countryCode
+     * @return array
+     */
+    public function getTaxRatesForCountry($countryCode)
+    {
+        return $this->taxRules[$countryCode]['rates'];
+    }
+
+    /**
      * Returns the tax rate for the given country code.
      * If a postal code is provided, it will try to lookup the different
      * postal code exceptions that are possible.
