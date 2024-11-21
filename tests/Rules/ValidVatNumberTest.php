@@ -24,7 +24,7 @@ class ValidVatNumberTest extends TestCase
         return [VatCalculatorServiceProvider::class];
     }
 
-    public function testValidatesVATNumber()
+    public function test_validates_vat_number()
     {
         $vatNumber = 'DE 190 098 891';
 
@@ -41,7 +41,7 @@ class ValidVatNumberTest extends TestCase
         $this->assertTrue($validator->passes());
     }
 
-    public function testValidatesInvalidVATNumber()
+    public function test_validates_invalid_vat_number()
     {
         $vatNumber = '098 891';
 
@@ -58,7 +58,7 @@ class ValidVatNumberTest extends TestCase
         $this->assertTrue($validator->fails());
     }
 
-    public function testValidatesUnavailableVATNumberCheck()
+    public function test_validates_unavailable_vat_number_check()
     {
         $vatNumber = '098 891';
 
@@ -75,7 +75,7 @@ class ValidVatNumberTest extends TestCase
         $this->assertTrue($validator->fails());
     }
 
-    public function testDefaultErrorMessageWorks()
+    public function test_default_error_message_works()
     {
         $vatNumber = '098 891';
 

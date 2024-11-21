@@ -19,7 +19,7 @@ class VatCalculatorTest extends TestCase
         m::close();
     }
 
-    public function testCalculateVatWithoutCountry()
+    public function test_calculate_vat_without_country()
     {
         $config = m::mock(Repository::class);
 
@@ -35,7 +35,7 @@ class VatCalculatorTest extends TestCase
         $this->assertEquals(25.00, $result);
     }
 
-    public function testCalculateVatWithoutCountryAndConfig()
+    public function test_calculate_vat_without_country_and_config()
     {
         $net = 25.00;
 
@@ -44,7 +44,7 @@ class VatCalculatorTest extends TestCase
         $this->assertEquals(25.00, $result);
     }
 
-    public function testCalculateVatWithPredefinedRules()
+    public function test_calculate_vat_with_predefined_rules()
     {
         $net = 24.00;
         $countryCode = 'DE';
@@ -69,7 +69,7 @@ class VatCalculatorTest extends TestCase
         $this->assertEquals(4.56, $vatCalculator->getTaxValue());
     }
 
-    public function testCalculateVatWithPredefinedRulesWithoutConfig()
+    public function test_calculate_vat_with_predefined_rules_without_config()
     {
         $net = 24.00;
         $countryCode = 'DE';
@@ -81,7 +81,7 @@ class VatCalculatorTest extends TestCase
         $this->assertEquals(4.56, $vatCalculator->getTaxValue());
     }
 
-    public function testCalculateVatWithPredefinedRulesOverwrittenByConfiguration()
+    public function test_calculate_vat_with_predefined_rules_overwritten_by_configuration()
     {
         $net = 24.00;
         $countryCode = 'DE';
@@ -105,7 +105,7 @@ class VatCalculatorTest extends TestCase
         $this->assertEquals(12.00, $vatCalculator->getTaxValue());
     }
 
-    public function testCalculatVatWithCountryDirectSet()
+    public function test_calculat_vat_with_country_direct_set()
     {
         $net = 24.00;
         $countryCode = 'DE';
@@ -127,7 +127,7 @@ class VatCalculatorTest extends TestCase
         $this->assertEquals(4.56, $vatCalculator->getTaxValue());
     }
 
-    public function testCalculatVatWithCountryDirectSetWithoutConfiguration()
+    public function test_calculat_vat_with_country_direct_set_without_configuration()
     {
         $net = 24.00;
         $countryCode = 'DE';
@@ -139,7 +139,7 @@ class VatCalculatorTest extends TestCase
         $this->assertEquals(4.56, $vatCalculator->getTaxValue());
     }
 
-    public function testCalculatVatWithCountryPreviousSet()
+    public function test_calculat_vat_with_country_previous_set()
     {
         $net = 24.00;
         $countryCode = 'DE';
@@ -163,7 +163,7 @@ class VatCalculatorTest extends TestCase
         $this->assertEquals(4.56, $vatCalculator->getTaxValue());
     }
 
-    public function testCalculatVatWithCountryAndCompany()
+    public function test_calculat_vat_with_country_and_company()
     {
         $net = 24.00;
         $countryCode = 'DE';
@@ -183,7 +183,7 @@ class VatCalculatorTest extends TestCase
         $this->assertEquals(0, $vatCalculator->getTaxValue());
     }
 
-    public function testCalculatVatWithCountryAndCompanySet()
+    public function test_calculat_vat_with_country_and_company_set()
     {
         $net = 24.00;
         $countryCode = 'DE';
@@ -204,7 +204,7 @@ class VatCalculatorTest extends TestCase
         $this->assertEquals(0, $vatCalculator->getTaxValue());
     }
 
-    public function testCalculatVatWithCountryAndCompanyBothSet()
+    public function test_calculat_vat_with_country_and_company_both_set()
     {
         $net = 24.00;
         $countryCode = 'DE';
@@ -225,7 +225,7 @@ class VatCalculatorTest extends TestCase
         $this->assertEquals(0, $vatCalculator->getTaxValue());
     }
 
-    public function testGetTaxRateForLocationWithCountry()
+    public function test_get_tax_rate_for_location_with_country()
     {
         $countryCode = 'DE';
 
@@ -244,7 +244,7 @@ class VatCalculatorTest extends TestCase
         $this->assertEquals(0.19, $result);
     }
 
-    public function testGetTaxRateForCountry()
+    public function test_get_tax_rate_for_country()
     {
         $countryCode = 'DE';
 
@@ -263,7 +263,7 @@ class VatCalculatorTest extends TestCase
         $this->assertEquals(0.19, $result);
     }
 
-    public function testGetTaxRateForLocationWithCountryAndCompany()
+    public function test_get_tax_rate_for_location_with_country_and_company()
     {
         $countryCode = 'DE';
         $company = true;
@@ -279,7 +279,7 @@ class VatCalculatorTest extends TestCase
         $this->assertEquals(0, $result);
     }
 
-    public function testGetTaxRateForCountryAndCompany()
+    public function test_get_tax_rate_for_country_and_company()
     {
         $countryCode = 'DE';
         $company = true;
@@ -295,7 +295,7 @@ class VatCalculatorTest extends TestCase
         $this->assertEquals(0, $result);
     }
 
-    public function testCanValidateValidVATNumber()
+    public function test_can_validate_valid_vat_number()
     {
         $config = m::mock(Repository::class);
         $config->shouldReceive('get')
@@ -322,7 +322,7 @@ class VatCalculatorTest extends TestCase
         $this->assertTrue($result);
     }
 
-    public function testCanValidateInvalidVATNumber()
+    public function test_can_validate_invalid_vat_number()
     {
         $result = new \stdClass;
         $result->valid = false;
@@ -343,7 +343,7 @@ class VatCalculatorTest extends TestCase
         $this->assertFalse($result);
     }
 
-    public function testValidateVATNumberReturnsFalseOnSoapFailure()
+    public function test_validate_vat_number_returns_false_on_soap_failure()
     {
         $vatCheck = $this->getMockFromWsdl(__DIR__.'/checkVatService.wsdl', 'VATService');
         $vatCheck->expects($this->any())
@@ -361,7 +361,7 @@ class VatCalculatorTest extends TestCase
         $this->assertFalse($result);
     }
 
-    public function testValidateVATNumberReturnsFalseOnSoapFailureWithoutForwarding()
+    public function test_validate_vat_number_returns_false_on_soap_failure_without_forwarding()
     {
         $vatCheck = $this->getMockFromWsdl(__DIR__.'/checkVatService.wsdl', 'VATService');
         $vatCheck->expects($this->any())
@@ -385,7 +385,7 @@ class VatCalculatorTest extends TestCase
         $this->assertFalse($result);
     }
 
-    public function testValidateVATNumberThrowsExceptionOnSoapFailure()
+    public function test_validate_vat_number_throws_exception_on_soap_failure()
     {
         $this->expectException(VATCheckUnavailableException::class);
 
@@ -410,7 +410,7 @@ class VatCalculatorTest extends TestCase
         $vatCalculator->isValidVATNumber($vatNumber);
     }
 
-    public function testCannotValidateVATNumberWhenServiceIsDown()
+    public function test_cannot_validate_vat_number_when_service_is_down()
     {
         $this->expectException(VATCheckUnavailableException::class);
 
@@ -423,7 +423,7 @@ class VatCalculatorTest extends TestCase
         $vatCalculator->isValidVATNumber($vatNumber);
     }
 
-    public function testCanValidateValidUKVATNumber()
+    public function test_can_validate_valid_ukvat_number()
     {
         $config = m::mock(Repository::class);
         $config->shouldReceive('get')
@@ -440,7 +440,7 @@ class VatCalculatorTest extends TestCase
         $this->assertTrue($result);
     }
 
-    public function testCanValidateInvalidUKVATNumber()
+    public function test_can_validate_invalid_ukvat_number()
     {
         $config = m::mock(Repository::class);
         $config->shouldReceive('get')
@@ -457,7 +457,7 @@ class VatCalculatorTest extends TestCase
         $this->assertFalse($result);
     }
 
-    public function testCompanyInBusinessCountryGetsValidVATRate()
+    public function test_company_in_business_country_gets_valid_vat_rate()
     {
         $net = 24.00;
         $countryCode = 'DE';
@@ -475,7 +475,7 @@ class VatCalculatorTest extends TestCase
         $this->assertEquals(4.56, $vatCalculator->getTaxValue());
     }
 
-    public function testCompanyInBusinessCountryGetsValidVATRateDirectSet()
+    public function test_company_in_business_country_gets_valid_vat_rate_direct_set()
     {
         $net = 24.00;
         $countryCode = 'DE';
@@ -488,7 +488,7 @@ class VatCalculatorTest extends TestCase
         $this->assertEquals(4.56, $vatCalculator->getTaxValue());
     }
 
-    public function testCompanyOutsideBusinessCountryGetsValidVATRate()
+    public function test_company_outside_business_country_gets_valid_vat_rate()
     {
         $net = 24.00;
         $countryCode = 'DE';
@@ -501,7 +501,7 @@ class VatCalculatorTest extends TestCase
         $this->assertEquals(0.00, $vatCalculator->getTaxValue());
     }
 
-    public function testReturnsZeroForInvalidCountryCode()
+    public function test_returns_zero_for_invalid_country_code()
     {
         $net = 24.00;
         $countryCode = 'XXX';
@@ -513,7 +513,7 @@ class VatCalculatorTest extends TestCase
         $this->assertEquals(0.00, $vatCalculator->getTaxValue());
     }
 
-    public function testChecksPostalCodeForVATExceptions()
+    public function test_checks_postal_code_for_vat_exceptions()
     {
         $net = 24.00;
         $vatCalculator = new VatCalculator;
@@ -548,7 +548,7 @@ class VatCalculatorTest extends TestCase
         $this->assertEquals(3.84, $vatCalculator->getTaxValue());
     }
 
-    public function testPostalCodesWithoutExceptionsGetStandardRate()
+    public function test_postal_codes_without_exceptions_get_standard_rate()
     {
         $net = 24.00;
         $vatCalculator = new VatCalculator;
@@ -570,7 +570,7 @@ class VatCalculatorTest extends TestCase
         $this->assertEquals(5.04, $vatCalculator->getTaxValue());
     }
 
-    public function testPostalCodesWithoutExceptionsOverwrittenByConfiguration()
+    public function test_postal_codes_without_exceptions_overwritten_by_configuration()
     {
         $net = 24.00;
         $countryCode = 'DE';
@@ -600,7 +600,7 @@ class VatCalculatorTest extends TestCase
         $this->assertEquals(1.20, $vatCalculator->getTaxValue());
     }
 
-    public function testShouldCollectVAT()
+    public function test_should_collect_vat()
     {
         $vatCalculator = new VatCalculator;
         $this->assertTrue($vatCalculator->shouldCollectVAT('DE'));
@@ -609,7 +609,7 @@ class VatCalculatorTest extends TestCase
         $this->assertFalse($vatCalculator->shouldCollectVAT('XXX'));
     }
 
-    public function testShouldCollectVATFromConfig()
+    public function test_should_collect_vat_from_config()
     {
         $countryCode = 'TEST';
         $taxKey = 'vat_calculator.rules.'.strtoupper($countryCode);
@@ -628,7 +628,7 @@ class VatCalculatorTest extends TestCase
         $this->assertTrue($vatCalculator->shouldCollectVAT($countryCode));
     }
 
-    public function testCalculateNetPriceWithoutCountry()
+    public function test_calculate_net_price_without_country()
     {
         $config = m::mock(Repository::class);
         $config->shouldReceive('get')
@@ -643,7 +643,7 @@ class VatCalculatorTest extends TestCase
         $this->assertEquals(25.00, $result);
     }
 
-    public function testCalculateNetPriceWithoutCountryAndConfig()
+    public function test_calculate_net_price_without_country_and_config()
     {
         $gross = 25.00;
 
@@ -652,7 +652,7 @@ class VatCalculatorTest extends TestCase
         $this->assertEquals(25.00, $result);
     }
 
-    public function testCalculateNetPriceWithPredefinedRules()
+    public function test_calculate_net_price_with_predefined_rules()
     {
         $gross = 28.56;
         $countryCode = 'DE';
@@ -670,7 +670,7 @@ class VatCalculatorTest extends TestCase
         $this->assertEquals(4.56, $vatCalculator->getTaxValue());
     }
 
-    public function testCalculateNetPriceWithPredefinedRulesWithoutConfig()
+    public function test_calculate_net_price_with_predefined_rules_without_config()
     {
         $gross = 28.56;
         $countryCode = 'DE';
@@ -682,7 +682,7 @@ class VatCalculatorTest extends TestCase
         $this->assertEquals(4.56, $vatCalculator->getTaxValue());
     }
 
-    public function testCalculateNetPriceWithPredefinedRulesOverwrittenByConfiguration()
+    public function test_calculate_net_price_with_predefined_rules_overwritten_by_configuration()
     {
         $gross = 36.00;
         $countryCode = 'DE';
@@ -706,7 +706,7 @@ class VatCalculatorTest extends TestCase
         $this->assertEquals(12.00, $vatCalculator->getTaxValue());
     }
 
-    public function testCalculateNetPriceWithCountryDirectSet()
+    public function test_calculate_net_price_with_country_direct_set()
     {
         $gross = 28.56;
         $countryCode = 'DE';
@@ -728,7 +728,7 @@ class VatCalculatorTest extends TestCase
         $this->assertEquals(4.56, $vatCalculator->getTaxValue());
     }
 
-    public function testCalculateNetPriceWithCountryDirectSetWithoutConfiguration()
+    public function test_calculate_net_price_with_country_direct_set_without_configuration()
     {
         $gross = 28.56;
         $countryCode = 'DE';
@@ -741,7 +741,7 @@ class VatCalculatorTest extends TestCase
         $this->assertEquals(4.56, $vatCalculator->getTaxValue());
     }
 
-    public function testCalculateNetPriceWithCountryPreviousSet()
+    public function test_calculate_net_price_with_country_previous_set()
     {
         $gross = 28.56;
         $countryCode = 'DE';
@@ -765,7 +765,7 @@ class VatCalculatorTest extends TestCase
         $this->assertEquals(4.56, $vatCalculator->getTaxValue());
     }
 
-    public function testCalculateNetPriceWithCountryAndCompany()
+    public function test_calculate_net_price_with_country_and_company()
     {
         $gross = 28.56;
         $countryCode = 'DE';
@@ -785,7 +785,7 @@ class VatCalculatorTest extends TestCase
         $this->assertEquals(0, $vatCalculator->getTaxValue());
     }
 
-    public function testCalculateNetPriceWithCountryAndCompanySet()
+    public function test_calculate_net_price_with_country_and_company_set()
     {
         $gross = 24.00;
         $countryCode = 'DE';
@@ -806,7 +806,7 @@ class VatCalculatorTest extends TestCase
         $this->assertEquals(0, $vatCalculator->getTaxValue());
     }
 
-    public function testCalculateNetPriceWithCountryAndCompanyBothSet()
+    public function test_calculate_net_price_with_country_and_company_both_set()
     {
         $gross = 24.00;
         $countryCode = 'DE';
@@ -827,7 +827,7 @@ class VatCalculatorTest extends TestCase
         $this->assertEquals(0, $vatCalculator->getTaxValue());
     }
 
-    public function testCalculateHighVatType()
+    public function test_calculate_high_vat_type()
     {
         $gross = 24.00;
         $countryCode = 'NL';
@@ -841,7 +841,7 @@ class VatCalculatorTest extends TestCase
         $this->assertEquals(29.04, $result);
     }
 
-    public function testCalculateLowVatType()
+    public function test_calculate_low_vat_type()
     {
         $gross = 24.00;
         $countryCode = 'NL';
@@ -855,7 +855,7 @@ class VatCalculatorTest extends TestCase
         $this->assertEquals(26.16, $result);
     }
 
-    public function testCalculateLowVatVatWithPredefinedRulesOverwrittenByConfiguration()
+    public function test_calculate_low_vat_vat_with_predefined_rules_overwritten_by_configuration()
     {
         $net = 24.00;
         $countryCode = 'DE';
@@ -886,7 +886,7 @@ class VatCalculatorTest extends TestCase
     /**
      * @covers VatCalculator::isValidVatNumberFormat
      */
-    public function testIsValidVatNumberFormat()
+    public function test_is_valid_vat_number_format()
     {
         $valid = [
             'ATU12345678',

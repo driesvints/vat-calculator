@@ -22,7 +22,7 @@ class BillableWithinTheEUTest extends TestCase
         return [VatCalculatorServiceProvider::class];
     }
 
-    public function testTaxPercentZeroByDefault()
+    public function test_tax_percent_zero_by_default()
     {
         VatCalculator::shouldReceive('getTaxRateForCountry')
             ->once()
@@ -34,7 +34,7 @@ class BillableWithinTheEUTest extends TestCase
         $this->assertEquals(0, $taxPercent);
     }
 
-    public function testTaxPercentGetsCalculated()
+    public function test_tax_percent_gets_calculated()
     {
         $countryCode = 'DE';
         $company = false;
@@ -50,7 +50,7 @@ class BillableWithinTheEUTest extends TestCase
         $this->assertEquals(19, $taxPercent);
     }
 
-    public function testTaxPercentGetsCalculatedByUseTaxFrom()
+    public function test_tax_percent_gets_calculated_by_use_tax_from()
     {
         $countryCode = 'DE';
         $company = false;
@@ -65,7 +65,7 @@ class BillableWithinTheEUTest extends TestCase
         $this->assertEquals(19, $taxPercent);
     }
 
-    public function testTaxPercentGetsCalculatedByUseTaxFromAsBusinessCustomer()
+    public function test_tax_percent_gets_calculated_by_use_tax_from_as_business_customer()
     {
         $countryCode = 'DE';
         $company = true;
@@ -80,7 +80,7 @@ class BillableWithinTheEUTest extends TestCase
         $this->assertEquals(0, $taxPercent);
     }
 
-    public function testTaxPercentGetsCalculatedByUseTaxFromAsIndividual()
+    public function test_tax_percent_gets_calculated_by_use_tax_from_as_individual()
     {
         $countryCode = 'DE';
         $company = false;
