@@ -1,6 +1,10 @@
 # Changelog
 
-## [Unreleased](https://github.com/driesvints/vat-calculator/compare/3.13.0...3.x)
+## [Unreleased](https://github.com/driesvints/vat-calculator/compare/3.14.0...3.x)
+
+## [3.14.0](https://github.com/driesvints/vat-calculator/compare/3.13.0...3.14.0) - 2024-11-21
+
+* Update VatCalculator.php by [@DonCamillo11](https://github.com/DonCamillo11) in https://github.com/driesvints/vat-calculator/pull/182
 
 ## [3.13.0](https://github.com/driesvints/vat-calculator/compare/3.12.0...3.13.0) - 2024-10-08
 
