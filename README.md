@@ -87,6 +87,14 @@ $netPrice = VatCalculator::getNetPrice(); // 24.00
 $taxValue = VatCalculator::getTaxValue(); // 4.56
 ```
 
+### Receive all tax rates for a given country
+
+To receive an array with all available tax rates for a given country, use the `getTaxRatesForCountry` method.
+
+```php
+VatCalculator::getTaxRatesForCountry('DE'); // ["high" => 0.19, "low" => 0.07]
+```
+
 ### Validate EU VAT numbers
 
 Prior to validating your customers VAT numbers, you can use the `shouldCollectVAT` method to check if the country code requires you to collect VAT
