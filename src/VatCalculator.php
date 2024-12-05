@@ -37,7 +37,6 @@ class VatCalculator
                 'high' => 0.20,
                 'low' => 0.10,
                 'low1' => 0.13,
-                'low2' => 0.05,
                 'parking' => 0.13,
             ],
         ],
