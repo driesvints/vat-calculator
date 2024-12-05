@@ -1,6 +1,10 @@
 # Changelog
 
-## [Unreleased](https://github.com/driesvints/vat-calculator/compare/3.14.0...3.x)
+## [Unreleased](https://github.com/driesvints/vat-calculator/compare/3.15.0...3.x)
+
+## [3.15.0](https://github.com/driesvints/vat-calculator/compare/3.14.0...3.15.0) - 2024-12-05
+
+* Austria has only two reduced rates by [@soukicz](https://github.com/soukicz) in https://github.com/driesvints/vat-calculator/pull/183
 
 ## [3.14.0](https://github.com/driesvints/vat-calculator/compare/3.13.0...3.14.0) - 2024-11-21
 
