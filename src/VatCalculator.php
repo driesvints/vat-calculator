@@ -238,7 +238,7 @@ class VatCalculator
             'rate' => 0.23,
             'rates' => [
                 'high' => 0.23,
-                'low' => 0.06,
+                'low' => 0.05,
                 'low1' => 0.08,
             ],
         ],
