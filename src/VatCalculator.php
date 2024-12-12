@@ -280,10 +280,11 @@ class VatCalculator
             ],
         ],
         'SK' => [ // Slovakia
-            'rate' => 0.20,
+            'rate' => 0.23,
             'rates' => [
-                'high' => 0.20,
-                'low' => 0.10,
+                'high' => 0.23,
+                'low' => 0.05,
+                'low1' => 0.19,
             ],
         ],
 
