@@ -136,6 +136,14 @@ class VatCalculator
                 'Guadeloupe' => 0.085,
                 'Guyane' => 0,
                 'Mayotte' => 0,
+                'Saint-Barthélemy' => 0,
+                'Saint-Martin' => 0,
+                'Saint-Pierre-et-Miquelon' => 0,
+                'Wallis-et-Futuna' => 0,
+                'Polynésie française' => 0,
+                'Nouvelle-Calédonie' => 0,
+                'Terres australes et antarctiques françaises' => 0,
+                'Île de Clipperton' => 0,
             ],
             'rates' => [
                 'high' => 0.20,
@@ -408,9 +416,49 @@ class VatCalculator
                 'name' => 'Reunion',
             ],
             [
+                'postalCode' => '/^975\d{2,}$/',
+                'code' => 'FR',
+                'name' => 'Saint-Pierre-et-Miquelon',
+            ],
+            [
                 'postalCode' => '/^976\d{2,}$/',
                 'code' => 'FR',
                 'name' => 'Mayotte',
+            ],
+            [
+                'postalCode' => '/^977\d{2,}$/',
+                'code' => 'FR',
+                'name' => 'Saint-Barthélemy',
+            ],
+            [
+                'postalCode' => '/^978\d{2,}$/',
+                'code' => 'FR',
+                'name' => 'Saint-Martin',
+            ],
+            [
+                'postalCode' => '/^984\d{2,}$/',
+                'code' => 'FR',
+                'name' => 'Terres australes et antarctiques françaises',
+            ],
+            [
+                'postalCode' => '/^986\d{2,}$/',
+                'code' => 'FR',
+                'name' => 'Wallis-et-Futuna',
+            ],
+            [
+                'postalCode' => '/^987\d{2,}$/',
+                'code' => 'FR',
+                'name' => 'Polynésie française',
+            ],
+            [
+                'postalCode' => '/^988\d{2,}$/',
+                'code' => 'FR',
+                'name' => 'Nouvelle-Calédonie',
+            ],
+            [
+                'postalCode' => '/^989\d{2,}$/',
+                'code' => 'FR',
+                'name' => 'Île de Clipperton',
             ],
         ],
         'GB' => [
