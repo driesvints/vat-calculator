@@ -1,6 +1,10 @@
 # Changelog
 
-## [Unreleased](https://github.com/driesvints/vat-calculator/compare/3.16.0...3.x)
+## [Unreleased](https://github.com/driesvints/vat-calculator/compare/3.17.0...3.x)
+
+## [3.17.0](https://github.com/driesvints/vat-calculator/compare/3.16.0...3.17.0) - 2025-01-01
+
+* slovakia-2025 by [@MartinMystikJonas](https://github.com/MartinMystikJonas) in https://github.com/driesvints/vat-calculator/pull/186
 
 ## [3.16.0](https://github.com/driesvints/vat-calculator/compare/3.15.0...3.16.0) - 2024-12-05
 
