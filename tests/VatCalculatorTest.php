@@ -556,7 +556,7 @@ class VatCalculatorTest extends TestCase
         // Invalid post code
         $postalCode = 'IGHJ987ERT35';
         $result = $vatCalculator->calculate($net, 'ES', $postalCode, false);
-        //Expect standard rate for Spain
+        // Expect standard rate for Spain
         $this->assertEquals(29.04, $result);
         $this->assertEquals(0.21, $vatCalculator->getTaxRate());
         $this->assertEquals(5.04, $vatCalculator->getTaxValue());
@@ -564,7 +564,7 @@ class VatCalculatorTest extends TestCase
         // Valid BE post code
         $postalCode = '2000';
         $result = $vatCalculator->calculate($net, 'BE', $postalCode, false);
-        //Expect standard rate for BE
+        // Expect standard rate for BE
         $this->assertEquals(29.04, $result);
         $this->assertEquals(0.21, $vatCalculator->getTaxRate());
         $this->assertEquals(5.04, $vatCalculator->getTaxValue());
