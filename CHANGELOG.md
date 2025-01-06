@@ -1,6 +1,10 @@
 # Changelog
 
-## [Unreleased](https://github.com/driesvints/vat-calculator/compare/3.17.0...3.x)
+## [Unreleased](https://github.com/driesvints/vat-calculator/compare/3.18.0...3.x)
+
+## [3.18.0](https://github.com/driesvints/vat-calculator/compare/3.17.0...3.18.0) - 2025-01-06
+
+* Add missing French overseas by [@boutetnico](https://github.com/boutetnico) in https://github.com/driesvints/vat-calculator/pull/187
 
 ## [3.17.0](https://github.com/driesvints/vat-calculator/compare/3.16.0...3.17.0) - 2025-01-01
 
