@@ -7,6 +7,8 @@ use Mpociot\VatCalculator\Exceptions\VATCheckUnavailableException;
 use SoapClient;
 use SoapFault;
 
+//inisialisasi sudah dilakukan di awal
+
 class VatCalculator
 {
     /**
@@ -509,6 +511,7 @@ class VatCalculator
         ],
     ];
 
+    //Terdapat banyak parameter mungkin perlu dijelaskan.
     /**
      * Regular expression patterns per country code for VAT.
      *
