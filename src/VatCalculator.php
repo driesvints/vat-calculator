@@ -89,9 +89,9 @@ class VatCalculator
             ],
         ],
         'EE' => [ // Estonia
-            'rate' => 0.22,
+            'rate' => 0.24,
             'rates' => [
-                'high' => 0.22,
+                'high' => 0.24,
                 'low' => 0.09,
             ],
         ],
