@@ -896,7 +896,7 @@ class VatCalculator
         $vatNumber = substr($vatNumber, 2);
 
         if (strtoupper($countryCode) === 'GB') {
-            throw new VATCheckUnavailableException('UK VAT checks are no longer available. Please see .');
+            throw new VATCheckUnavailableException("UK VAT checks are no longer available. Please see https://github.com/driesvints/vat-calculator/pull/191.");
         } else {
             $this->initSoapClient();
             $client = $this->soapClient;
