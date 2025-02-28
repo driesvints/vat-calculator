@@ -423,8 +423,10 @@ class VatCalculatorTest extends TestCase
         $vatCalculator->isValidVATNumber($vatNumber);
     }
 
-    public function test_can_validate_valid_ukvat_number()
+    public function test_cannot_validate_valid_ukvat_numbers()
     {
+        $this->expectException(VATCheckUnavailableException::class);
+
         $config = m::mock(Repository::class);
         $config->shouldReceive('get')
             ->once()
@@ -436,25 +438,7 @@ class VatCalculatorTest extends TestCase
 
         $vatNumber = 'GB 553557881';
         $vatCalculator = new VatCalculator($config);
-        $result = $vatCalculator->testing()->isValidVATNumber($vatNumber);
-        $this->assertTrue($result);
-    }
-
-    public function test_can_validate_invalid_ukvat_number()
-    {
-        $config = m::mock(Repository::class);
-        $config->shouldReceive('get')
-            ->once()
-            ->with('vat_calculator', [])
-            ->andReturn([]);
-
-        $result = new \stdClass;
-        $result->valid = true;
-
-        $vatNumber = 'GB Invalid';
-        $vatCalculator = new VatCalculator($config);
-        $result = $vatCalculator->testing()->isValidVATNumber($vatNumber);
-        $this->assertFalse($result);
+        $vatCalculator->isValidVATNumber($vatNumber);
     }
 
     public function test_company_in_business_country_gets_valid_vat_rate()
