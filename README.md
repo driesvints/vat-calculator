@@ -154,9 +154,11 @@ try {
 }
 ```
 
-#### UK VAT Numbers
+#### ~UK VAT Numbers~
 
-UK VAT numbers are formatted a little differently:
+> Support for validating UK VAT numbers has been removed. [See the related PR.](https://github.com/driesvints/vat-calculator/pull/191)
+
+~UK VAT numbers are formatted a little differently:~
 
 ```php
 try {
