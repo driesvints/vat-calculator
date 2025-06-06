@@ -21,7 +21,10 @@ class VatCalculator
      */
     protected $soapClient;
 
-    protected CurlClient $curlClient;
+    /**
+     * @var CurlClient
+     */
+    protected $curlClient;
 
     /**
      * All available tax rules and their exceptions.
