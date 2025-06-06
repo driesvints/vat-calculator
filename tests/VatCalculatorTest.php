@@ -483,7 +483,7 @@ class VatCalculatorTest extends TestCase
                         if ($header === 'Authorization: Bearer test-access-token-123') {
                             $hasAuthHeader = true;
                         }
-                        if ($header === 'Accept: application/vnd.hmrc.1.0+json') {
+                        if ($header === 'Accept: application/vnd.hmrc.2.0+json') {
                             $hasAcceptHeader = true;
                         }
                     }
@@ -559,7 +559,7 @@ class VatCalculatorTest extends TestCase
                         if ($header === 'Authorization: Bearer test-access-token-123') {
                             $hasAuthHeader = true;
                         }
-                        if ($header === 'Accept: application/vnd.hmrc.1.0+json') {
+                        if ($header === 'Accept: application/vnd.hmrc.2.0+json') {
                             $hasAcceptHeader = true;
                         }
                     }
