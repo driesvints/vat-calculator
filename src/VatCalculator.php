@@ -2,7 +2,9 @@
 
 namespace Mpociot\VatCalculator;
 
+use Exception;
 use Illuminate\Contracts\Config\Repository;
+use Mpociot\VatCalculator\Http\CurlClient;
 use Mpociot\VatCalculator\Exceptions\VATCheckUnavailableException;
 use SoapClient;
 use SoapFault;
@@ -18,6 +20,8 @@ class VatCalculator
      * @var SoapClient
      */
     protected $soapClient;
+
+    protected CurlClient $curlClient;
 
     /**
      * All available tax rules and their exceptions.
@@ -595,10 +599,22 @@ class VatCalculator
     protected $businessCountryCode = '';
 
     /**
+     * @var string
+     */
+    protected $ukHmrcTokenEndpoint = 'https://api.service.hmrc.gov.uk/oauth/token';
+
+    /**
+     * @var string
+     */
+    protected $ukValidationEndpoint = 'https://api.service.hmrc.gov.uk';
+
+    /**
      * @param \Illuminate\Contracts\Config\Repository|array
      */
     public function __construct($config = [])
     {
+        $this->curlClient = new CurlClient();
+
         $this->config = $config instanceof Repository ? $config->get('vat_calculator', []) : $config;
 
         if (isset($this->config['business_country_code'])) {
@@ -884,6 +900,46 @@ class VatCalculator
     }
 
     /**
+     * Get or refresh HMRC access token
+     */
+    private function getAccessToken()
+    {
+        // Get token from HMRC
+        $clientId = $this->config['hmrc']['client_id'];
+        $clientSecret = $this->config['hmrc']['client_secret'];
+
+        if (!$clientId || !$clientSecret) {
+            throw new VATCheckUnavailableException("HMRC API credentials not configured");
+        }
+
+        $tokenUrl = $this->ukHmrcTokenEndpoint;
+
+        $postData = [
+            'grant_type' => 'client_credentials',
+            'client_id' => $clientId,
+            'client_secret' => $clientSecret,
+        ];
+
+        // Note: This endpoint requires x-www-form-urlencoded, so override content-type
+        $headers = [
+            'Content-Type: application/x-www-form-urlencoded',
+        ];
+
+        // Convert data to URL-encoded format
+        $encodedData = http_build_query($postData);
+
+        $response = $this->curlClient->post($tokenUrl, $headers, $encodedData, false);
+
+        $data = json_decode($response, true);
+
+        if (!isset($data['access_token'])) {
+            throw new VATCheckUnavailableException("Failed to retrieve HMRC access token");
+        }
+
+        return $data['access_token'];
+    }
+
+    /**
      * @param  string  $vatNumber
      * @return object|false
      *
@@ -896,7 +952,42 @@ class VatCalculator
         $vatNumber = substr($vatNumber, 2);
 
         if (strtoupper($countryCode) === 'GB') {
-            throw new VATCheckUnavailableException('UK VAT checks are no longer available. Please see https://github.com/driesvints/vat-calculator/pull/191.');
+            try {
+                $accessToken = $this->getAccessToken();
+
+                $url = "$this->ukValidationEndpoint/organisations/vat/check-vat-number/lookup/$vatNumber";
+
+                $headers = [
+                    "Authorization: Bearer $accessToken",
+                    "Accept: application/vnd.hmrc.2.0+json",
+                ];
+
+                $responseData = $this->curlClient->getWithStatus($url, $headers);
+
+                $apiStatusCode = $responseData['statusCode'];
+                $apiResponseBody = $responseData['body'];
+
+                if ($apiStatusCode === 400 || $apiStatusCode === 404) {
+                    return false;
+                }
+
+                if ($apiStatusCode === 200) {
+                    $apiResponse = json_decode($apiResponseBody, true);
+
+                    if (json_last_error() !== JSON_ERROR_NONE) {
+                        throw new VATCheckUnavailableException("Invalid JSON response from UK VAT check service");
+                    }
+
+                    return $apiResponse['target'] ?? false;
+                }
+
+                throw new VATCheckUnavailableException("The UK VAT check service is currently unavailable (status code $apiStatusCode). Please try again later.");
+
+            } catch (VATCheckUnavailableException $e) {
+                throw $e;
+            } catch (Exception $e) {
+                throw new VATCheckUnavailableException("An unexpected error occurred while validating the VAT number");
+            }
         } else {
             $this->initSoapClient();
             $client = $this->soapClient;
@@ -957,5 +1048,28 @@ class VatCalculator
     public function setSoapClient($soapClient)
     {
         $this->soapClient = $soapClient;
+    }
+
+    public function setupCurlClient($curlClient)
+    {
+        $this->curlClient = $curlClient;
+    }
+
+    /**
+     * @return $this
+     *
+     * @internal This method is not covered by our BC policy.
+     */
+    public function testing($curlClient)
+    {
+        $this->ukHmrcTokenEndpoint = 'https://test-api.service.hmrc.gov.uk/oauth/token';
+        $this->ukValidationEndpoint = 'https://test-api.service.hmrc.gov.uk';
+
+        $this->config['hmrc']['client_id'] = 'test-client-id';
+        $this->config['hmrc']['client_secret'] = 'test-client-secret';
+
+        $this->setupCurlClient($curlClient);
+
+        return $this;
     }
 }
