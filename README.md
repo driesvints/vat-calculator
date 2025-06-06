@@ -154,11 +154,11 @@ try {
 }
 ```
 
-#### ~UK VAT Numbers~
+#### UK VAT Numbers
 
-> Support for validating UK VAT numbers has been removed. [See the related PR.](https://github.com/driesvints/vat-calculator/pull/191)
+> Note: Validating UK VAT numbers requires registering your application with the HMRC Developer Hub. Please follow the official [HMRC API Documentation](https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/vat-registered-companies-api/2.0) for details on authentication and setup.
 
-~UK VAT numbers are formatted a little differently:~
+UK VAT numbers are formatted a little differently:
 
 ```php
 try {
@@ -184,6 +184,15 @@ try {
 } catch (VATCheckUnavailableException $e) {
     // The VAT check API is unavailable...
 }
+```
+
+> 🔐 Configuration
+
+To use the UK VAT validation feature, you'll need to register your application with HMRC and set the following environment variables in your .env file:
+
+```
+HMRC_CLIENT_ID="your-client-id"
+HMRC_CLIENT_SECRET="your-client-secret"
 ```
 
 ## Laravel
