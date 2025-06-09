@@ -4,14 +4,13 @@ namespace Tests;
 
 use Illuminate\Contracts\Config\Repository;
 use Mockery as m;
+use Mpociot\VatCalculator\Http\CurlClient;
 use Mpociot\VatCalculator\Exceptions\VATCheckUnavailableException;
 use Mpociot\VatCalculator\VatCalculator;
 use PHPUnit\Framework\TestCase;
 
 class VatCalculatorTest extends TestCase
 {
-    public static $file_get_contents_result;
-
     protected function tearDown(): void
     {
         parent::tearDown();
@@ -423,22 +422,163 @@ class VatCalculatorTest extends TestCase
         $vatCalculator->isValidVATNumber($vatNumber);
     }
 
-    public function test_cannot_validate_valid_ukvat_numbers()
+    public function test_can_validate_valid_ukvat_number()
     {
-        $this->expectException(VATCheckUnavailableException::class);
+        $config = [
+            'hmrc' => [
+                'client_id' => 'test-client-id',
+                'client_secret' => 'test-client-secret'
+            ]
+        ];
 
-        $config = m::mock(Repository::class);
-        $config->shouldReceive('get')
+        $configMock = m::mock(Repository::class);
+        $configMock->shouldReceive('get')
             ->once()
             ->with('vat_calculator', [])
-            ->andReturn([]);
+            ->andReturn($config);
 
-        $result = new \stdClass;
-        $result->valid = true;
+        $clientMock = m::mock(CurlClient::class);
 
-        $vatNumber = 'GB 553557881';
-        $vatCalculator = new VatCalculator($config);
-        $vatCalculator->isValidVATNumber($vatNumber);
+        $tokenUrl = 'https://test-api.service.hmrc.gov.uk/oauth/token';
+        $tokenResponseBody = json_encode([
+            'access_token' => 'test-access-token-123',
+            'token_type' => 'bearer',
+            'expires_in' => 3600
+        ]);
+
+        $clientMock->shouldReceive('post')
+            ->once()
+            ->with(
+                $tokenUrl,
+                ['Content-Type: application/x-www-form-urlencoded'],
+                'grant_type=client_credentials&client_id=test-client-id&client_secret=test-client-secret',
+                false
+            )
+            ->andReturn($tokenResponseBody);
+
+        $vatNumber = '123456789';
+        $validationUrl = "https://test-api.service.hmrc.gov.uk/organisations/vat/check-vat-number/lookup/$vatNumber";
+
+        $apiResponseBody = json_encode([
+            'target' => [
+                'vatNumber' => $vatNumber,
+                'name' => 'Test Company Ltd',
+                'address' => [
+                    'line1' => '123 Test Street',
+                    'postcode' => 'TE1 5ST',
+                    'countryCode' => 'GB'
+                ]
+            ]
+        ]);
+
+        $clientMock->shouldReceive('getWithStatus')
+            ->once()
+            ->with(
+                $validationUrl,
+                m::on(function ($headers) {
+                    $hasAuthHeader = false;
+                    $hasAcceptHeader = false;
+
+                    foreach ($headers as $header) {
+                        if ($header === 'Authorization: Bearer test-access-token-123') {
+                            $hasAuthHeader = true;
+                        }
+                        if ($header === 'Accept: application/vnd.hmrc.2.0+json') {
+                            $hasAcceptHeader = true;
+                        }
+                    }
+
+                    return $hasAuthHeader && $hasAcceptHeader;
+                })
+            )
+            ->andReturn([
+                'statusCode' => 200,
+                'headers' => '',
+                'body' => $apiResponseBody,
+            ]);
+
+        $vatCalculator = new VatCalculator($configMock);
+
+        $fullVatNumber = 'GB' . $vatNumber;
+        $result = $vatCalculator->testing($clientMock)->isValidVATNumber($fullVatNumber);
+
+        $this->assertTrue($result);
+    }
+
+    public function test_can_validate_invalid_ukvat_number()
+    {
+        $config = [
+            'hmrc' => [
+                'client_id' => 'test-client-id',
+                'client_secret' => 'test-client-secret'
+            ]
+        ];
+
+        $configMock = m::mock(Repository::class);
+        $configMock->shouldReceive('get')
+            ->once()
+            ->with('vat_calculator', [])
+            ->andReturn($config);
+
+        $clientMock = m::mock(CurlClient::class);
+
+        $tokenUrl = 'https://test-api.service.hmrc.gov.uk/oauth/token';
+        $tokenResponseBody = json_encode([
+            'access_token' => 'test-access-token-123',
+            'token_type' => 'bearer',
+            'expires_in' => 3600
+        ]);
+
+        $clientMock->shouldReceive('post')
+            ->once()
+            ->with(
+                $tokenUrl,
+                ['Content-Type: application/x-www-form-urlencoded'],
+                'grant_type=client_credentials&client_id=test-client-id&client_secret=test-client-secret',
+                false
+            )
+            ->andReturn($tokenResponseBody);
+
+        $vatNumber = '123456789';
+        $validationUrl = "https://test-api.service.hmrc.gov.uk/organisations/vat/check-vat-number/lookup/$vatNumber";
+
+        $apiResponseBody = json_encode([
+            'code' => 'NOT_FOUND',
+            'message' => 'targetVrn does not match a registered company'
+        ]);
+
+        $clientMock->shouldReceive('getWithStatus')
+            ->once()
+            ->with(
+                $validationUrl,
+                m::on(function ($headers) {
+                    $hasAuthHeader = false;
+                    $hasAcceptHeader = false;
+
+                    foreach ($headers as $header) {
+                        if ($header === 'Authorization: Bearer test-access-token-123') {
+                            $hasAuthHeader = true;
+                        }
+                        if ($header === 'Accept: application/vnd.hmrc.2.0+json') {
+                            $hasAcceptHeader = true;
+                        }
+                    }
+
+                    return $hasAuthHeader && $hasAcceptHeader;
+                })
+            )
+            ->andReturn([
+                'statusCode' => 404,
+                'headers' => '',
+                'body' => $apiResponseBody,
+            ]);
+
+        $vatCalculator = new VatCalculator($configMock);
+
+        $fullVatNumber = 'GB' . $vatNumber;
+        $result = $vatCalculator->testing($clientMock)->isValidVATNumber($fullVatNumber);
+
+        $this->assertFalse($result);
     }
 
     public function test_company_in_business_country_gets_valid_vat_rate()
@@ -867,9 +1007,7 @@ class VatCalculatorTest extends TestCase
         $this->assertEquals(1.68, $vatCalculator->getTaxValue());
     }
 
-    /**
-     * @covers VatCalculator::isValidVatNumberFormat
-     */
+    #[Covers('VatCalculator::isValidVatNumberFormat')]
     public function test_is_valid_vat_number_format()
     {
         $valid = [

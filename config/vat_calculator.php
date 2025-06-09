@@ -70,4 +70,9 @@ return [
 
     'soap_timeout' => 30,
 
+    'hmrc' => [
+        'client_id' => env('HMRC_CLIENT_ID'),
+        'client_secret' => env('HMRC_CLIENT_SECRET'),
+    ],
+
 ];
