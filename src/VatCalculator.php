@@ -905,37 +905,30 @@ class VatCalculator
     /**
      * Get or refresh HMRC access token
      */
-    private function getAccessToken()
+    private function getHmrcAccessToken()
     {
         // Get token from HMRC
         $clientId = $this->config['hmrc']['client_id'];
         $clientSecret = $this->config['hmrc']['client_secret'];
 
-        if (!$clientId || !$clientSecret) {
+        if (! $clientId || ! $clientSecret) {
             throw new VATCheckUnavailableException("HMRC API credentials not configured");
         }
 
-        $tokenUrl = $this->ukHmrcTokenEndpoint;
-
-        $postData = [
-            'grant_type' => 'client_credentials',
-            'client_id' => $clientId,
-            'client_secret' => $clientSecret,
-        ];
-
-        // Note: This endpoint requires x-www-form-urlencoded, so override content-type
+        // Note: This endpoint requires x-www-form-urlencoded, so override the content-type.
         $headers = [
             'Content-Type: application/x-www-form-urlencoded',
         ];
 
-        // Convert data to URL-encoded format
-        $encodedData = http_build_query($postData);
-
-        $response = $this->curlClient->post($tokenUrl, $headers, $encodedData, false);
+        $response = $this->curlClient->post($this->ukHmrcTokenEndpoint, $headers, http_build_query([
+            'grant_type' => 'client_credentials',
+            'client_id' => $clientId,
+            'client_secret' => $clientSecret,
+        ]), false);
 
         $data = json_decode($response, true);
 
-        if (!isset($data['access_token'])) {
+        if (! isset($data['access_token'])) {
             throw new VATCheckUnavailableException("Failed to retrieve HMRC access token");
         }
 
@@ -956,26 +949,24 @@ class VatCalculator
 
         if (strtoupper($countryCode) === 'GB') {
             try {
-                $accessToken = $this->getAccessToken();
+                $accessToken = $this->getHmrcAccessToken();
 
-                $url = "$this->ukValidationEndpoint/organisations/vat/check-vat-number/lookup/$vatNumber";
-
-                $headers = [
-                    "Authorization: Bearer $accessToken",
-                    "Accept: application/vnd.hmrc.2.0+json",
-                ];
-
-                $responseData = $this->curlClient->getWithStatus($url, $headers);
+                $responseData = $this->curlClient->getWithStatus(
+                    "$this->ukValidationEndpoint/organisations/vat/check-vat-number/lookup/$vatNumber",
+                    [
+                        "Authorization: Bearer $accessToken",
+                        "Accept: application/vnd.hmrc.2.0+json",
+                    ]
+                );
 
                 $apiStatusCode = $responseData['statusCode'];
-                $apiResponseBody = $responseData['body'];
 
                 if ($apiStatusCode === 400 || $apiStatusCode === 404) {
                     return false;
                 }
 
                 if ($apiStatusCode === 200) {
-                    $apiResponse = json_decode($apiResponseBody, true);
+                    $apiResponse = json_decode($responseData['body'], true);
 
                     if (json_last_error() !== JSON_ERROR_NONE) {
                         throw new VATCheckUnavailableException("Invalid JSON response from UK VAT check service");
@@ -985,7 +976,6 @@ class VatCalculator
                 }
 
                 throw new VATCheckUnavailableException("The UK VAT check service is currently unavailable (status code $apiStatusCode). Please try again later.");
-
             } catch (VATCheckUnavailableException $e) {
                 throw $e;
             } catch (Exception $e) {

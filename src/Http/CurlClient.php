@@ -37,7 +37,7 @@ class CurlClient
      *
      * @param string $url
      * @param array $headers
-     * @param array $data
+     * @param array|string $data
      * @param bool $json
      * @return string
      * @throws \RuntimeException on cURL error

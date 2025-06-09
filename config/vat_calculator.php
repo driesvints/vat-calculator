@@ -72,7 +72,7 @@ return [
 
     'hmrc' => [
         'client_id' => env('HMRC_CLIENT_ID'),
-        'client_secret' => env('HMRC_CLIENT_SECRET')
-    ]
+        'client_secret' => env('HMRC_CLIENT_SECRET'),
+    ],
 
 ];
