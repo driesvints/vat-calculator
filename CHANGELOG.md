@@ -1,6 +1,10 @@
 # Changelog
 
-## [Unreleased](https://github.com/driesvints/vat-calculator/compare/3.20.0...3.x)
+## [Unreleased](https://github.com/driesvints/vat-calculator/compare/3.21.0...3.x)
+
+## [3.21.0](https://github.com/driesvints/vat-calculator/compare/3.20.0...3.21.0) - 2025-06-09
+
+* Add uk vat checks by [@joshuacadman01](https://github.com/joshuacadman01) in https://github.com/driesvints/vat-calculator/pull/193
 
 ## [3.20.0](https://github.com/driesvints/vat-calculator/compare/3.19.0...3.20.0) - 2025-02-28
 
