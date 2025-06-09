@@ -4,8 +4,8 @@ namespace Tests;
 
 use Illuminate\Contracts\Config\Repository;
 use Mockery as m;
-use Mpociot\VatCalculator\Http\CurlClient;
 use Mpociot\VatCalculator\Exceptions\VATCheckUnavailableException;
+use Mpociot\VatCalculator\Http\CurlClient;
 use Mpociot\VatCalculator\VatCalculator;
 use PHPUnit\Framework\TestCase;
 
@@ -427,8 +427,8 @@ class VatCalculatorTest extends TestCase
         $config = [
             'hmrc' => [
                 'client_id' => 'test-client-id',
-                'client_secret' => 'test-client-secret'
-            ]
+                'client_secret' => 'test-client-secret',
+            ],
         ];
 
         $configMock = m::mock(Repository::class);
@@ -443,7 +443,7 @@ class VatCalculatorTest extends TestCase
         $tokenResponseBody = json_encode([
             'access_token' => 'test-access-token-123',
             'token_type' => 'bearer',
-            'expires_in' => 3600
+            'expires_in' => 3600,
         ]);
 
         $clientMock->shouldReceive('post')
@@ -466,9 +466,9 @@ class VatCalculatorTest extends TestCase
                 'address' => [
                     'line1' => '123 Test Street',
                     'postcode' => 'TE1 5ST',
-                    'countryCode' => 'GB'
-                ]
-            ]
+                    'countryCode' => 'GB',
+                ],
+            ],
         ]);
 
         $clientMock->shouldReceive('getWithStatus')
@@ -499,7 +499,7 @@ class VatCalculatorTest extends TestCase
 
         $vatCalculator = new VatCalculator($configMock);
 
-        $fullVatNumber = 'GB' . $vatNumber;
+        $fullVatNumber = 'GB'.$vatNumber;
         $result = $vatCalculator->testing($clientMock)->isValidVATNumber($fullVatNumber);
 
         $this->assertTrue($result);
@@ -510,8 +510,8 @@ class VatCalculatorTest extends TestCase
         $config = [
             'hmrc' => [
                 'client_id' => 'test-client-id',
-                'client_secret' => 'test-client-secret'
-            ]
+                'client_secret' => 'test-client-secret',
+            ],
         ];
 
         $configMock = m::mock(Repository::class);
@@ -526,7 +526,7 @@ class VatCalculatorTest extends TestCase
         $tokenResponseBody = json_encode([
             'access_token' => 'test-access-token-123',
             'token_type' => 'bearer',
-            'expires_in' => 3600
+            'expires_in' => 3600,
         ]);
 
         $clientMock->shouldReceive('post')
@@ -544,7 +544,7 @@ class VatCalculatorTest extends TestCase
 
         $apiResponseBody = json_encode([
             'code' => 'NOT_FOUND',
-            'message' => 'targetVrn does not match a registered company'
+            'message' => 'targetVrn does not match a registered company',
         ]);
 
         $clientMock->shouldReceive('getWithStatus')
@@ -575,7 +575,7 @@ class VatCalculatorTest extends TestCase
 
         $vatCalculator = new VatCalculator($configMock);
 
-        $fullVatNumber = 'GB' . $vatNumber;
+        $fullVatNumber = 'GB'.$vatNumber;
         $result = $vatCalculator->testing($clientMock)->isValidVATNumber($fullVatNumber);
 
         $this->assertFalse($result);

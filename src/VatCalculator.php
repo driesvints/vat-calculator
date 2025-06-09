@@ -4,8 +4,8 @@ namespace Mpociot\VatCalculator;
 
 use Exception;
 use Illuminate\Contracts\Config\Repository;
-use Mpociot\VatCalculator\Http\CurlClient;
 use Mpociot\VatCalculator\Exceptions\VATCheckUnavailableException;
+use Mpociot\VatCalculator\Http\CurlClient;
 use SoapClient;
 use SoapFault;
 
@@ -616,7 +616,7 @@ class VatCalculator
      */
     public function __construct($config = [])
     {
-        $this->curlClient = new CurlClient();
+        $this->curlClient = new CurlClient;
 
         $this->config = $config instanceof Repository ? $config->get('vat_calculator', []) : $config;
 
@@ -912,7 +912,7 @@ class VatCalculator
         $clientSecret = $this->config['hmrc']['client_secret'];
 
         if (! $clientId || ! $clientSecret) {
-            throw new VATCheckUnavailableException("HMRC API credentials not configured");
+            throw new VATCheckUnavailableException('HMRC API credentials not configured');
         }
 
         // Note: This endpoint requires x-www-form-urlencoded, so override the content-type.
@@ -929,7 +929,7 @@ class VatCalculator
         $data = json_decode($response, true);
 
         if (! isset($data['access_token'])) {
-            throw new VATCheckUnavailableException("Failed to retrieve HMRC access token");
+            throw new VATCheckUnavailableException('Failed to retrieve HMRC access token');
         }
 
         return $data['access_token'];
@@ -955,7 +955,7 @@ class VatCalculator
                     "$this->ukValidationEndpoint/organisations/vat/check-vat-number/lookup/$vatNumber",
                     [
                         "Authorization: Bearer $accessToken",
-                        "Accept: application/vnd.hmrc.2.0+json",
+                        'Accept: application/vnd.hmrc.2.0+json',
                     ]
                 );
 
@@ -969,7 +969,7 @@ class VatCalculator
                     $apiResponse = json_decode($responseData['body'], true);
 
                     if (json_last_error() !== JSON_ERROR_NONE) {
-                        throw new VATCheckUnavailableException("Invalid JSON response from UK VAT check service");
+                        throw new VATCheckUnavailableException('Invalid JSON response from UK VAT check service');
                     }
 
                     return $apiResponse['target'] ?? false;
@@ -979,7 +979,7 @@ class VatCalculator
             } catch (VATCheckUnavailableException $e) {
                 throw $e;
             } catch (Exception $e) {
-                throw new VATCheckUnavailableException("An unexpected error occurred while validating the VAT number");
+                throw new VATCheckUnavailableException('An unexpected error occurred while validating the VAT number');
             }
         } else {
             $this->initSoapClient();

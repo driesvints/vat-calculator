@@ -7,9 +7,6 @@ class CurlClient
     /**
      * Send a GET request.
      *
-     * @param string $url
-     * @param array $headers
-     * @return string
      * @throws \RuntimeException on cURL error
      */
     public function get(string $url, array $headers = []): string
@@ -24,7 +21,7 @@ class CurlClient
         $response = curl_exec($ch);
 
         if ($response === false) {
-            throw new \RuntimeException('cURL GET error: ' . curl_error($ch));
+            throw new \RuntimeException('cURL GET error: '.curl_error($ch));
         }
 
         curl_close($ch);
@@ -35,11 +32,8 @@ class CurlClient
     /**
      * Send a POST request with JSON body.
      *
-     * @param string $url
-     * @param array $headers
-     * @param array|string $data
-     * @param bool $json
-     * @return string
+     * @param  array|string  $data
+     *
      * @throws \RuntimeException on cURL error
      */
     public function post(string $url, array $headers = [], $data = [], bool $json = true): string
@@ -62,7 +56,7 @@ class CurlClient
         $response = curl_exec($ch);
 
         if ($response === false) {
-            throw new \RuntimeException('cURL POST error: ' . curl_error($ch));
+            throw new \RuntimeException('cURL POST error: '.curl_error($ch));
         }
 
         curl_close($ch);
@@ -73,9 +67,10 @@ class CurlClient
     /**
      * Send a GET request and return response with HTTP status code and headers.
      *
-     * @param string $url The URL to send the GET request to
-     * @param array $headers Optional array of HTTP headers to include in the request
+     * @param  string  $url  The URL to send the GET request to
+     * @param  array  $headers  Optional array of HTTP headers to include in the request
      * @return array Associative array containing statusCode, headers, and body
+     *
      * @throws \RuntimeException on cURL error
      */
     public function getWithStatus(string $url, array $headers = []): array
@@ -92,7 +87,7 @@ class CurlClient
         $response = curl_exec($ch);
 
         if ($response === false) {
-            throw new \RuntimeException('cURL GET error: ' . curl_error($ch));
+            throw new \RuntimeException('cURL GET error: '.curl_error($ch));
         }
 
         $headerSize = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
