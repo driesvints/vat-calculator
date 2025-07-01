@@ -1,6 +1,10 @@
 # Changelog
 
-## [Unreleased](https://github.com/driesvints/vat-calculator/compare/3.21.0...3.x)
+## [Unreleased](https://github.com/driesvints/vat-calculator/compare/3.22.0...3.x)
+
+## [3.22.0](https://github.com/driesvints/vat-calculator/compare/3.21.0...3.22.0) - 2025-07-01
+
+* Update Estonia's main VAT rate to 24% by [@Seldaek](https://github.com/Seldaek) in https://github.com/driesvints/vat-calculator/pull/189
 
 ## [3.21.0](https://github.com/driesvints/vat-calculator/compare/3.20.0...3.21.0) - 2025-06-09
 
