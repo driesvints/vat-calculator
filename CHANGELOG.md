@@ -1,6 +1,10 @@
 # Changelog
 
-## [Unreleased](https://github.com/driesvints/vat-calculator/compare/3.22.0...3.x)
+## [Unreleased](https://github.com/driesvints/vat-calculator/compare/3.23.0...3.x)
+
+## [3.23.0](https://github.com/driesvints/vat-calculator/compare/3.22.0...3.23.0) - 2025-08-03
+
+* Update Romania's main VAT to 21%, low to 11% by [@gregberger](https://github.com/gregberger) in https://github.com/driesvints/vat-calculator/pull/194
 
 ## [3.22.0](https://github.com/driesvints/vat-calculator/compare/3.21.0...3.22.0) - 2025-07-01
 
