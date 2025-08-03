@@ -271,11 +271,11 @@ class VatCalculator
             ],
         ],
         'RO' => [ // Romania
-            'rate' => 0.19,
+            'rate' => 0.21,
             'rates' => [
-                'high' => 0.19,
-                'low' => 0.05,
-                'low1' => 0.09,
+                'high' => 0.21,
+                'low' => 0.11,
+                'low1' => 0.09 // certain housing supplies will remain at the reduced rate of 9% during a transition period from August 2025 until 1 August 2026
             ],
         ],
         'SE' => [ // Sweden
