@@ -275,7 +275,7 @@ class VatCalculator
             'rates' => [
                 'high' => 0.21,
                 'low' => 0.11,
-                'low1' => 0.09 // certain housing supplies will remain at the reduced rate of 9% during a transition period from August 2025 until 1 August 2026
+                'low1' => 0.09, // certain housing supplies will remain at the reduced rate of 9% during a transition period from August 2025 until 1 August 2026
             ],
         ],
         'SE' => [ // Sweden
