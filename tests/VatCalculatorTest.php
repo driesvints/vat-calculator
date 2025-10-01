@@ -85,15 +85,13 @@ class VatCalculatorTest extends TestCase
         $net = 24.00;
         $countryCode = 'DE';
 
-        $taxKey = 'vat_calculator.rules.'.strtoupper($countryCode);
-
         $config = m::mock(Repository::class);
         $config->shouldReceive('get')
             ->once()
             ->with('vat_calculator', [])
             ->andReturn([
                 'rules' => [
-                    'DE' => 0.50,
+                    $countryCode => 0.50,
                 ],
             ]);
 
@@ -699,15 +697,13 @@ class VatCalculatorTest extends TestCase
         $net = 24.00;
         $countryCode = 'DE';
 
-        $taxKey = 'vat_calculator.rules.'.strtoupper($countryCode);
-
         $config = m::mock(Repository::class);
         $config->shouldReceive('get')
             ->once()
             ->with('vat_calculator', [])
             ->andReturn([
                 'rules' => [
-                    'DE' => [
+                    $countryCode => [
                         'rate' => 0.19,
                         'exceptions' => [
                             'Heligoland' => 0.05,
@@ -718,7 +714,7 @@ class VatCalculatorTest extends TestCase
 
         $vatCalculator = new VatCalculator($config);
         $postalCode = '27498'; // Heligoland
-        $result = $vatCalculator->calculate($net, 'DE', $postalCode, false);
+        $result = $vatCalculator->calculate($net, $countryCode, $postalCode, false);
         $this->assertEquals(25.20, $result);
         $this->assertEquals(0.05, $vatCalculator->getTaxRate());
         $this->assertEquals(1.20, $vatCalculator->getTaxValue());
@@ -736,7 +732,6 @@ class VatCalculatorTest extends TestCase
     public function test_should_collect_vat_from_config()
     {
         $countryCode = 'TEST';
-        $taxKey = 'vat_calculator.rules.'.strtoupper($countryCode);
 
         $config = m::mock(Repository::class);
         $config->shouldReceive('get')
@@ -744,7 +739,7 @@ class VatCalculatorTest extends TestCase
             ->with('vat_calculator', [])
             ->andReturn([
                 'rules' => [
-                    'TEST' => 0.19,
+                    $countryCode => 0.19,
                 ],
             ]);
 
@@ -811,15 +806,13 @@ class VatCalculatorTest extends TestCase
         $gross = 36.00;
         $countryCode = 'DE';
 
-        $taxKey = 'vat_calculator.rules.'.strtoupper($countryCode);
-
         $config = m::mock(Repository::class);
         $config->shouldReceive('get')
             ->once()
             ->with('vat_calculator', [])
             ->andReturn([
                 'rules' => [
-                    'DE' => 0.50,
+                    $countryCode => 0.50,
                 ],
             ]);
 
@@ -984,27 +977,27 @@ class VatCalculatorTest extends TestCase
         $net = 24.00;
         $countryCode = 'DE';
 
-        $taxKey = 'vat_calculator.rules.'.strtoupper($countryCode);
-
         $config = m::mock(Repository::class);
         $config->shouldReceive('get')
             ->once()
             ->with('vat_calculator', [])
             ->andReturn([
-                'DE' => [
-                    'rate' => 0.19,
-                    'rates' => [
-                        'high' => 0.19,
-                        'low' => 0.07,
+                'rules' => [
+                    $countryCode => [
+                        'rate' => 0.19,
+                        'rates' => [
+                            'high' => 0.19,
+                            'low' => 0.03,
+                        ],
                     ],
                 ],
             ]);
 
         $vatCalculator = new VatCalculator($config);
         $result = $vatCalculator->calculate($net, $countryCode, null, null, 'low');
-        $this->assertEquals(25.68, $result);
-        $this->assertEquals(0.07, $vatCalculator->getTaxRate());
-        $this->assertEquals(1.68, $vatCalculator->getTaxValue());
+        $this->assertEquals(24.72, $result);
+        $this->assertEquals(0.03, $vatCalculator->getTaxRate());
+        $this->assertEquals(0.72, $vatCalculator->getTaxValue());
     }
 
     #[Covers('VatCalculator::isValidVatNumberFormat')]
