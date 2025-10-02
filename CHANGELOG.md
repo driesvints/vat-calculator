@@ -1,6 +1,11 @@
 # Changelog
 
-## [Unreleased](https://github.com/driesvints/vat-calculator/compare/3.23.0...3.x)
+## [Unreleased](https://github.com/driesvints/vat-calculator/compare/3.24.0...3.x)
+
+## [3.24.0](https://github.com/driesvints/vat-calculator/compare/3.23.0...3.24.0) - 2025-10-02
+
+* fix: missing key 'rules' in test by [@comhon-project](https://github.com/comhon-project) in https://github.com/driesvints/vat-calculator/pull/199
+* feat: handle several vat rates for exception rules by [@comhon-project](https://github.com/comhon-project) in https://github.com/driesvints/vat-calculator/pull/198
 
 ## [3.23.0](https://github.com/driesvints/vat-calculator/compare/3.22.0...3.23.0) - 2025-08-03
 
