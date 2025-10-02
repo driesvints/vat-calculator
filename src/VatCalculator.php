@@ -145,7 +145,7 @@ class VatCalculator
                         'low' => 0.021,
                         'low1' => 0.021,
                         'super-reduced' => 0.021,
-                    ]
+                    ],
                 ],
                 'Martinique' => [
                     'rate' => 0.085,
@@ -154,7 +154,7 @@ class VatCalculator
                         'low' => 0.021,
                         'low1' => 0.021,
                         'super-reduced' => 0.021,
-                    ]
+                    ],
                 ],
                 'Guadeloupe' => [
                     'rate' => 0.085,
@@ -163,7 +163,7 @@ class VatCalculator
                         'low' => 0.021,
                         'low1' => 0.021,
                         'super-reduced' => 0.021,
-                    ]
+                    ],
                 ],
                 'Guyane' => 0,
                 'Mayotte' => 0,

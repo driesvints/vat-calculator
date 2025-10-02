@@ -1064,7 +1064,7 @@ class VatCalculatorTest extends TestCase
                                 'rates' => [
                                     'high' => 0.085,
                                     'low' => 0.021,
-                                ]
+                                ],
                             ],
                         ],
                     ],
