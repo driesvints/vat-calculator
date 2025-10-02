@@ -138,9 +138,33 @@ class VatCalculator
             'rate' => 0.20,
             'exceptions' => [
                 // Overseas France
-                'Reunion' => 0.085,
-                'Martinique' => 0.085,
-                'Guadeloupe' => 0.085,
+                'Reunion' => [
+                    'rate' => 0.085,
+                    'rates' => [
+                        'high' => 0.085,
+                        'low' => 0.021,
+                        'low1' => 0.021,
+                        'super-reduced' => 0.021,
+                    ]
+                ],
+                'Martinique' => [
+                    'rate' => 0.085,
+                    'rates' => [
+                        'high' => 0.085,
+                        'low' => 0.021,
+                        'low1' => 0.021,
+                        'super-reduced' => 0.021,
+                    ]
+                ],
+                'Guadeloupe' => [
+                    'rate' => 0.085,
+                    'rates' => [
+                        'high' => 0.085,
+                        'low' => 0.021,
+                        'low1' => 0.021,
+                        'super-reduced' => 0.021,
+                    ]
+                ],
                 'Guyane' => 0,
                 'Mayotte' => 0,
                 'Saint-Barthélemy' => 0,
@@ -839,7 +863,14 @@ class VatCalculator
                 }
 
                 if (isset($postalCodeException['name'])) {
-                    return $taxRules[$postalCodeException['code']]['exceptions'][$postalCodeException['name']];
+                    $rate = $taxRules[$postalCodeException['code']]['exceptions'][$postalCodeException['name']];
+                    if (is_array($rate)) {
+                        $rate = $type
+                            ? ($rate['rates'][$type] ?? 0)
+                            : ($rate['rate'] ?? 0);
+                    }
+
+                    return $rate;
                 }
 
                 return $taxRules[$postalCodeException['code']]['rate'];
@@ -847,10 +878,10 @@ class VatCalculator
         }
 
         if ($type) {
-            return isset($taxRules[strtoupper($countryCode)]['rates'][$type]) ? $taxRules[strtoupper($countryCode)]['rates'][$type] : 0;
+            return $taxRules[strtoupper($countryCode)]['rates'][$type] ?? 0;
         }
 
-        return isset($taxRules[strtoupper($countryCode)]['rate']) ? $taxRules[strtoupper($countryCode)]['rate'] : 0;
+        return $taxRules[strtoupper($countryCode)]['rate'] ?? 0;
     }
 
     /**

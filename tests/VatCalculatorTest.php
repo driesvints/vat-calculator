@@ -1000,6 +1000,82 @@ class VatCalculatorTest extends TestCase
         $this->assertEquals(0.72, $vatCalculator->getTaxValue());
     }
 
+    public function test_calculate_exception_high_vat_with_type_param()
+    {
+        $gross = 24.00;
+        $countryCode = 'FR';
+        $company = false;
+        $type = 'high';
+        $postalCode = 97123;
+
+        $vatCalculator = new VatCalculator;
+        $result = $vatCalculator->calculate($gross, $countryCode, $postalCode, $company, $type);
+
+        $this->assertEquals(26.04, $result);
+    }
+
+    public function test_calculate_exception_low_vat_with_type_param()
+    {
+        $gross = 24.00;
+        $countryCode = 'FR';
+        $company = false;
+        $type = 'low';
+        $postalCode = 97123;
+
+        $vatCalculator = new VatCalculator;
+        $result = $vatCalculator->calculate($gross, $countryCode, $postalCode, $company, $type);
+
+        $this->assertEquals(24.5, $result);
+    }
+
+    public function test_calculate_exception_default_vat_without_type_param()
+    {
+        $gross = 24.00;
+        $countryCode = 'FR';
+        $company = false;
+        $postalCode = 97123;
+
+        $vatCalculator = new VatCalculator;
+        $result = $vatCalculator->calculate($gross, $countryCode, $postalCode, $company);
+
+        $this->assertEquals(26.04, $result);
+    }
+
+    public function test_calculate_exception_low_vat_vat_with_predefined_rules_overwritten_by_configuration()
+    {
+        $net = 24.00;
+        $countryCode = 'FR';
+
+        $config = m::mock(Repository::class);
+        $config->shouldReceive('get')
+            ->once()
+            ->with('vat_calculator', [])
+            ->andReturn([
+                'rules' => [
+                    $countryCode => [
+                        'rate' => 0.19,
+                        'rates' => [
+                            'high' => 0.19,
+                            'low' => 0.07,
+                        ],
+                        'exceptions' => [
+                            'Guadeloupe' => [
+                                'rate' => 0.5,
+                                'rates' => [
+                                    'high' => 0.085,
+                                    'low' => 0.021,
+                                ]
+                            ],
+                        ],
+                    ],
+                ],
+            ]);
+
+        $vatCalculator = new VatCalculator($config);
+        $result = $vatCalculator->calculate($net, $countryCode, 97123, false);
+        $this->assertEquals(36, $result);
+    }
+
     #[Covers('VatCalculator::isValidVatNumberFormat')]
     public function test_is_valid_vat_number_format()
     {
