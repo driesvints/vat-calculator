@@ -1,6 +1,10 @@
 # Changelog
 
-## [Unreleased](https://github.com/driesvints/vat-calculator/compare/3.24.0...3.x)
+## [Unreleased](https://github.com/driesvints/vat-calculator/compare/3.25.0...3.x)
+
+## [3.25.0](https://github.com/driesvints/vat-calculator/compare/3.24.0...3.25.0) - 2025-11-24
+
+* Support PHP 8.5 by [@spaze](https://github.com/spaze) in https://github.com/driesvints/vat-calculator/pull/201
 
 ## [3.24.0](https://github.com/driesvints/vat-calculator/compare/3.23.0...3.24.0) - 2025-10-02
 
