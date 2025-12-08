@@ -1,10 +1,10 @@
 # VatCalculator
 
-<a href="https://github.com/driesvints/vat-calculator/actions">
-    <img src="https://github.com/driesvints/vat-calculator/workflows/tests/badge.svg" alt="Tests">
+<a href="https://github.com/laravel/vat-calculator/actions">
+    <img src="https://github.com/laravel/vat-calculator/workflows/tests/badge.svg" alt="Tests">
 </a>
-<a href="https://github.com/driesvints/vat-calculator/actions/workflows/coding-standards.yml">
-    <img src="https://github.com/driesvints/vat-calculator/actions/workflows/coding-standards.yml/badge.svg" alt="Coding Standards" />
+<a href="https://github.com/laravel/vat-calculator/actions/workflows/coding-standards.yml">
+    <img src="https://github.com/laravel/vat-calculator/actions/workflows/coding-standards.yml/badge.svg" alt="Coding Standards" />
 </a>
 <a href="https://packagist.org/packages/mpociot/vat-calculator">
     <img src="https://img.shields.io/packagist/v/mpociot/vat-calculator" alt="Latest Stable Version">
@@ -313,7 +313,7 @@ Check out the [CHANGELOG](CHANGELOG.md) in this repository for all the recent ch
 
 ## Maintainers
 
-VatCalculator is maintained by [Dries Vints](https://driesvints.com). Originally created by [Marcel Pociot](https://pociot.dev).
+VatCalculator is maintained by Laravel. Originally created by [Marcel Pociot](https://pociot.dev).
 
 ## License
 
