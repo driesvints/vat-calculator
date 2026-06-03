@@ -2,6 +2,9 @@ name: Coding Standards
 
 on: [push]
 
+permissions:
+  contents: write
+
 jobs:
   lint:
-    uses: laravel/.github/.github/workflows/coding-standards.yml@main
+    uses: laravel/.github/.github/workflows/coding-standards.yml@dd86ce0a18475504e42fa809d7454c1cb1a88028 # main
