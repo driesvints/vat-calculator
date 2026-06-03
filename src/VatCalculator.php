@@ -636,7 +636,7 @@ class VatCalculator
     protected $ukValidationEndpoint = 'https://api.service.hmrc.gov.uk';
 
     /**
-     * @param \Illuminate\Contracts\Config\Repository|array
+     * @param Repository|array
      */
     public function __construct($config = [])
     {
